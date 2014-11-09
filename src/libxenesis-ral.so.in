@@ -23,7 +23,7 @@ HOST_LIST="";
 num_host=0;
 host_list_reset=0;
 
-# load_hosts($HOSTS): check and create a valid host list -> $HOST_LIST # 
+# load_hosts($HOSTS): check hosts and create a valid host_list -> $HOST_LIST # 
 function load_hosts {
 	# Params: $HOSTS #
 	HOSTS="$1";
@@ -34,7 +34,7 @@ function load_hosts {
 		for h in $HOSTS; do
 			# Count HOSTS -> num_host #
 			num_host=$((num_host+1));
-			# Fill HOSTS -> HOST_LIST #
+			# Fill $h -> HOST_LIST #
 			HOST_LIST="$h $HOST_LIST";
 		done;
 
@@ -47,15 +47,15 @@ function load_hosts {
 
 			if [[ $? -ne $true ]]; then # Check for error #
 				# check host dns $hosts; #
-				THISHOST=$($NSLOOKUP $host | $GREP Name | $AWK '{print $2}');
+				HOST_DNS=$($NSLOOKUP $host | $GREP Name | $AWK '{print $2}');
 
-				if [ ! -z "$THISHOST" ]; then
+				if [ ! -z "$HOST_DNS" ]; then
 					# WARNING! Host is in DNS but does not reply to ping! #
 					# WARNING! Nothing to do! #
-					echolog "$WARNING! DNS discovered host name: <$THISHOST>!";
-					echolog "$WARNING! But <$THISHOST> does not reply to ping!";
-					echolog "$WARNING! Nothing to do! Skipping <$THISHOST>!";
-					# Skip this host $THISHOST #
+					echolog "$WARNING! DNS discovered host name: <$HOST_DNS>!";
+					echolog "$WARNING! But <$HOST_DNS> does not reply to ping!";
+					echolog "$WARNING! Nothing to do! Skipping <$HOST_DNS>!";
+					# Skip this host $HOST_DNS #
 					HOST_LIST=$($ECHO $HOST_LIST | $SED -e 's/'$h'//g');
 				else
 					# If host does NOT reply to PING || does NOT have DNS #
