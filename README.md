@@ -1,9 +1,7 @@
-===========
-# XENESIS #
-===========
+# XENESIS
 
 ```
-Copyright (C) 2014 Antonio Cao (@burzumishi) #
+Copyright (C) 2014 Antonio Cao (@burzumishi)
 
 This is free software;
 You have unlimited permission to copy and/or distribute it,
@@ -23,6 +21,22 @@ schedule tasks on remote hosts conected to the same network over SSH.
 Remote administration of tasks, is done trought Remote Admin Layer (RAL) Plugins.
 
 
+Install
+-------
+
+**Xenesis** is using GNU AutoTools, as build system.
+
+Type the following commands to install:
+
+
+```
+sh autogen.sh
+./configure --prefix=/usr
+make
+make install
+```
+
+
 Features
 --------
 
@@ -34,4 +48,11 @@ Features
  - TODO: Manage simple or complex tasks on hosts with RAL plugins.
  - TODO: Schedule RAL Plugins (crond).
  - TODO RAL Plugin (deploy): Deploy files to hosts.
+
+
+Authors
+-------
+
+Antonio Cao (@burzumishi)
+
 
