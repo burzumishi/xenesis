@@ -1,0 +1,7 @@
+# ral: template #
+
+# User #
+SSHUSER="root"
+
+# Command #
+test -a

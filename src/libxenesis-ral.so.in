@@ -1,0 +1,198 @@
+#!/bin/bash
+
+# @PACKAGE@-@VERSION@ (libxenesis-ral.so) #
+
+# Copyright (C) 2014 Antonio Cao (@burzumishi) #
+
+# This is free software;
+# You have unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# Xenesis RAL Library #
+
+# libxenesis-ral.so: Remote Administration Layer functions and definitions #
+
+# HOSTS #
+
+HOST_LIST="";
+num_host=0;
+host_list_reset=0;
+
+# load_hosts: check and create a valid host list -> $HOST_LIST # 
+function load_hosts {
+	# Function Params #
+	HOSTS="$1";
+
+	# $HOSTS cannot be empty #
+	if [ ! -z "$HOSTS" ]; then
+		# Host || Host List count #
+		for h in $HOSTS; do
+			# Count HOSTS -> num_host #
+			num_host=$((num_host+1));
+			# Fill HOSTS -> HOST_LIST #
+			HOST_LIST="$h $HOST_LIST";
+		done;
+
+		echolog "$OK! Loaded #$num_host hosts or host_list files: $HOST_LIST";
+
+		for host in $HOST_LIST; do
+			# Single host or host_list #
+			# check host ping $host #
+			$PING -c 1 $host >/dev/null;
+
+			if [[ $? -ne $true ]]; then # Check for error #
+				# check host dns $hosts; #
+				THISHOST=$($NSLOOKUP $host | $GREP Name | $AWK '{print $2}');
+
+				if [ ! -z "$THISHOST" ]; then
+					# WARNING! Host is in DNS but does not reply to ping! #
+					# WARNING! Nothing to do! #
+					echolog "$WARNING! DNS discovered host name: <$THISHOST>!";
+					echolog "$WARNING! But <$THISHOST> does not reply to ping!";
+					echolog "$WARNING! Nothing to do! Skipping <$THISHOST>!";
+					# Skip this host $THISHOST #
+					HOST_LIST=$($ECHO $HOST_LIST | $SED -e 's/'$h'//g');
+				else
+					# If host does NOT reply to PING || does NOT have DNS #
+					# Maybe it's a 'hostslist' in '$HOSTSDIR' #
+					# check host list $host; # (cat $HOSTSDIR/$hosts) #
+					CHECK_HOST_LIST=$($FIND $HOSTSDIR -iname "$host" -exec $BASH {} \;);
+					if [ ! -z "$CHECK_HOST_LIST" ]; then
+						echolog "$OK! Found <$host> host_list file with the following hosts: $CHECK_HOST_LIST";
+						# Reset HOST_LIST #
+						# Load list with hostnames instead of host_list #
+						# First time loop runs, we need to reset host_list names from HOST_LIST #
+						if [[ $host_list_reset -eq 0 ]]; then
+							HOST_LIST="";
+							host_list_reset=1;
+						fi;
+						# Reload HOST_LIST from current host_list file #
+						for hf in $CHECK_HOST_LIST; do
+							# Ping $hf
+							$PING -c 1 $hf >/dev/null;
+							if [[ $? -eq $true ]]; then
+								HOST_LIST="$hf $HOST_LIST"
+								$ECHO "$OK! <$hf> is online!";
+							else
+								# WARNING! Host is in DNS but does not reply to ping! #
+								# WARNING! Nothing to do! #
+								echolog "$WARNING! <$hf> does not reply to ping!";
+								echolog "$WARNING! Nothing to do! Skipping <$hf>!";
+								# Skip this host $hf #
+								HOST_LIST=$($ECHO $HOST_LIST | $SED -e 's/'$hf'//g');
+							fi;
+						done			
+					else
+						# Param is not a host or a host_list #
+						echolog "$ERROR! <$host> is not a <host> or <host_list>!";
+						echolog "$WARNING! Nothing to do! Skipping <$host>!";
+						# Skip this host $host #
+						HOST_LIST=$($ECHO $HOST_LIST | $SED -e 's/'$host'//g');
+						return $true;
+					fi;
+				fi;
+			else
+				# If hosts reply to ping then continue #
+				echolog "$OK! <$host> is online!";
+				return $true;
+			fi;
+		done;
+	else
+		$ECHO
+		echolog "$ERROR! <host> or <host_list> is needed!";
+		$ECHO
+		usage;
+		return $false;
+	fi;
+}
+
+# check_host_list: checks $HOST_LIST created by load_hosts() #
+function check_host_list {
+	# Check $HOST_LIST #
+	if [ ! -z "$HOST_LIST" ]; then
+		# Host count #
+		avaliable_hosts=0;
+		for h in $HOST_LIST; do
+			# Count HOSTS -> avaliable_hosts #
+			avaliable_hosts=$((avaliable_hosts+1));
+		done;
+
+		# Show avaliable $HOST_LIST #
+		echolog "$OK! Found #$avaliable_hosts avaliable hosts: $HOST_LIST";
+		return $true;
+	else
+		# There are any host avaliable #
+		echolog "$ERROR! No hosts avaliable!";
+		return $false;
+	fi;
+}
+
+# RAL PLUGIN #
+
+# check_plugin: check for an existent plugin #
+function check_ral_plugin {
+	# Function Params #
+	plugin="$1";
+
+	ralfile=$($FIND $PLUGINSDIR -iname "${plugin}.ral");
+
+	if [ ! -z "$ralfile" ]; then
+		# RAL Plugin found (ralfile) #
+		echolog "$OK! Found Plugin: $ralfile";
+		export RALFILE="$ralfile";
+		return $true;
+	else
+		# RAL Plugin NOT found (create new ralfile??) #
+		echolog "$ERROR! RAL Plugin NOT Found!";
+
+		# Define a dummy plugin name #
+		if [ -z "$plugin" ]; then plugin="yourplugin"; fi
+
+		# Ask user for plugin creation #
+		echolog "$WARNING! If your RAL Plugin does not exist, you can create a new one.";
+		echolog "$WARNING! Use: $EDITOR $PLUGINSDIR/${plugin}.ral"
+		$ECHO
+		usage;
+	fi;	
+}
+
+# ralplugin: Execute ralfile on host # TODO TODO TODO #
+function load_ral_plugin {
+	# Function Params #
+	ralfile="$1";
+	host="$2";
+
+	echolog "$OK! Deploying <$ralfile> to <$host> ...";
+	echolog "$OK! Running <$ralfile> on <$host> ...";
+	echolog "$OK! RAL Plugin <$ralfile> status on <$host>: Finished!";
+
+	return $true;
+}
+
+# ral: Execute remote administration scripts on hosts and get stdout #
+function ral {
+	# Function Params #
+	plugin="$1";
+	hosts="$2";
+
+	# Create a valid list of hosts #
+	load_hosts "$hosts";
+	errorcheck $?;
+
+	# Check HOST_LIST #
+	check_host_list;
+	errorcheck $?;
+
+	# Load ralplugin on host_list #
+	for h in $HOST_LIST; do
+		load_ral_plugin "$RALFILE" $h;
+		errorcheck $?;
+	done;
+}
+
+

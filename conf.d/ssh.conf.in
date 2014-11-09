@@ -1,0 +1,5 @@
+# SSH Setup #
+SSHCMD="ssh";
+SCPCMD="scp";
+SSHUSER="root";
+SSHOPTS="";

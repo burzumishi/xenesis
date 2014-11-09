@@ -1,0 +1,3 @@
+# LOGFILE Setup #
+LOGDIR="@localstatedir@/log/@PACKAGE@";
+LOGFILE="@PACKAGE@.log";

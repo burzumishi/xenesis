@@ -1,0 +1,19 @@
+2014-11-07  Antonio Cao (@burzumishi)
+
+	* xenesis: 0.1 Initial Release.
+
+
+2014-11-08  Antonio Cao (@burzumishi)
+
+        * xenesis: GNU AutoTools Support.
+	* xenesis: Terminal Color Support.
+	* xenesis: Dinamic Configuration Files Support (conf.d).
+	* xenesis: Remote Admin Layer (RAL) Plugin Support.
+	* libxenesis.so: errorcheck(), check_directory_structure(), echolog(), startmsg(), usage().
+	* libxenesis-ral.so: ral(), load_ral_plugin(), check_ral_plugin(), load_hosts(), check_host_list().
+
+
+2014-11-09  Antonio Cao (@burzumishi)
+
+	* libxenesis-ral.so: Dinamic Host List scripts: default, demo.
+	* libxenesis.so: echodebuglog().

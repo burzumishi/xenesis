@@ -1,0 +1,68 @@
+.\" Copyright (c) 2014, Antonio Cao (@burzumishi) <antoniocao000@gmail.com>
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 2 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public
+.\" License along with this manual; if not, write to the Free
+.\" Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+.\" Boston, MA  02111-1301  USA.
+.TH XENESIS 1
+.SH NAME
+xenesis \- Remote Task Manager
+
+.SH SYNOPSIS
+.B xenesis [plugin_name] [host]||[host_list] [plugin_params]
+
+.SH DESCRIPTION
+Xenesis is a remote task manager, it will help you on manage and schedule tasks on remote hosts conected to the same network over SSH.
+Xenesis uses basic shell tools, it's simple and fully customizable!
+
+.SH OPTIONS
+
+.TP
+.B [plugin_name]
+This option must be an existent plugin name, if the plugin does not exist you can create a new one in plugins directory.
+All plugins are shell script executed on the remote hosts.
+.br
+
+.TP
+.B [host]||[host_list]
+This option must be a single "host" or a "host_list", like: "host1 host2 host3 ..."
+Either "host_list" can be a shell script in hosts directory, with the same output: "host1 host2 host3 ..."
+.br
+
+.TP
+.B [plugin_params] (optional)
+Special plugin params.
+.br
+
+.SH RAL (Remote Administration Layer)
+Remote administration of tasks, is done trought Remote Admin Layer (RAL) Plugins.
+This plugins are shell script files.
+
+.SH BUGS
+The bug tracker can be reached by visiting the website
+\fIhttps://github.com/burzumishi/xenesis/issues\fR
+
+Before sending a bug report, please verify that you have the latest
+version of xenesis. Many bugs (major and minor) are fixed at each
+release, and if yours is out of date, the problem may already have
+been solved.
+
+.SH ADDITIONAL INFORMATION
+
+For further information, visit the website
+\fIhttps://github.com/burzumishi/xenesis\fR

@@ -1,0 +1,3 @@
+HOSTS="localhost $(hostname)"
+
+echo $HOSTS;

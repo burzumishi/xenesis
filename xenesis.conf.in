@@ -1,0 +1,14 @@
+# @PACKAGE@.conf - @DESCRIPTION@ #
+
+# Terminal Color Support #
+COLOR="yes";
+
+# Activate Debug Log #
+DEBUG="yes";
+
+# PLUGINS DATABASE PATH #
+PLUGINSDIR="@localstatedir@/lib/@PACKAGE@/plugins";
+
+# HOSTS DATABASE PATH #
+HOSTSDIR="@localstatedir@/lib/@PACKAGE@/hosts";
+

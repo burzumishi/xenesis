@@ -1,0 +1,2 @@
+HOSTS="demohost1 demohost2";
+echo $HOSTS;

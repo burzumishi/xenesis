@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# @PACKAGE@-@VERSION@ (@DESCRIPTION@) #
+
+# Copyright (C) 2014 Antonio Cao (@burzumishi) #
+
+# This is free software; 
+# You have unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+
+# @PACKAGE@ @VERSION@ (@DESCRIPTION@) #
+# Usage: xenesis <plugin_name> <host>||<host_list> <plugin_params (optional)>
+
+
+# Load Configuration Files #
+
+# Import @PACKAGE@ Main Config File #
+. @sysconfdir@/@PACKAGE@/@PACKAGE@.conf;
+
+# Import @PACKAGE@ Dinamic Config Files (conf.d) #
+if [ -d "@sysconfdir@/@PACKAGE@/conf.d" ]; then
+        CONFD=$(find @sysconfdir@/@PACKAGE@/conf.d -iname "*.conf");
+        for confd in $CONFD; do
+                . $confd;
+        done
+fi;
+
+
+# Load Libraries #
+
+# Import @PACKAGE@ Core Functions #
+. @libdir@/libxenesis.so;
+
+# Import @PACKAGE@ Remote Admin Layer (RAL) Functions #
+. @libdir@/libxenesis-ral.so;
+
+
+# Read User Input Params #
+
+# [option] PLUGIN: must be an existent "plugin name" #
+PLUGIN="$1";
+
+# [option] HOSTS: must be a valid "host" or "host_list" #
+HOSTS="$2";
+
+# [option] PLUGIN_PARAMS: should be a "plugin params list" # (OPTIONAL) #
+PLUGIN_PARAMS="$3";
+
+
+# Start @PACKAGE@ # libxenesis.so #
+
+# Check @PACKAGE@ runtime directory structure # 
+check_directory_structure "$LOGDIR" "$PLUGINSDIR" "$HOSTSDIR";
+
+# @PACKAGE@ startmsg #
+startmsg;
+
+
+# Start Remote Admin Layer (RAL) Support # libxenesis-ral.so #
+
+# Check for Remote Admin Layer (RAL) Plugin File #
+# PLUGIN -> export $RALFILE #
+check_ral_plugin "$PLUGIN";
+
+# If have Remote Admin Layer (RAL) Plugin file #
+# Load RAL Plugin on each host: "ral $RALFILE $HOSTS)" #
+ral "$RALFILE" "$HOSTS";
+errorcheck $?;
+
+exit;

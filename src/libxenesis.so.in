@@ -1,0 +1,185 @@
+#!/bin/bash
+
+# @PACKAGE@-@VERSION@ (libxenesis.so) #
+
+# Copyright (C) 2014 Antonio Cao (@burzumishi) #
+
+# This is free software;
+# You have unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# Xenesis Core Library #
+
+# libxenesis.so: Core functions and definitions #
+
+# Log Date #
+LOGDATE=$(date +%D-%H:%M:%S);
+
+# Local Definitions #
+
+ECHO=$(which echo);
+GREP=$(which grep);
+PING=$(which ping);
+NSLOOKUP=$(which nslookup);
+AWK=$(which awk);
+SORT=$(which sort);
+CAT=$(which cat);
+MV=$(which mv);
+CP=$(which cp);
+LN=$(which ln);
+TAIL=$(which tail);
+HEAD=$(which head);
+LESS=$(which less);
+MORE=$(which more);
+FIND=$(which find);
+MKDIR=$(which mkdir);
+DATE=$(which date);
+TEE=$(which tee);
+SED=$(which sed)
+
+SSH=$(which $SSHCMD);
+SCP=$(which $SCPCMD);
+
+true=0;
+false=1;
+
+# Shell color definitions #
+color_blk='\e[0;30m'  # Black - Regular #
+color_red='\e[0;31m'  # Red #
+color_grn='\e[0;32m'  # Green #
+color_ylw='\e[0;33m'  # Yellow #
+color_blu='\e[0;34m'  # Blue #
+color_pur='\e[0;35m'  # Purple #
+color_cyn='\e[0;36m'  # Cyan #
+color_wht='\e[0;37m'  # White #
+
+color_bblk='\e[1;30m' # Black - Bold #
+color_bred='\e[1;31m' # Red #
+color_bgrn='\e[1;32m' # Green #
+color_bylw='\e[1;33m' # Yellow #
+color_bblu='\e[1;34m' # Blue #
+color_bpur='\e[1;35m' # Purple #
+color_bcyn='\e[1;36m' # Cyan #
+color_bwht='\e[1;37m' # White #
+
+color_ublk='\e[4;30m' # Black - Underline #
+color_ured='\e[4;31m' # Red #
+color_ugrn='\e[4;32m' # Green #
+color_uylw='\e[4;33m' # Yellow #
+color_ublu='\e[4;34m' # Blue #
+color_upur='\e[4;35m' # Purple #
+color_ucyn='\e[4;36m' # Cyan #
+color_uwht='\e[4;37m' # White #
+
+color_bkblk='\e[40m'  # Black - Background #
+color_bkred='\e[41m'  # Red #
+color_bdgrn='\e[42m'  # Green #
+color_bkylw='\e[43m'  # Yellow #
+color_bkblu='\e[44m'  # Blue #
+color_bkpur='\e[45m'  # Purple #
+color_bkcyn='\e[46m'  # Cyan #
+color_bkwht='\e[47m'  # White #
+
+color_reset='\e[0m'   # Text Reset #
+
+# Color Messages #
+
+if [ "$COLOR" == "yes" ]; then
+	ECHO="$ECHO -e";
+	OK="${color_bgrn}OK${color_reset}";
+	ERROR="${color_bred}ERROR${color_reset}";
+	WARNING="${color_bylw}WARNING${color_reset}";
+	STARTMSG_PACK="${color_bred}<-${color_bylw}(${color_bwht} @PACKAGE@ @VERSION@ ${color_bylw})${color_bred}->${color_reset}";
+	STARTMSG_DESC="${color_bred}<--${color_bylw}(${color_bwht} @DESCRIPTION@ ${color_bylw})${color_bred}-->${color_reset}";
+	USAGE="${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ <plugin_name> <host>||<host_list> <plugin_params (optional)>${color_reset}";
+	PACKAGE_FULL_DESC="${color_bgrn}@PACKAGE@ @VERSION@${color_reset} - ${color_bylw}@DESCRIPTION@${color_reset}"
+else
+        OK="OK";
+        ERROR="ERROR";
+        WARNING="WARNING";
+	STARTMSG_PACK="<-( @PACKAGE@ @VERSION@ )->";
+	STARTMSG_DESC="<--( @DESCRIPTION@ )-->";
+	USAGE="Usage: @PACKAGE@ <plugin_name> <host>||<host_list> <plugin_params (optional)>";
+	PACKAGE_FULL_DESC="@PACKAGE@ @VERSION - @DESCRIPTION@"
+fi;
+
+# Define LOG #
+LOG="$LOGDIR/$LOGFILE";
+DEBUGLOG="$LOGDIR/debug-$LOGFILE";
+
+# Define functions #
+
+# echolog: log @PACKAGE@ activity #
+function echolog {
+	# Function Params #
+	string="$1";
+
+	$ECHO "$string";
+	$ECHO "[$LOGDATE] $string" >> $LOG;
+
+	return $true;
+}
+
+# echolog: debug log @PACKAGE@ activity #
+function echodebuglog {
+	if [ $DEBUG == "yes" ]; then
+		# Function Params #
+		string="$1";
+
+		$ECHO "$string";
+		$ECHO "[$LOGDATE] $string" >> $DEBUGLOG;
+
+		return $true;
+	fi;
+}
+
+# errorcheck: check for errors, if $false will exit (1) #
+function errorcheck {
+	# Function Params #
+        error=$1;
+
+        if [[ $error -ne $true ]]; then
+                echolog "$ERROR! An error was found. (ErrCode: $error)";
+                exit $false;
+        else
+                return $true;
+        fi;
+}
+
+# check_dir: check and create directory #
+function check_directory_structure {
+	# Function Params #
+	directories="$*";
+
+	for dir in $directories; do
+		if [ -d "$dir" ]; then
+			return $true;
+		else
+			$MKDIR -pv $dir >> $LOG;
+			errorcheck $?;
+		fi;
+	done
+}
+
+# startmsg: command line help #
+function startmsg {
+	$ECHO 
+	$ECHO "                         $STARTMSG_PACK";
+	$ECHO
+	$ECHO "                    $STARTMSG_DESC";
+	$ECHO 
+}
+
+# usage: command line help #
+function usage {
+	$ECHO "$PACKAGE_FULL_DESC"
+	$ECHO "$USAGE";
+	$ECHO 
+
+	exit $true;
+}
