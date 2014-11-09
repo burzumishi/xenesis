@@ -114,9 +114,9 @@ DEBUGLOG="$LOGDIR/debug-$LOGFILE";
 
 # Define functions #
 
-# echolog: log @PACKAGE@ activity #
+# echolog($string): log @PACKAGE@ activity #
 function echolog {
-	# Function Params #
+	# Params: $string #
 	string="$1";
 
 	$ECHO "$string";
@@ -125,10 +125,10 @@ function echolog {
 	return $true;
 }
 
-# echolog: debug log @PACKAGE@ activity #
+# echolog($string): debug log @PACKAGE@ activity #
 function echodebuglog {
 	if [ $DEBUG == "yes" ]; then
-		# Function Params #
+		# Params: $string #
 		string="$1";
 
 		$ECHO "$string";
@@ -138,9 +138,9 @@ function echodebuglog {
 	fi;
 }
 
-# errorcheck: check for errors, if $false will exit (1) #
+# errorcheck($error): check for errors, if $false will exit (1) #
 function errorcheck {
-	# Function Params #
+	# Params: $error #
         error=$1;
 
         if [[ $error -ne $true ]]; then
@@ -151,9 +151,9 @@ function errorcheck {
         fi;
 }
 
-# check_dir: check and create directory #
+# check_directory_structure($directories): check and create directory #
 function check_directory_structure {
-	# Function Params #
+	# Params $directories #
 	directories="$*";
 
 	for dir in $directories; do
@@ -166,7 +166,7 @@ function check_directory_structure {
 	done
 }
 
-# startmsg: command line help #
+# startmsg(): command line help #
 function startmsg {
 	$ECHO 
 	$ECHO "                         $STARTMSG_PACK";
@@ -175,7 +175,7 @@ function startmsg {
 	$ECHO 
 }
 
-# usage: command line help #
+# usage(): command line help #
 function usage {
 	$ECHO "$PACKAGE_FULL_DESC"
 	$ECHO "$USAGE";

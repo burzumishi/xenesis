@@ -23,9 +23,9 @@ HOST_LIST="";
 num_host=0;
 host_list_reset=0;
 
-# load_hosts: check and create a valid host list -> $HOST_LIST # 
+# load_hosts($HOSTS): check and create a valid host list -> $HOST_LIST # 
 function load_hosts {
-	# Function Params #
+	# Params: $HOSTS #
 	HOSTS="$1";
 
 	# $HOSTS cannot be empty #
@@ -111,7 +111,7 @@ function load_hosts {
 	fi;
 }
 
-# check_host_list: checks $HOST_LIST created by load_hosts() #
+# check_host_list(): checks $HOST_LIST created by load_hosts() #
 function check_host_list {
 	# Check $HOST_LIST #
 	if [ ! -z "$HOST_LIST" ]; then
@@ -134,9 +134,9 @@ function check_host_list {
 
 # RAL PLUGIN #
 
-# check_plugin: check for an existent plugin #
+# check_ral_plugin($plugin): check for an existent plugin #
 function check_ral_plugin {
-	# Function Params #
+	# Params: $plugin #
 	plugin="$1";
 
 	ralfile=$($FIND $PLUGINSDIR -iname "${plugin}.ral");
@@ -161,9 +161,9 @@ function check_ral_plugin {
 	fi;	
 }
 
-# ralplugin: Execute ralfile on host # TODO TODO TODO #
+# load_ral_plugin($ralfile,$host): Execute ralfile on host # TODO TODO TODO #
 function load_ral_plugin {
-	# Function Params #
+	# Params: $ralfile, $host #
 	ralfile="$1";
 	host="$2";
 
@@ -174,9 +174,9 @@ function load_ral_plugin {
 	return $true;
 }
 
-# ral: Execute remote administration scripts on hosts and get stdout #
+# ral($plugin,$hosts): Execute remote administration scripts on hosts and get stdout #
 function ral {
-	# Function Params #
+	# Params: $plugin, $hosts #
 	plugin="$1";
 	hosts="$2";
 
