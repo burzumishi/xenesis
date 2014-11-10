@@ -38,12 +38,14 @@ function load_hosts {
 			HOST_LIST="$h $HOST_LIST";
 		done;
 
+		HOST_LIST=$(echo $HOST_LIST | sed -e 's/ $//g');
+
 		echolog "$OK! Loaded #$num_host hosts or host_list files: $HOST_LIST";
 
-		for host in $HOST_LIST; do
+		for host in "$HOST_LIST"; do
 			# Single host or host_list #
 			# check host ping $host #
-			$PING -c 1 $host >/dev/null;
+			$PING $host >/dev/null;
 
 			if [[ $? -ne $true ]]; then # Check for error #
 				# check host dns $hosts; #
@@ -74,7 +76,7 @@ function load_hosts {
 						# Reload HOST_LIST from current host_list file #
 						for hf in $CHECK_HOST_LIST; do
 							# Ping $hf
-							$PING -c 1 $hf >/dev/null;
+							$PING $hf >/dev/null;
 							if [[ $? -eq $true ]]; then
 								HOST_LIST="$hf $HOST_LIST"
 								$ECHO "$OK! <$hf> is online!";

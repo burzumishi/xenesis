@@ -5,7 +5,7 @@
 
 2014-11-08  Antonio Cao (@burzumishi)
 
-        * xenesis: GNU AutoTools Support.
+    * xenesis: GNU AutoTools Support.
 	* xenesis: Terminal Color Support.
 	* xenesis: Dinamic Configuration Files Support (conf.d).
 	* xenesis: Remote Admin Layer (RAL) Plugin Support.
@@ -24,4 +24,4 @@
 	* libxenesis-ral.so: start_ral().
 	* libxenesis-ral.so: add ral().
 	* libxenesis.so: check_user().
-	* xenesis: add start_ral(), add check_user(), delete ral().
+	* xenesis: add start_ral(), add check_user(), delete ral(), add "touch $LOG", add setup_os_commands.

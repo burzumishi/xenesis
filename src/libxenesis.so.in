@@ -17,10 +17,15 @@
 
 # libxenesis.so: Core functions and definitions #
 
+export $LANG $LC_ALL
+
+# Operating System # Linux, HP-UX, CYGWIN_NT, ... #
+OS=$(uname -s);
+
 # Log Date #
 LOGDATE=$(date +%D-%H:%M:%S);
 
-# Local Definitions #
+# Command Definitions #
 
 ECHO=$(which echo);
 GREP=$(which grep);
@@ -32,6 +37,7 @@ CAT=$(which cat);
 MV=$(which mv);
 CP=$(which cp);
 LN=$(which ln);
+TOUCH=$(which touch);
 TAIL=$(which tail);
 HEAD=$(which head);
 LESS=$(which less);
@@ -45,10 +51,12 @@ SED=$(which sed)
 SSH=$(which $SSHCMD);
 SCP=$(which $SCPCMD);
 
+# Define (true || false)
+
 true=0;
 false=1;
 
-# Shell color definitions #
+# Define Shell Colors #
 color_blk='\e[0;30m'  # Black - Regular #
 color_red='\e[0;31m'  # Red #
 color_grn='\e[0;32m'  # Green #
@@ -87,7 +95,7 @@ color_bkwht='\e[47m'  # White #
 
 color_reset='\e[0m'   # Text Reset #
 
-# Color Messages #
+# Define Color Messages #
 
 if [ "$COLOR" == "yes" ]; then
 	ECHO="$ECHO -e";
@@ -97,7 +105,7 @@ if [ "$COLOR" == "yes" ]; then
 	STARTMSG_PACK="${color_bred}<-${color_bylw}(${color_bwht} @PACKAGE@ @VERSION@ ${color_bylw})${color_bred}->${color_reset}";
 	STARTMSG_DESC="${color_bred}<--${color_bylw}(${color_bwht} @DESCRIPTION@ ${color_bylw})${color_bred}-->${color_reset}";
 	USAGE="${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ [exec] <plugin_name> <host>||<host_list> <plugin_params (optional)>
-           [test] <plugin_name> <host>||<host_list> <plugin_params>${color_reset}";
+               [test] <plugin_name> <host>||<host_list> <plugin_params>${color_reset}";
 	PACKAGE_FULL_DESC="${color_bgrn}@PACKAGE@ @VERSION@${color_reset} - ${color_bylw}@DESCRIPTION@${color_reset}"
 else
         OK="OK";
@@ -106,7 +114,7 @@ else
 	STARTMSG_PACK="<-( @PACKAGE@ @VERSION@ )->";
 	STARTMSG_DESC="<--( @DESCRIPTION@ )-->";
 	USAGE="Usage: @PACKAGE@ [exec] <plugin_name> <host>||<host_list> <plugin_params (optional)>
-           [test] <plugin_name> <host>||<host_list> <plugin_params>";
+               [test] <plugin_name> <host>||<host_list> <plugin_params>";
 	PACKAGE_FULL_DESC="@PACKAGE@ @VERSION - @DESCRIPTION@"
 fi;
 
@@ -123,10 +131,26 @@ function check_user {
 	if [ "$WHOAMI" != "root" ]; then
 		$ECHO;
 		$ECHO "$WARNING! You are not superuser!";
-		$ECHO "$WARNING! Perhaps you can not use all functionalities!";
+		$ECHO "$WARNING! Maybe you can not use all functionality!";
 		$ECHO;
 	fi;
 
+	return $true;
+}
+
+# setup_os_commands(): Setup OS specific commands #
+function setup_os_commands {
+	case $OS in
+		# Operating System # Linux, HP-UX, CYGWIN_NT, ... #
+		*linux*|*Linux*|*LINUX*) PING=$($PING -c 1);
+			;;
+		*hp-ux*|*HP-UX*) PING=$($PING -n 1);
+			;;
+		*cygwin*|*CYGWIN*) PING=$($PING -n 1);
+			;;
+		*) PING=$($PING -c 1);
+			;;
+	esac
 	return $true;
 }
 
@@ -176,7 +200,7 @@ function check_directory_structure {
 		if [ -d "$dir" ]; then
 			return $true;
 		else
-			$MKDIR -pv $dir >> $LOG;
+			$MKDIR -p $dir >/dev/null;
 			errorcheck $?;
 		fi;
 	done
@@ -194,6 +218,7 @@ function startmsg {
 # usage(): command line help #
 function usage {
 	$ECHO "$PACKAGE_FULL_DESC"
+	$ECHO
 	$ECHO "$USAGE";
 	$ECHO 
 

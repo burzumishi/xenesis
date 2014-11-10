@@ -6,6 +6,10 @@ COLOR="yes";
 # Activate Debug Log #
 DEBUG="yes";
 
+# Language Support #
+LC_ALL="C"
+LANG="C"
+
 # PLUGINS DATABASE PATH #
 PLUGINSDIR="@localstatedir@/lib/@PACKAGE@/plugins";
 

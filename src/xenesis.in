@@ -46,6 +46,12 @@ fi;
 # Check @PACKAGE@ runtime directory structure # 
 check_directory_structure "$LOGDIR" "$PLUGINSDIR" "$HOSTSDIR";
 
+# Setup @PACKAGE@ OS Commands #
+setup_os_commands;
+
+# Initialize @PACKAGE@ $LOG
+$TOUCH $LOG;
+
 # @PACKAGE@ startmsg #
 startmsg;
 
