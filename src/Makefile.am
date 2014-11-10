@@ -1,4 +1,4 @@
-CLEANFILES = xenesis libxenesis-ral.so libxenesis.so *~
+CLEANFILES = xenesis libxenesis-ral.so libxenesis.so libxenesis-net.so libxenesis-ssh.so libxenesis-sshnopass.so *~
 
 do_subst = sed -e 's,[@]sharedstatedir[@],$(sharedstatedir),g' \
 		-e 's,[@]localstatedir[@],$(localstatedir),g' \
@@ -20,8 +20,20 @@ libxenesis-ral.so: libxenesis-ral.so.in Makefile
 	$(do_subst) < $(srcdir)/libxenesis-ral.so.in > libxenesis-ral.so; \
 	chmod +x libxenesis-ral.so
 
+libxenesis-net.so: libxenesis-net.so.in Makefile
+	$(do_subst) < $(srcdir)/libxenesis-net.so.in > libxenesis-net.so; \
+	chmod +x libxenesis-net.so
+
+libxenesis-ssh.so: libxenesis-ssh.so.in Makefile
+	$(do_subst) < $(srcdir)/libxenesis-ssh.so.in > libxenesis-ssh.so; \
+	chmod +x libxenesis-ssh.so
+
+libxenesis-sshnopass.so: libxenesis-sshnopass.so.in Makefile
+	$(do_subst) < $(srcdir)/libxenesis-sshnopass.so.in > libxenesis-sshnopass.so; \
+	chmod +x libxenesis-sshnopass.so
+
 xenesis: xenesis.in Makefile
 	$(do_subst) < $(srcdir)/xenesis.in > xenesis; \
 	chmod +x xenesis
 
-all-local: libxenesis.so libxenesis-ral.so xenesis
+all-local: libxenesis.so libxenesis-ral.so libxenesis-net.so libxenesis-ssh.so libxenesis-sshnopass.so xenesis

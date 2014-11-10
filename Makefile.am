@@ -41,7 +41,7 @@ clean-local: clean-doc
 distclean-local: distclean-doc
 	@rm -rfv  rm -rf aclocal.m4 AUTHORS autom4te.cache config.guess \
 	configure config.sub COPYING INSTALL install-sh missing NEWS README \
-	Makefile.in src/Makefile.in Makefile src/Makefile \
+	Makefile.in src/Makefile.in Makefile src/Makefile compile \
 	config.log config.status conf.d/Makefile.in conf.d/Makefile; \
 	echo "=== distclean-local done ==="
 
@@ -96,6 +96,9 @@ install-data-hook:
 	cp -rfv src/xenesis $(bindir)/xenesis; \
 	cp -rfv src/libxenesis.so $(libdir)/libxenesis.so; \
 	cp -rfv src/libxenesis-ral.so $(libdir)/libxenesis-ral.so; \
+	cp -rfv src/libxenesis-net.so $(libdir)/libxenesis-net.so; \
+	cp -rfv src/libxenesis-ssh.so $(libdir)/libxenesis-ssh.so; \
+	cp -rfv src/libxenesis-sshnopass.so $(libdir)/libxenesis-sshnopass.so; \
 	echo "Installing <<@PACKAGE@>> config files ..."; \
 	mkdir -pv $(sysconfdir)/@PACKAGE@/conf.d; \
 	cp -rfv conf.d/editor.conf $(sysconfdir)/@PACKAGE@/conf.d/editor.conf; \

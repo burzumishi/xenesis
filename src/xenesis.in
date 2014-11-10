@@ -37,6 +37,9 @@ fi;
 # Import @PACKAGE@ Core Functions #
 . @libdir@/libxenesis.so;
 
+# Import @PACKAGE@ Basic Network Functions #
+. @libdir@/libxenesis-net.so;
+
 # Import @PACKAGE@ Remote Admin Layer (RAL) Functions #
 . @libdir@/libxenesis-ral.so;
 

@@ -13,7 +13,7 @@
 
 # Xenesis SSH Library #
 
-# libxenesis-sshnopass.so: SSH functions and definitions #
+# libxenesis-sshnopass.so: SSH non interactive #
 
 $^W = 1;  # enable warnings
 

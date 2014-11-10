@@ -37,6 +37,7 @@ CAT=$(which cat);
 MV=$(which mv);
 CP=$(which cp);
 LN=$(which ln);
+LS=$(which ls);
 TOUCH=$(which touch);
 TAIL=$(which tail);
 HEAD=$(which head);

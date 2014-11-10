@@ -17,29 +17,148 @@
 
 # libxenesis-net.so: Basic Network functions and definitions #
 
-function checkping {
+HOST_LIST="";
+num_host=0;
+host_list_reset=0;
 
-NODO="$1";
+# check_ping($host): check host ping reply #
+function check_ping {
 
-    if [[ $CHECK_PING -eq 1 ]]; then
-        # Comprobamos que responde a ping
-        TEST_PING=$(ping $NODO -n 2 -m 2 | awk -F, '{ORS="";OFS=""; print $3}');
+	host="$1";
 
-        if [ "$TEST_PING" != " 0% packet loss" ]; then
-                _log "- checkping.so: ERROR! $NODO no responde a ping.";
-                _log "- checkping.so: Se deben revisar las comunicaciones de $NODO.";
-                echo "__CHECKPING=FAILED" >> $VARCACHEDIR/${NOMBRE}.info;
-                return 1;
+        # CHECK PING #
+        CHECK_PING=$($PING $host | $AWK -F, -v ORS="" -v OFS="" '{print $3}');
+
+        if [ "$CHECK_PING" != " 0% packet loss" ]; then
+		echolog "$WARNING! <$host> does NOT reply to PING.";
+                return $false;
         else
-                _log "- checkping.so: El nodo $NODO responde a PING."
-                echo "__CHECKPING=OK" >> $VARCACHEDIR/${NOMBRE}.info;
-                return 0;
+                echolog "$OK! <$host> replies to PING.";
+                return $true;
         fi;
-    else
-        _log "- checkping.so: No es necesario comprobar si $NODO responde a ping.";
-        echo "__CHECKPING=N/A" >> $VARCACHEDIR/${NOMBRE}.info;
-        return 0;
-    fi;
+}
 
+# addto_host_list($error,$host): add verified hosts to $HOST_LIST # 
+function addto_host_list {
+	error=$1;
+	host="$2";
+	if [[ $1 -eq $true ]]; then
+		HOST_LIST="$host $HOST_LIST"
+		$ECHO "$OK! <$host> is online!";
+	else
+		# WARNING! Host is in DNS but does not reply to ping! #
+		# WARNING! Nothing to do! #
+		echolog "$WARNING! Nothing to do! Skipping <$host>!";
+		# Skip this host $hf #
+		# HOST_LIST=$($ECHO $HOST_LIST | $SED -e 's/'$host'//g');
+	fi;
+}
+
+# load_host_list($HOSTS): check hosts and create a valid host_list -> $HOST_LIST # 
+
+# First check if it's a HOST_LIST file #
+# Load all hosts from file, then check DNS and PING #
+# If it's not a file, it's a real host, then check DNS and PING #
+
+function load_host_list {
+	# Params: $HOSTS #
+	HOSTS="$1";
+
+	# $HOSTS cannot be empty #
+	if [ ! -z "$HOSTS" ]; then
+		# Host || Host List count #
+		for h in $HOSTS; do
+			# Count HOSTS -> num_host #
+			num_host=$((num_host+1));
+			# Fill $h -> HOST_LIST #
+			HOST_LIST="$h $HOST_LIST";
+		done;
+
+		# Clean white spaces at end of the list #
+		HOST_LIST=$(echo $HOST_LIST | sed -e 's/ $//g');
+		echolog_debug "$DEBUG: Loaded #$num_host hosts or host_list files: $HOST_LIST";
+
+		# Check all host in $HOST_LIST #
+		for host in $HOST_LIST; do
+			# check host dns $hosts; #
+			HOST_DNS=$($NSLOOKUP $host | $GREP Name | $AWK '{print $2}');
+			if [ ! -z "$HOST_DNS" ]; then
+				echolog "$WARNING! DNS discovered host name: <$HOST_DNS>!";
+
+				# Single host or host_list #
+				# check host ping $host #
+				check_ping $host;
+
+				# add to host list $error $host #
+				addto_host_list $? $host;
+			else
+				# If host does NOT have DNS #
+				# Maybe it's a 'hostslist' in '$HOSTSDIR' #
+				# check host list $host; # (cat $HOSTSDIR/$hosts) #
+				CHECK_HOST_LIST=$($FIND $HOSTSDIR -iname "$host" -exec $BASH {} \;);
+				if [ ! -z "$CHECK_HOST_LIST" ]; then
+					echolog "$OK! Found <$host> host_list file with the following hosts: $CHECK_HOST_LIST";
+					# Reset HOST_LIST #
+					# Load list with hostnames instead of host_list #
+					# First time loop runs, we need to reset host_list names from HOST_LIST #
+					if [[ $host_list_reset -eq 0 ]]; then
+						HOST_LIST="";
+						host_list_reset=1;
+					fi;
+					# Reload HOST_LIST from current host_list file #
+					for hf in $CHECK_HOST_LIST; do
+						# check host dns $hf; #
+						hf_DNS=$($NSLOOKUP $hf | $GREP Name | $AWK '{print $2}');
+						if [ ! -z "$hf_DNS" ]; then
+							# Ping $hf
+							check_ping $hf;
+							# add to host list $error $hf #
+							addto_host_list $? $hf;
+						else
+							# WARNING! Host is in NOT DNS #
+							# WARNING! Nothing to do! #
+							echolog "$WARNING! <$hf> does NOT have a DNS name.";
+							echolog "$WARNING! Nothing to do! Skipping <$hf>!";
+						fi;
+					done;
+				else
+					# Param is not a host or a host_list #
+					echolog "$ERROR! <$host> is not a <host> or <host_list>!";
+					echolog "$WARNING! Nothing to do! Skipping <$host>!";
+					# Skip this host $host #
+					HOST_LIST=$($ECHO $HOST_LIST | $SED -e 's/'$host'//g');
+					return $true;
+				fi;
+			fi;
+		done;
+	else
+		$ECHO
+		echolog "$ERROR! <host> or <host_list> is needed!";
+		$ECHO
+		usage;
+		return $false;
+	fi;
+}
+
+
+# check_host_list(): checks avaliable hosts from $HOST_LIST created by load_host_list() #
+function check_host_list {
+	# Check $HOST_LIST #
+	if [ ! -z "$HOST_LIST" ]; then
+		# Host count #
+		avaliable_hosts=0;
+		for h in $HOST_LIST; do
+			# Count HOSTS -> avaliable_hosts #
+			avaliable_hosts=$((avaliable_hosts+1));
+		done;
+
+		# Show avaliable $HOST_LIST #
+		echolog "$OK! Found #$avaliable_hosts avaliable hosts: $HOST_LIST";
+		return $true;
+	else
+		# There are any host avaliable #
+		echolog "$ERROR! No hosts avaliable!";
+		return $false;
+	fi;
 }
 
