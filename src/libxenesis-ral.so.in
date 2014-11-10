@@ -40,11 +40,12 @@ function load_hosts {
 
 		HOST_LIST=$(echo $HOST_LIST | sed -e 's/ $//g');
 
-		echolog "$OK! Loaded #$num_host hosts or host_list files: $HOST_LIST";
+		echodebuglog "$DEBUG: Loaded #$num_host hosts or host_list files: $HOST_LIST";
 
-		for host in "$HOST_LIST"; do
+		for host in $HOST_LIST; do
 			# Single host or host_list #
 			# check host ping $host #
+			echodebuglog "$DEBUG: $PING $host";
 			$PING $host >/dev/null;
 
 			if [[ $? -ne $true ]]; then # Check for error #

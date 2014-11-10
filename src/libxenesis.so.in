@@ -102,15 +102,17 @@ if [ "$COLOR" == "yes" ]; then
 	OK="${color_bgrn}OK${color_reset}";
 	ERROR="${color_bred}ERROR${color_reset}";
 	WARNING="${color_bylw}WARNING${color_reset}";
+	DEBUG="${color_bred}DEBUG${color_reset}";
 	STARTMSG_PACK="${color_bred}<-${color_bylw}(${color_bwht} @PACKAGE@ @VERSION@ ${color_bylw})${color_bred}->${color_reset}";
 	STARTMSG_DESC="${color_bred}<--${color_bylw}(${color_bwht} @DESCRIPTION@ ${color_bylw})${color_bred}-->${color_reset}";
 	USAGE="${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ [exec] <plugin_name> <host>||<host_list> <plugin_params (optional)>
                [test] <plugin_name> <host>||<host_list> <plugin_params>${color_reset}";
 	PACKAGE_FULL_DESC="${color_bgrn}@PACKAGE@ @VERSION@${color_reset} - ${color_bylw}@DESCRIPTION@${color_reset}"
 else
-        OK="OK";
-        ERROR="ERROR";
-        WARNING="WARNING";
+    OK="OK";
+    ERROR="ERROR";
+    WARNING="WARNING";
+	DEBUG="DEBUG";
 	STARTMSG_PACK="<-( @PACKAGE@ @VERSION@ )->";
 	STARTMSG_DESC="<--( @DESCRIPTION@ )-->";
 	USAGE="Usage: @PACKAGE@ [exec] <plugin_name> <host>||<host_list> <plugin_params (optional)>
@@ -142,13 +144,13 @@ function check_user {
 function setup_os_commands {
 	case $OS in
 		# Operating System # Linux, HP-UX, CYGWIN_NT, ... #
-		*linux*|*Linux*|*LINUX*) PING=$($PING -c 1);
+		*linux*|*Linux*|*LINUX*) PING="$PING -c 1";
 			;;
-		*hp-ux*|*HP-UX*) PING=$($PING -n 1);
+		*hp-ux*|*HP-UX*) PING="$PING -n 1";
 			;;
-		*cygwin*|*CYGWIN*) PING=$($PING -n 1);
+		*cygwin*|*CYGWIN*) PING="$PING -n 1";
 			;;
-		*) PING=$($PING -c 1);
+		*) PING="$PING -c 1";
 			;;
 	esac
 	return $true;
@@ -167,7 +169,7 @@ function echolog {
 
 # echolog($string): debug log @PACKAGE@ activity #
 function echodebuglog {
-	if [ $DEBUG == "yes" ]; then
+	if [ "$DEBUGLOG" == "yes" ]; then
 		# Params: $string #
 		string="$1";
 

@@ -4,7 +4,7 @@
 COLOR="yes";
 
 # Activate Debug Log #
-DEBUG="yes";
+DEBUGLOG="yes";
 
 # Language Support #
 LC_ALL="C"

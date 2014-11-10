@@ -20,6 +20,8 @@ schedule tasks on remote hosts conected to the same network over SSH.
 
 **Xenesis** uses basic shell tools, it's simple and fully customizable!
 
+Administrators will execute tasks on remote hosts with a single command line.
+
 Remote administration of tasks, is done trought Remote Admin Layer (RAL) Plugins.
 
 
