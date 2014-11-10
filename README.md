@@ -56,6 +56,12 @@ make install
 ```
 
 
+Supported OS
+------------
+
+Linux, CygWin, HP-UX, and maybe more. ;)
+
+
 Authors
 -------
 
