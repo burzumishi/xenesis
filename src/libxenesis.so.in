@@ -96,7 +96,8 @@ if [ "$COLOR" == "yes" ]; then
 	WARNING="${color_bylw}WARNING${color_reset}";
 	STARTMSG_PACK="${color_bred}<-${color_bylw}(${color_bwht} @PACKAGE@ @VERSION@ ${color_bylw})${color_bred}->${color_reset}";
 	STARTMSG_DESC="${color_bred}<--${color_bylw}(${color_bwht} @DESCRIPTION@ ${color_bylw})${color_bred}-->${color_reset}";
-	USAGE="${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ <plugin_name> <host>||<host_list> <plugin_params (optional)>${color_reset}";
+	USAGE="${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ [exec] <plugin_name> <host>||<host_list> <plugin_params (optional)>
+           [test] <plugin_name> <host>||<host_list> <plugin_params>${color_reset}";
 	PACKAGE_FULL_DESC="${color_bgrn}@PACKAGE@ @VERSION@${color_reset} - ${color_bylw}@DESCRIPTION@${color_reset}"
 else
         OK="OK";
@@ -104,7 +105,8 @@ else
         WARNING="WARNING";
 	STARTMSG_PACK="<-( @PACKAGE@ @VERSION@ )->";
 	STARTMSG_DESC="<--( @DESCRIPTION@ )-->";
-	USAGE="Usage: @PACKAGE@ <plugin_name> <host>||<host_list> <plugin_params (optional)>";
+	USAGE="Usage: @PACKAGE@ [exec] <plugin_name> <host>||<host_list> <plugin_params (optional)>
+           [test] <plugin_name> <host>||<host_list> <plugin_params>";
 	PACKAGE_FULL_DESC="@PACKAGE@ @VERSION - @DESCRIPTION@"
 fi;
 
@@ -113,6 +115,20 @@ LOG="$LOGDIR/$LOGFILE";
 DEBUGLOG="$LOGDIR/debug-$LOGFILE";
 
 # Define functions #
+
+# check_user(): check superuser #
+function check_user {
+	WHOAMI=$(whoami);
+
+	if [ "$WHOAMI" != "root" ]; then
+		$ECHO;
+		$ECHO "$WARNING! You are not superuser!";
+		$ECHO "$WARNING! Perhaps you can not use all functionalities!";
+		$ECHO;
+	fi;
+
+	return $true;
+}
 
 # echolog($string): log @PACKAGE@ activity #
 function echolog {

@@ -24,7 +24,8 @@
 xenesis \- Remote Task Manager
 
 .SH SYNOPSIS
-.B xenesis [plugin_name] [host]||[host_list] [plugin_params]
+.B xenesis [exec] <plugin_name> <host>||<host_list> <plugin_params>
+           [test] <plugin_name> <host>||<host_list> <plugin_params>
 
 .SH DESCRIPTION
 Xenesis is a remote task manager, it will help you on manage and schedule tasks on remote hosts conected to the same network over SSH.
@@ -33,19 +34,31 @@ Xenesis uses basic shell tools, it's simple and fully customizable!
 .SH OPTIONS
 
 .TP
-.B [plugin_name]
+.B [exec]
+Run selected plugin_name.
+.br
+
+.TP
+.B [test]
+Test selected plugin_name.
+.br
+
+.SH [exec]||[test] PARAMETERS
+
+.TP
+.B <plugin_name>
 This option must be an existent plugin name, if the plugin does not exist you can create a new one in plugins directory.
 All plugins are shell script executed on the remote hosts.
 .br
 
 .TP
-.B [host]||[host_list]
+.B <host>||<host_list>
 This option must be a single "host" or a "host_list", like: "host1 host2 host3 ..."
 Either "host_list" can be a shell script in hosts directory, with the same output: "host1 host2 host3 ..."
 .br
 
 .TP
-.B [plugin_params] (optional)
+.B <plugin_params> (optional)
 Special plugin params.
 .br
 

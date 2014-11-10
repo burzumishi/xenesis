@@ -195,4 +195,25 @@ function ral {
 	done;
 }
 
+# start_ral($plugin,$hosts): Execute remote administration scripts on hosts and get stdout #
+function start_ral {
+	# Start Remote Admin Layer (RAL) Support # libxenesis-ral.so #
 
+	# [option] PLUGIN: must be an existent "plugin name" #
+	PLUGIN="$1";
+
+	# [option] HOSTS: must be a valid "host" or "host_list" #
+	HOSTS="$2";
+
+	# [option] PLUGIN_PARAMS: should be a "plugin params list" # (OPTIONAL) #
+	PLUGIN_PARAMS="$3";
+
+	# Check for Remote Admin Layer (RAL) Plugin File #
+	# PLUGIN -> export $RALFILE #
+	check_ral_plugin "$PLUGIN";
+
+	# If have Remote Admin Layer (RAL) Plugin file #
+	# Load RAL Plugin on each host: "ral $RALFILE $HOSTS)" #
+	ral "$RALFILE" "$HOSTS";
+	errorcheck $?;
+}

@@ -17,3 +17,11 @@
 
 	* libxenesis-ral.so: Dinamic Host List scripts: default, demo.
 	* libxenesis.so: echodebuglog().
+
+
+2014-11-10  Antonio Cao (@burzumishi)
+
+	* libxenesis-ral.so: start_ral().
+	* libxenesis-ral.so: add ral().
+	* libxenesis.so: check_user().
+	* xenesis: add start_ral(), add check_user(), delete ral().

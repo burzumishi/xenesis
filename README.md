@@ -20,6 +20,11 @@ schedule tasks on remote hosts conected to the same network over SSH.
 
 Remote administration of tasks, is done trought Remote Admin Layer (RAL) Plugins.
 
+Releases
+--------
+
+Check out the latest [Xenesis Releases] (https://github.com/burzumishi/xenesis/releases)
+
 
 Install
 -------
@@ -53,6 +58,6 @@ Features
 Authors
 -------
 
-Antonio Cao (@burzumishi)
+Antonio Cao [(@burzumishi)] (https://github.com/burzumishi)
 
 

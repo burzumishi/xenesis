@@ -41,18 +41,6 @@ fi;
 . @libdir@/libxenesis-ral.so;
 
 
-# Read User Input Params #
-
-# [option] PLUGIN: must be an existent "plugin name" #
-PLUGIN="$1";
-
-# [option] HOSTS: must be a valid "host" or "host_list" #
-HOSTS="$2";
-
-# [option] PLUGIN_PARAMS: should be a "plugin params list" # (OPTIONAL) #
-PLUGIN_PARAMS="$3";
-
-
 # Start @PACKAGE@ # libxenesis.so #
 
 # Check @PACKAGE@ runtime directory structure # 
@@ -61,16 +49,17 @@ check_directory_structure "$LOGDIR" "$PLUGINSDIR" "$HOSTSDIR";
 # @PACKAGE@ startmsg #
 startmsg;
 
+# @PACKAGE@ check current user #
+check_user;
 
-# Start Remote Admin Layer (RAL) Support # libxenesis-ral.so #
-
-# Check for Remote Admin Layer (RAL) Plugin File #
-# PLUGIN -> export $RALFILE #
-check_ral_plugin "$PLUGIN";
-
-# If have Remote Admin Layer (RAL) Plugin file #
-# Load RAL Plugin on each host: "ral $RALFILE $HOSTS)" #
-ral "$RALFILE" "$HOSTS";
-errorcheck $?;
+# @PACKAGE@ Read User Input Options #
+case $1 in
+'exec') start_ral $2 $3 $4; # Start RAL #
+	;;
+'test') start_ral_test $2 $3 $4; # Start RAL #
+	;;
+*) 		usage; # @PACKAGE@ HELP #
+	;;
+esac
 
 exit;
