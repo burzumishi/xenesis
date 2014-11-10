@@ -55,20 +55,6 @@ make
 make install
 ```
 
-TODO List
----------
-
-General:
-
- - **sshconf**: New commandline option to configure SSH for "$SSHUSER@$host".
- - **sshhost.db**: SSH "$host" database, then check only for PING & DNS.
- - Manage simple or complex tasks on hosts with RAL plugins.
- - **Scheduler**: Schedule RAL Plugins (crond).
-
-Plugins:
-
- - **(deploy)**: Deploy files to hosts.
-
 
 Authors
 -------
