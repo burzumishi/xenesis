@@ -39,9 +39,6 @@ Features
  - Dinamic Configuration Files Support (conf.d).
  - Remote Admin Layer (RAL) Plugin Support.
  - Dinamic Host List scripts.
- - **TODO**: Manage simple or complex tasks on hosts with RAL plugins.
- - **TODO**: Schedule RAL Plugins (crond).
- - **TODO RAL Plugin (deploy)**: Deploy files to hosts.
 
 
 Install
@@ -51,13 +48,26 @@ Install
 
 Type the following commands to install:
 
-
 ```
 sh autogen.sh
 ./configure --prefix=/usr
 make
 make install
 ```
+
+TODO List
+---------
+
+General:
+
+ - **sshconf**: New commandline option to configure SSH for "$SSHUSER@$host".
+ - **sshhost.db**: SSH "$host" database, then check only for PING & DNS.
+ - Manage simple or complex tasks on hosts with RAL plugins.
+ - **Scheduler**: Schedule RAL Plugins (crond).
+
+Plugins:
+
+ - **(deploy)**: Deploy files to hosts.
 
 
 Authors
