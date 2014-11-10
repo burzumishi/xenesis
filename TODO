@@ -1,8 +1,14 @@
+TODO List
+---------
 
-# TODO LIST #
+General:
 
-- SSH Support (Execute RAL Plugins)
-- Deploy Support (SCP)
-- Manage & Log RAL Plugin Execution
-- Schedule Support
+ - **sshconf**: New commandline option to configure SSH for "$SSHUSER@$host".
+ - **sshhost.db**: SSH "$host" database, then check only for PING & DNS.
+ - Manage simple or complex tasks on hosts with RAL plugins.
+ - **Scheduler**: Schedule RAL Plugins (crond).
+
+Plugins:
+
+  - **(deploy)**: Deploy files to hosts.
 
