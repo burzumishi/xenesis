@@ -1,0 +1,2 @@
+# HPUX Setup #
+PING="$PING -n 1";

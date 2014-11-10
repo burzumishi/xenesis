@@ -104,6 +104,10 @@ install-data-hook:
 	cp -rfv conf.d/editor.conf $(sysconfdir)/@PACKAGE@/conf.d/editor.conf; \
 	cp -rfv conf.d/ssh.conf $(sysconfdir)/@PACKAGE@/conf.d/ssh.conf; \
 	cp -rfv conf.d/log.conf $(sysconfdir)/@PACKAGE@/conf.d/log.conf; \
+	cp -rfv conf.d/default_os.conf $(sysconfdir)/@PACKAGE@/conf.d/default_os.conf; \
+	cp -rfv conf.d/linux.conf $(sysconfdir)/@PACKAGE@/conf.d/linux.conf; \
+	cp -rfv conf.d/hpux.conf $(sysconfdir)/@PACKAGE@/conf.d/hpux.conf; \
+	cp -rfv conf.d/cygwin.conf $(sysconfdir)/@PACKAGE@/conf.d/cygwin.conf; \
 	echo "Installing <<@PACKAGE@>> data files ..."; \
 	mkdir -pv $(localstatedir)/lib/@PACKAGE@; \
 	cp -rfv plugins $(localstatedir)/lib/@PACKAGE@/; \

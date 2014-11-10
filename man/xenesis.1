@@ -24,8 +24,9 @@
 xenesis \- Remote Task Manager
 
 .SH SYNOPSIS
-.B xenesis [exec] <plugin_name> <host>||<host_list> <plugin_params>
-           [test] <plugin_name> <host>||<host_list> <plugin_params>
+.B xenesis
+           <exec> "plugin(s)" "host(s) || host_list" "plugin(s) params (optional)"
+           <test> "plugin(s)" "host(s) || host_list" "plugin(s) params (optional)"
 
 .SH DESCRIPTION
 Xenesis is a remote task manager, it will help you on manage and schedule tasks on remote hosts conected to the same network over SSH.
@@ -34,37 +35,33 @@ Xenesis uses basic shell tools, it's simple and fully customizable!
 .SH OPTIONS
 
 .TP
-.B [exec]
-Run selected plugin_name.
+.B <exec>
+Run selected plugin or plugins on hosts or host_list.
 .br
 
 .TP
-.B [test]
-Test selected plugin_name.
+.B <test>
+Test selected plugin or plugins on hosts or host_list.
 .br
 
-.SH [exec]||[test] PARAMETERS
+.SH <exec> && <test> PARAMETERS
 
 .TP
-.B <plugin_name>
-This option must be an existent plugin name, if the plugin does not exist you can create a new one in plugins directory.
-All plugins are shell script executed on the remote hosts.
-.br
-
-.TP
-.B <host>||<host_list>
-This option must be a single "host" or a "host_list", like: "host1 host2 host3 ..."
-Either "host_list" can be a shell script in hosts directory, with the same output: "host1 host2 host3 ..."
+.B "plugin(s)"
+This option must be existent plugin(s) name(s), if the selected plugin(s) does not exist, you can create a new one in plugins directory.
+All plugins are shell scripts executed on the remote hosts.
 .br
 
 .TP
-.B <plugin_params> (optional)
-Special plugin params.
+.B "host(s) || host_list"
+This option must be a single "host" or a "host(s)" list, like: "host1 host2 host3 ..."
+Either "host_list" can be the name of a shell script in hosts directory, with the same output as a "host(s)" list: "host1 host2 host3 ..."
 .br
 
-.SH RAL (Remote Administration Layer)
-Remote administration of tasks, is done trought Remote Admin Layer (RAL) Plugins.
-This plugins are shell script files.
+.TP
+.B "plugin(s) params (optional)"
+Special plugin params. This is optional, depends on each plugin.
+.br
 
 .SH BUGS
 The bug tracker can be reached by visiting the website

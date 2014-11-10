@@ -104,21 +104,17 @@ if [ "$COLOR" == "yes" ]; then
 	ERROR="${color_bred}ERROR${color_reset}";
 	WARNING="${color_bylw}WARNING${color_reset}";
 	DEBUG="${color_bred}**DEBUG**${color_reset}";
-	STARTMSG_PACK="${color_bred}<-${color_bylw}(${color_bwht} @PACKAGE@ @VERSION@ ${color_bylw})${color_bred}->${color_reset}";
-	STARTMSG_DESC="${color_bred}<--${color_bylw}(${color_bwht} @DESCRIPTION@ ${color_bylw})${color_bred}-->${color_reset}";
-	USAGE="${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ [exec] <plugin_name> <host>||<host_list> <plugin_params (optional)>
-               [test] <plugin_name> <host>||<host_list> <plugin_params>${color_reset}";
-	PACKAGE_FULL_DESC="${color_bgrn}@PACKAGE@ @VERSION@${color_reset} - ${color_bylw}@DESCRIPTION@${color_reset}"
+	STARTMSG_PACK="${color_bred}<-${color_bylw}(${color_bwht} @PACKAGE@ @VERSION@ ${color_bblu}[${color_bcyn}[${color_bwht} @DESCRIPTION@ ${color_bcyn}]${color_bblu}] ${color_bgrn}$OS ${color_bylw})${color_bred}->${color_reset}";
+	USAGE="${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ <exec> \"plugin(s)\" \"host(s) || host_list\" \"plugin(s) params (optional)\"
+               <test> \"plugin(s)\" \"host(s) || host_list\" \"plugin(s) params (optional)\"${color_reset}";
 else
-    OK="OK";
-    ERROR="ERROR";
-    WARNING="WARNING";
+	OK="OK";
+	ERROR="ERROR";
+	WARNING="WARNING";
 	DEBUG="**DEBUG**";
-	STARTMSG_PACK="<-( @PACKAGE@ @VERSION@ )->";
-	STARTMSG_DESC="<--( @DESCRIPTION@ )-->";
-	USAGE="Usage: @PACKAGE@ [exec] <plugin_name> <host>||<host_list> <plugin_params (optional)>
-               [test] <plugin_name> <host>||<host_list> <plugin_params>";
-	PACKAGE_FULL_DESC="@PACKAGE@ @VERSION - @DESCRIPTION@"
+	STARTMSG_PACK="<-( @PACKAGE@ @VERSION@ [[ @DESCRIPTION@ ]] $OS )->";
+	USAGE="Usage: @PACKAGE@ <exec> \"plugin(s)\" \"host(s) || host_list\" \"plugin(s) params (optional)\"
+               <test> \"plugin(s)\" \"host(s)||host_list\" \"plugin(s) params (optional)"\";
 fi;
 
 # Define LOG #
@@ -133,25 +129,24 @@ function check_user {
 
 	if [ "$WHOAMI" != "root" ]; then
 		$ECHO;
-		$ECHO "$WARNING! You are not superuser!";
-		$ECHO "$WARNING! Maybe you can not use all functionality!";
+		echolog "$WARNING! ($WHOAMI) you are not superuser!";
 		$ECHO;
 	fi;
 
 	return $true;
 }
 
-# setup_os_commands(): Setup OS specific commands #
+# setup_os_commands(): Setup OS specific commands. This commands can be redefined in config files #
 function setup_os_commands {
 	case $OS in
 		# Operating System # Linux, HP-UX, CYGWIN_NT, ... #
-		*linux*|*Linux*|*LINUX*) PING="$PING -c 1";
+		*linux*|*Linux*|*LINUX*) . @sysconfdir@/@PACKAGE@/conf.d/linux.conf;
 			;;
-		*hp-ux*|*HP-UX*) PING="$PING -n 1";
+		*hp-ux*|*HP-UX*) . @sysconfdir@/@PACKAGE@/conf.d/hpux.conf; # TODO TODO TODO #
 			;;
-		*cygwin*|*CYGWIN*) PING="$PING -n 1";
+		*cygwin*|*CYGWIN*) . @sysconfdir@/@PACKAGE@/conf.d/cygwin.conf;
 			;;
-		*) PING="$PING -c 1";
+		*) . @sysconfdir@/@PACKAGE@/conf.d/default_os.conf;
 			;;
 	esac
 	return $true;
@@ -215,14 +210,10 @@ function startmsg {
 	$ECHO 
 	$ECHO "                         $STARTMSG_PACK";
 	$ECHO
-	$ECHO "                    $STARTMSG_DESC";
-	$ECHO 
 }
 
 # usage(): command line help #
 function usage {
-	$ECHO "$PACKAGE_FULL_DESC"
-	$ECHO
 	$ECHO "$USAGE";
 	$ECHO 
 

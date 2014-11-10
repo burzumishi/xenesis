@@ -22,9 +22,9 @@
 2014-11-10  Antonio Cao (@burzumishi)
 
 	* libxenesis-ral.so: start_ral(), ral(), remove load_hosts(), remove check_host_list();.
-	* libxenesis.so: check_user(), setup_os_commands().
+	* libxenesis.so: check_user(), setup_os_commands() & [linux.conf, hpux.conf, cygwin.conf, default_os.conf].
 	* xenesis: add "touch $LOG", add "libxenesis-net.so".
 	* xenesis: Force POSIX "C"" (Disable Internacionalization Support).
 	* libxenesis-net.so: check_ping(), load_host_list(), addto_host_list(), check_host_list();
 	* libxenesis-ssh.so: check_ssh().
-	* libxenesis-sshnopass.so: Perl script to avoid ask for password in SSH, used from "libxenesis-ssh.so".
+	* libxenesis-sshnopass.so: Perl script to avoid ask password in SSH, used from "libxenesis-ssh.so".

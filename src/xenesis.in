@@ -46,16 +46,16 @@ fi;
 
 # Start @PACKAGE@ # libxenesis.so #
 
+# Setup @PACKAGE@ OS Specific Commands #
+setup_os_commands;
+
 # Check @PACKAGE@ runtime directory structure # 
 check_directory_structure "$LOGDIR" "$PLUGINSDIR" "$HOSTSDIR";
-
-# Setup @PACKAGE@ OS Commands #
-setup_os_commands;
 
 # Initialize @PACKAGE@ $LOG
 $TOUCH $LOG;
 
-# @PACKAGE@ startmsg #
+# @PACKAGE@ display startmsg #
 startmsg;
 
 # @PACKAGE@ check current user #
@@ -67,7 +67,7 @@ case $1 in
 	;;
 'test') start_ral_test $2 $3 $4; # Start RAL #
 	;;
-*) 		usage; # @PACKAGE@ HELP #
+*) usage; # @PACKAGE@ HELP #
 	;;
 esac
 
