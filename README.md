@@ -1,5 +1,7 @@
 # XENESIS
 
+[https://github.com/burzumishi/xenesis] (https://github.com/burzumishi/xenesis)
+
 ```
 Copyright (C) 2014 Antonio Cao (@burzumishi)
 
@@ -20,10 +22,24 @@ schedule tasks on remote hosts conected to the same network over SSH.
 
 Remote administration of tasks, is done trought Remote Admin Layer (RAL) Plugins.
 
+
 Releases
 --------
 
 Check out the latest [Xenesis Releases] (https://github.com/burzumishi/xenesis/releases)
+
+
+Features
+--------
+
+ - GNU AutoTools Support.
+ - Terminal Color Support.
+ - Dinamic Configuration Files Support (conf.d).
+ - Remote Admin Layer (RAL) Plugin Support.
+ - Dinamic Host List scripts.
+ - **TODO**: Manage simple or complex tasks on hosts with RAL plugins.
+ - **TODO**: Schedule RAL Plugins (crond).
+ - **TODO RAL Plugin (deploy)**: Deploy files to hosts.
 
 
 Install
@@ -42,22 +58,9 @@ make install
 ```
 
 
-Features
---------
-
- - GNU AutoTools Support.
- - Terminal Color Support.
- - Dinamic Configuration Files Support (conf.d).
- - Remote Admin Layer (RAL) Plugin Support.
- - Dinamic Host List scripts.
- - TODO: Manage simple or complex tasks on hosts with RAL plugins.
- - TODO: Schedule RAL Plugins (crond).
- - TODO RAL Plugin (deploy): Deploy files to hosts.
-
-
 Authors
 -------
 
-Antonio Cao [(@burzumishi)] (https://github.com/burzumishi)
+Antonio Cao ([@burzumishi] (https://github.com/burzumishi))
 
 
