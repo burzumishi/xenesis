@@ -18,7 +18,7 @@ PARTICULAR PURPOSE.
 **Xenesis** is a remote task manager, it will help you on manage and
 schedule tasks on remote hosts conected to the same network over SSH.
 
-**Xenesis** uses basic shell tools, it's simple and fully customizable!
+**Xenesis** is a shell script and uses basic shell tools, it's simple and fully customizable!
 
 Administrators will execute tasks on remote hosts with a single command line.
 
