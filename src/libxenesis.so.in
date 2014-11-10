@@ -102,7 +102,7 @@ if [ "$COLOR" == "yes" ]; then
 	OK="${color_bgrn}OK${color_reset}";
 	ERROR="${color_bred}ERROR${color_reset}";
 	WARNING="${color_bylw}WARNING${color_reset}";
-	DEBUG="${color_bred}DEBUG${color_reset}";
+	DEBUG="${color_bred}**DEBUG**${color_reset}";
 	STARTMSG_PACK="${color_bred}<-${color_bylw}(${color_bwht} @PACKAGE@ @VERSION@ ${color_bylw})${color_bred}->${color_reset}";
 	STARTMSG_DESC="${color_bred}<--${color_bylw}(${color_bwht} @DESCRIPTION@ ${color_bylw})${color_bred}-->${color_reset}";
 	USAGE="${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ [exec] <plugin_name> <host>||<host_list> <plugin_params (optional)>
@@ -112,7 +112,7 @@ else
     OK="OK";
     ERROR="ERROR";
     WARNING="WARNING";
-	DEBUG="DEBUG";
+	DEBUG="**DEBUG**";
 	STARTMSG_PACK="<-( @PACKAGE@ @VERSION@ )->";
 	STARTMSG_DESC="<--( @DESCRIPTION@ )-->";
 	USAGE="Usage: @PACKAGE@ [exec] <plugin_name> <host>||<host_list> <plugin_params (optional)>
@@ -167,9 +167,10 @@ function echolog {
 	return $true;
 }
 
-# echolog($string): debug log @PACKAGE@ activity #
-function echodebuglog {
-	if [ "$DEBUGLOG" == "yes" ]; then
+# echolog_debug($string): debug log @PACKAGE@ activity #
+function echolog_debug {
+	# If ENABLEDEBUG is enabled, write log #
+	if [ "$ENABLEDEBUG" == "yes" ]; then
 		# Params: $string #
 		string="$1";
 
@@ -186,7 +187,7 @@ function errorcheck {
         error=$1;
 
         if [[ $error -ne $true ]]; then
-                echolog "$ERROR! An error was found. (ErrCode: $error)";
+                echolog "$ERROR! An error was found. (Error Code: $error)";
                 exit $false;
         else
                 return $true;

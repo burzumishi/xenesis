@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# @PACKAGE@-@VERSION@ (libxenesis-net.so) #
+
+# Copyright (C) 2014 Antonio Cao (@burzumishi) #
+
+# This is free software;
+# You have unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# Xenesis NET Library #
+
+# libxenesis-net.so: Basic Network functions and definitions #
+
+function checkping {
+
+NODO="$1";
+
+    if [[ $CHECK_PING -eq 1 ]]; then
+        # Comprobamos que responde a ping
+        TEST_PING=$(ping $NODO -n 2 -m 2 | awk -F, '{ORS="";OFS=""; print $3}');
+
+        if [ "$TEST_PING" != " 0% packet loss" ]; then
+                _log "- checkping.so: ERROR! $NODO no responde a ping.";
+                _log "- checkping.so: Se deben revisar las comunicaciones de $NODO.";
+                echo "__CHECKPING=FAILED" >> $VARCACHEDIR/${NOMBRE}.info;
+                return 1;
+        else
+                _log "- checkping.so: El nodo $NODO responde a PING."
+                echo "__CHECKPING=OK" >> $VARCACHEDIR/${NOMBRE}.info;
+                return 0;
+        fi;
+    else
+        _log "- checkping.so: No es necesario comprobar si $NODO responde a ping.";
+        echo "__CHECKPING=N/A" >> $VARCACHEDIR/${NOMBRE}.info;
+        return 0;
+    fi;
+
+}
+

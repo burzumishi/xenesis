@@ -3,9 +3,6 @@
 # Terminal Color Support #
 COLOR="yes";
 
-# Activate Debug Log #
-DEBUGLOG="yes";
-
 # Language Support #
 LC_ALL="C"
 LANG="C"

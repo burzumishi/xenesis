@@ -24,5 +24,6 @@
 	* libxenesis-ral.so: start_ral().
 	* libxenesis-ral.so: add ral().
 	* libxenesis.so: check_user().
-	* xenesis: add start_ral(), add check_user(), delete ral(), add "touch $LOG", add setup_os_commands.
-	* xenesis: Force POSIX "C"" (Disable Internacionalization Support)
+	* xenesis: add start_ral(), add check_user(), delete ral(), add "touch $LOG", add setup_os_commands().
+	* xenesis: Force POSIX "C"" (Disable Internacionalization Support).
+

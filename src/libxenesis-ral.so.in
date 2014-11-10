@@ -40,12 +40,12 @@ function load_hosts {
 
 		HOST_LIST=$(echo $HOST_LIST | sed -e 's/ $//g');
 
-		echodebuglog "$DEBUG: Loaded #$num_host hosts or host_list files: $HOST_LIST";
+		echolog_debug "$DEBUG: Loaded #$num_host hosts or host_list files: $HOST_LIST";
 
 		for host in $HOST_LIST; do
 			# Single host or host_list #
 			# check host ping $host #
-			echodebuglog "$DEBUG: $PING $host";
+			echolog_debug "$DEBUG: $PING $host";
 			$PING $host >/dev/null;
 
 			if [[ $? -ne $true ]]; then # Check for error #
@@ -137,50 +137,67 @@ function check_host_list {
 
 # RAL PLUGIN #
 
-# check_ral_plugin($plugin): check for an existent plugin #
+RALFILE_LIST="";
+num_ralfile=0;
+ralfile_list_reset=0;
+
+# check_ral_plugin($PLUGINS): check for an existent plugin #
 function check_ral_plugin {
-	# Params: $plugin #
-	plugin="$1";
+	# Params: $PLUGINS #
+	PLUGINS="$1";
 
-	ralfile=$($FIND $PLUGINSDIR -iname "${plugin}.ral");
+	for plugin in $PLUGINS; do
+		ralfile=$($FIND $PLUGINSDIR -iname "${plugin}.ral");
 
-	if [ ! -z "$ralfile" ]; then
-		# RAL Plugin found (ralfile) #
-		echolog "$OK! Found Plugin: $ralfile";
-		export RALFILE="$ralfile";
-		return $true;
-	else
-		# RAL Plugin NOT found (create new ralfile??) #
-		echolog "$ERROR! RAL Plugin NOT Found!";
+		if [ ! -z "$ralfile" ]; then
+			# RAL Plugin found (ralfile) #
+			echolog "$OK! Found Plugin: $ralfile";
 
-		# Define a dummy plugin name #
-		if [ -z "$plugin" ]; then plugin="yourplugin"; fi
+			# Count RALFILES -> num_ralfile #
+			num_ralfile=$((num_ralfile+1));
 
-		# Ask user for plugin creation #
-		echolog "$WARNING! If your RAL Plugin does not exist, you can create a new one.";
-		echolog "$WARNING! Use: $EDITOR $PLUGINSDIR/${plugin}.ral"
-		$ECHO
-		usage;
-	fi;	
+			# Fill $ralfile -> RALFILE_LIST #
+			RALFILE_LIST="$ralfile $RALFILE_LIST";
+		else
+			# RAL Plugin NOT found (create new ralfile??) #
+			echolog "$ERROR! RAL Plugin NOT Found!";
+
+			# Define a dummy plugin name #
+			if [ -z "$plugin" ]; then plugin="yourplugin"; fi
+
+			# Ask user for plugin creation #
+			echolog "$WARNING! If your RAL Plugin does not exist, you can create a new one.";
+			echolog "$WARNING! Use: $EDITOR $PLUGINSDIR/${plugin}.ral"
+			$ECHO
+			usage;
+		fi;	
+	done
+
+	RALFILE_LIST=$(echo $RALFILE_LIST | sed -e 's/ $//g');
+
+	echolog_debug "$DEBUG: Loaded #$num_ralfile ralfiles: $RALFILE_LIST";
 }
 
-# load_ral_plugin($ralfile,$host): Execute ralfile on host # TODO TODO TODO #
+# load_ral_plugin($ralfile_list,$host): Execute ralfile on host # TODO TODO TODO #
 function load_ral_plugin {
-	# Params: $ralfile, $host #
-	ralfile="$1";
+	# Params: $ralfile_list, $host #
+	ralfile_list="$1";
 	host="$2";
 
-	echolog "$OK! Deploying <$ralfile> to <$host> ...";
-	echolog "$OK! Running <$ralfile> on <$host> ...";
-	echolog "$OK! RAL Plugin <$ralfile> status on <$host>: Finished!";
+	for ralfile in $ralfile_list; do
+		# TODO TODO TODO #
+		echolog "$OK! Deploying <$ralfile> to <$host> ...";
+		echolog "$OK! Running <$ralfile> on <$host> ...";
+		echolog "$OK! RAL Plugin <$ralfile> status on <$host>: Finished!";
+	done
 
 	return $true;
 }
 
-# ral($plugin,$hosts): Execute remote administration scripts on hosts and get stdout #
+# ral($ralfile_list,$hosts): Execute remote administration scripts on hosts and get stdout #
 function ral {
-	# Params: $plugin, $hosts #
-	plugin="$1";
+	# Params: $ralfile_list, $hosts #
+	ralfile_list="$1";
 	hosts="$2";
 
 	# Create a valid list of hosts #
@@ -193,17 +210,17 @@ function ral {
 
 	# Load ralplugin on host_list #
 	for h in $HOST_LIST; do
-		load_ral_plugin "$RALFILE" $h;
+		load_ral_plugin "$ralfile_list" $h;
 		errorcheck $?;
 	done;
 }
 
-# start_ral($plugin,$hosts): Execute remote administration scripts on hosts and get stdout #
+# start_ral($plugins,$hosts): Execute remote administration scripts on hosts and get stdout #
 function start_ral {
 	# Start Remote Admin Layer (RAL) Support # libxenesis-ral.so #
 
 	# [option] PLUGIN: must be an existent "plugin name" #
-	PLUGIN="$1";
+	PLUGINS="$1";
 
 	# [option] HOSTS: must be a valid "host" or "host_list" #
 	HOSTS="$2";
@@ -213,10 +230,10 @@ function start_ral {
 
 	# Check for Remote Admin Layer (RAL) Plugin File #
 	# PLUGIN -> export $RALFILE #
-	check_ral_plugin "$PLUGIN";
+	check_ral_plugin "$PLUGINS";
 
 	# If have Remote Admin Layer (RAL) Plugin file #
-	# Load RAL Plugin on each host: "ral $RALFILE $HOSTS)" #
-	ral "$RALFILE" "$HOSTS";
+	# Load RAL Plugin on each host: "ral $RALFILE_LIST $HOSTS)" #
+	ral "$RALFILE_LIST" "$HOSTS";
 	errorcheck $?;
 }

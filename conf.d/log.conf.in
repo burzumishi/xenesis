@@ -1,3 +1,6 @@
 # LOGFILE Setup #
 LOGDIR="@localstatedir@/log/@PACKAGE@";
 LOGFILE="@PACKAGE@.log";
+
+# Activate Debug Log #
+ENABLEDEBUG="yes";

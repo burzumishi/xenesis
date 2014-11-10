@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# @PACKAGE@-@VERSION@ (libxenesis-ssh.so) #
+
+# Copyright (C) 2014 Antonio Cao (@burzumishi) #
+
+# This is free software;
+# You have unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# Xenesis SSH Library #
+
+# libxenesis-ssh.so: SSH functions and definitions #
+
+function checkssh {
+
+	NODO="$1";
+
+    if [[ $CHECK_SSH -eq 1 ]]; then
+        # Comprobar que responde a ssh para hpux
+        TEST_SSH_HPUX=$($LIBDIR/sshnopass.pl ksh -c "ssh -o StrictHostKeyChecking=no hpux@${NODO} -n \"ls /softwas*\" 2>&1");
+
+        if [ ! -z "$(echo $TEST_SSH_HPUX | grep disconnect)" ]; then
+                 _log "- checkssh.so: ERROR! $NODO no tiene configurado correctamente ssh.";
+                 _log "- checkssh.so: Se debe revisar la confianza con $NODO para hpux.";
+                echo "__CHECKSSH_HPUX=FAILED" >> $VARCACHEDIR/${NOMBRE}.info;
+                return 1;
+        else
+                _log "- checkssh.so: El nodo $NODO responde a ssh como hpux."
+                echo "__CHECKSSH_HPUX=OK" >> $VARCACHEDIR/${NOMBRE}.info;
+        
+                if [ ! -z "$(echo $TEST_SSH_HPUX | grep WebSphere)" ]; then
+                        # Comprobar que responde a ssh para wasdmgr
+                        TEST_SSH_WASDMGR=$($LIBDIR/sshnopass.pl ksh -c "ssh -o StrictHostKeyChecking=no wasdmgr@${NODO} -n \"ls /softwas*\" 2>&1");
+                        if [ -z "$(echo $TEST_SSH_WASDMGR | grep WebSphere)" ]; then
+                                _log "- checkssh.so: ERROR! $NODO no tiene configurado correctamente ssh.";
+                                _log "- checkssh.so: Se debe revisar la confianza con $NODO para wasdmgr.";
+                                echo "__CHECKSSH_WASDMGR=FAILED" >> $VARCACHEDIR/${NOMBRE}.info;
+                                return 1;
+                        else
+                                _log "- checkssh.so: El nodo $NODO responde a ssh como wasdmgr."
+                                 echo "__CHECKSSH_WASDMGR=OK" >> $VARCACHEDIR/${NOMBRE}.info;
+                                return 0;
+                        fi;
+                else
+                        _log "- checkssh.so: No es necesario comprobar ssh como wasdmgr."
+                        echo "__CHECKSSH_WASDMGR=N/A" >> $VARCACHEDIR/${NOMBRE}.info;
+                        return 0;
+                fi;
+        fi;
+
+    else
+        _log "- checkssh.so: No es necesario comprobar si $NODO conecta por ssh.";
+        echo "__CHECKSSH=N/A" >> $VARCACHEDIR/${NOMBRE}.info;
+        return 0;
+    fi;
+}
+
