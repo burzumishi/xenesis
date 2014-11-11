@@ -2,7 +2,7 @@
 
 # @PACKAGE@-@VERSION@ (@DESCRIPTION@) #
 
-# Copyright (C) 2014 Antonio Cao (@burzumishi) #
+# Copyright © 2014 Antonio Cao (@burzumishi) #
 
 # This is free software; 
 # You have unlimited permission to copy and/or distribute it,
@@ -50,7 +50,7 @@ fi;
 setup_os_commands;
 
 # Check @PACKAGE@ runtime directory structure # 
-check_directory_structure "$LOGDIR" "$PLUGINSDIR" "$HOSTSDIR";
+check_directory_structure "$LOGDIR" "$PLUGINSDIR" "$HOSTSDIR" "$SSHHOSTSDIR";
 
 # Initialize @PACKAGE@ $LOG
 $TOUCH $LOG;
@@ -63,10 +63,18 @@ check_user;
 
 # @PACKAGE@ Read User Input Options #
 case $1 in
-'exec') start_ral "$2" "$3" "$4"; # Start RAL #
+# libxenesis-ral.so & libxenesis-net.so #
+# start_ral: "$2 == $PLUGINS", "$3 == $HOST_LIST", "$4 == $PLUGIN_PARAMS" #
+'exec') start_ral "$2" "$3" "$4"; 
 	;;
-'test') start_ral_test "$2" "$3" "$4"; # Start RAL #
+# start_ral_test: "$2 == $PLUGINS", "$3 == $HOST_LIST", "$4 == $PLUGIN_PARAMS" #
+'test') start_ral_test "$2" "$3" "$4";
 	;;
+# libxenesis-ssh.so #
+# sshconf: "$2 == $HOST_LIST" #
+'sshconf') configure_ssh "$2";
+	;;
+# usage: help #
 *) usage; # @PACKAGE@ HELP #
 	;;
 esac

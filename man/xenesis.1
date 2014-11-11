@@ -29,6 +29,8 @@ xenesis \- Remote Task Manager
 
 	        [test] "[plugin{s}]" "[host{s}] || [host_list]" "[plugin{s} params (optional)]"
 
+			[sshconf] "[host{s}] || [host_list]"
+
 .SH DESCRIPTION
 Xenesis is a remote task manager, it will help you on manage and schedule tasks on remote hosts conected to the same network over SSH.
 
@@ -44,6 +46,11 @@ Run selected plugin or plugins on "hosts" or "host_list".
 .TP
 .B [test]:
 Test selected plugin or plugins on "hosts" or "host_list".
+.br
+
+.TP
+.B [sshconf]:
+Configure SSH access on "hosts" or "host_list".
 .br
 
 .SH PARAMETERS:

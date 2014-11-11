@@ -2,7 +2,7 @@
 
 # @PACKAGE@-@VERSION@ (libxenesis-ral.so) #
 
-# Copyright (C) 2014 Antonio Cao (@burzumishi) #
+# Copyright © 2014 Antonio Cao (@burzumishi) #
 
 # This is free software;
 # You have unlimited permission to copy and/or distribute it,
@@ -28,20 +28,20 @@ function ral_plugin_notfound {
         # If $plugin does not exist set it to "none" #
         if [ -z "$plugin" ]; then plugin="none"; fi
 
-	# RAL Plugin NOT found (create new ralfile??) #
-	echolog "$ERROR! [RAL] Plugin [$plugin] NOT Found!";
-	echolog "$ERROR! Perhaps you should check your spelling.";
+		# RAL Plugin NOT found (create new ralfile??) #
+		echolog "$ERROR! [RAL Plugin]: [$plugin] not Found!";
+		echolog "$ERROR! Perhaps you should check your spelling.";
 
-        # If $plugin is "none" define a dummy plugin name, if not, show current param value #
-        if [ "$plugin" == "none" ]; then plugin="yournewplugin"; fi
+	    # If $plugin is "none" define a dummy plugin name, if not, show current param value #
+	    if [ "$plugin" == "none" ]; then plugin="yournewplugin"; fi
 
-	# Ask user for plugin creation #
-	echolog "$WARNING! If your RAL Plugin does not exist, you can create a new one.";
-	echolog "$WARNING! Use: $EDITOR $PLUGINSDIR/${plugin}.ral"
-	$ECHO;
-	usage;
+		# Ask user for plugin creation #
+		echolog "$WARNING! [RAL Plugin]: does not exist, you can create a new one.";
+		echolog "$WARNING! Use: $EDITOR $PLUGINSDIR/${plugin}.ral"
+		$ECHO;
+		usage;
 
-	return $false;
+		return $false;
 }
 
 # check_ral_plugin($PLUGINS): check for an existent plugin #
@@ -55,7 +55,7 @@ function check_ral_plugin {
 
 			if [ ! -z "$ralfile" ]; then
 				# RAL Plugin found (ralfile) #
-				echolog "$OK! Found Plugin: $ralfile";
+				echolog "$OK! [RAL Plugin] found: $ralfile";
 
 				# Count RALFILES -> num_ralfile #
 				num_ralfile=$((num_ralfile+1));
@@ -71,7 +71,7 @@ function check_ral_plugin {
 
 		# DEBUG $RALFILE_LIST #
 		RALFILE_LIST=$($ECHO $RALFILE_LIST | sed -e 's/ $//g');
-		echolog_debug "$DEBUG: Loaded #$num_ralfile ralfiles: $RALFILE_LIST";
+		echolog_debug "$DEBUG: Loaded [#$num_ralfile] ralfiles: $RALFILE_LIST";
 
 		return $true;
 	else
@@ -90,9 +90,9 @@ function load_ral_plugin {
 
 	for ralfile in $ralfile_list; do
 		# TODO TODO TODO #
-		echolog "$OK! Deploying <$ralfile> to <$host> ...";
-		echolog "$OK! Running <$ralfile> on <$host> ...";
-		echolog "$OK! RAL Plugin <$ralfile> status on <$host>: Finished!";
+		echolog "$OK! Deploying [$ralfile] to [$host] ...";
+		echolog "$OK! Running [$ralfile] on [$host] ...";
+		echolog "$OK! [RAL Plugin] status [$ralfile] on [$host]: Finished!";
 	done
 
 	return $true;
@@ -104,11 +104,11 @@ function ral {
 	ralfile_list="$1";
 	hosts="$2";
 
-	# Create a valid list of hosts #
+	# Create a valid list of hosts: $HOST_LIST #
 	load_host_list "$hosts";
 	errorcheck $?;
 
-	# Check HOST_LIST #
+	# Check $HOST_LIST #
 	check_host_list;
 	errorcheck $?;
 

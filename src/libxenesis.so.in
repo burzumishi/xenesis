@@ -2,7 +2,7 @@
 
 # @PACKAGE@-@VERSION@ (libxenesis.so) #
 
-# Copyright (C) 2014 Antonio Cao (@burzumishi) #
+# Copyright © 2014 Antonio Cao (@burzumishi) #
 
 # This is free software;
 # You have unlimited permission to copy and/or distribute it,
@@ -17,6 +17,7 @@
 
 # libxenesis.so: Core functions and definitions #
 
+# Force POSIX "C" (Does not work on CYGWIN_NT)
 export $LANG $LC_ALL
 
 # Operating System # Linux, HP-UX, CYGWIN_NT, ... #
@@ -38,6 +39,8 @@ MV=$(which mv);
 CP=$(which cp);
 LN=$(which ln);
 LS=$(which ls);
+RM=$(which rm);
+CHMOD=$(which chmod);
 TOUCH=$(which touch);
 TAIL=$(which tail);
 HEAD=$(which head);
@@ -106,7 +109,8 @@ if [ "$COLOR" == "yes" ]; then
 	DEBUG="${color_bred}**DEBUG**${color_reset}";
 	STARTMSG_PACK="${color_bred}<-${color_bylw}[${color_bwht} @PACKAGE@ @VERSION@ ${color_bblu}(${color_bcyn}(${color_bwht} @DESCRIPTION@ ${color_bcyn})${color_bblu}) ${color_bgrn}$OS ${color_bylw}]${color_bred}->${color_reset}";
 	USAGE="${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ [exec] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"
-               [test] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"${color_reset}";
+               [test] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"${color_reset}
+			   [sshconf] \"[host{s}] || [host_list]\"";
 else
 	OK="OK";
 	ERROR="ERROR";
@@ -114,7 +118,8 @@ else
 	DEBUG="**DEBUG**";
 	STARTMSG_PACK="<-[ @PACKAGE@ @VERSION@ (( @DESCRIPTION@ )) $OS ]->";
 	USAGE="Usage: @PACKAGE@ [exec] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"
-               [test] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]"\";
+               [test] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"
+			   [sshconf] \"[host{s}] || [host_list]\"";
 fi;
 
 # Define LOG #
@@ -203,6 +208,17 @@ function check_directory_structure {
 			errorcheck $?;
 		fi;
 	done
+}
+
+# continue_promt: Ask user to continue or not #
+function continue_promt {
+	$ECHO " Continue? (y/n): "
+	read input
+	case $input in
+		     [Yy]*) ;;
+		     [Nn]*) exit;;
+		     *) $ECHO " Continue? (y/n): ";;
+	esac
 }
 
 # startmsg(): command line help #

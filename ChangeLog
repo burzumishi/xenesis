@@ -29,7 +29,12 @@
 	* libxenesis-net.so: check_ping(), load_host_list(), addto_host_list(), check_host_list();
 	* libxenesis-ssh.so: check_ssh().
 	* libxenesis-sshnopass.so: Perl script to avoid ask password in SSH, used from "libxenesis-ssh.so".
+	* User output improvements.
 
 2014-11-11  Antonio Cao (@burzumishi)
 
-	* libxenesis-ral.so: ral_plugin_notfound.
+	* libxenesis-ral.so: ral_plugin_notfound().
+	* xenesis: "sshconf".
+	* libxenesis-ssh.so: check_rsa(), configure_ssh().
+	* libxenesis.so: continue_promt().
+	* More User output improvements.

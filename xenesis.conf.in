@@ -7,9 +7,13 @@ COLOR="yes";
 LC_ALL="C"
 LANG="C"
 
+# @PACKAGE@ PATHS #
+
 # PLUGINS DATABASE PATH #
 PLUGINSDIR="@localstatedir@/lib/@PACKAGE@/plugins";
 
 # HOSTS DATABASE PATH #
 HOSTSDIR="@localstatedir@/lib/@PACKAGE@/hosts";
 
+# SSH HOSTS ACCESS DATABASE PATH #
+SSHHOSTSDIR="@localstatedir@/lib/@PACKAGE@/sshhosts";

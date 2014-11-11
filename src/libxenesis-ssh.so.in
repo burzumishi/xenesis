@@ -2,7 +2,7 @@
 
 # @PACKAGE@-@VERSION@ (libxenesis-ssh.so) #
 
-# Copyright (C) 2014 Antonio Cao (@burzumishi) #
+# Copyright © 2014 Antonio Cao (@burzumishi) #
 
 # This is free software;
 # You have unlimited permission to copy and/or distribute it,
@@ -17,19 +17,106 @@
 
 # libxenesis-ssh.so: SSH functions and definitions #
 
+# check_rsa: Check for RSA key file #
+function check_rsa {
+	if [ ! -f "$SSH_ID_RSA" ]; then
+		# Generate a new RSA key #
+		ssh-keygen -t rsa;
+		checkerror ?;
+	else
+		# $SSH_ID_RSA key file found #
+       	echolog_debug "$OK! Have a [$SSH_ID_RSA] key file."
+		return $true;
+	fi;
+}
+
+# check_ssh($host): Check SSH host reply #
 function check_ssh {
 
 	host="$1";
 
-        # Comprobar que responde a ssh para hpux
-        TEST_SSH=$(@libdir@/libxenesis-sshnopass.so $BASH -c "$SSH -o StrictHostKeyChecking=no $SSHUSER@${host} -n \"$LS\" 2>&1");
+    # TEST_SSH on $host #
+    TEST_SSH=$(@libdir@/libxenesis-sshnopass.so $BASH -c "$SSH -o StrictHostKeyChecking=no $SSHUSER@${host} -n \"$LS\" 2>&1");
 
-        if [ ! -z "$($ECHO $TEST_SSH | $GREP disconnect)" ]; then
-        	echolog "$ERROR! $host can't be accessed with SSH.";
-        	return $false;
-        else
-        	echolog "$OK! $host can be accessed as <$SSHUSER>."
+    if [ ! -z "$($ECHO $TEST_SSH | $GREP disconnect)" ]; then
+		# ERROR: Host cant be accesed with SSH and $SSHUSER.
+      	echolog "$ERROR! [$host] can't be accessed with SSH by [$SSHUSER].";
+		echolog "$WARNING! Configure SSH access for [${SSHUSER}@${host}] with 'sshconf' option.";
+
+		# If a database file exists we should delete it.
+		if [ -f "$SSHHOSTSDIR/${host}_${SSHUSER}" ]; then $RM -f $SSHHOSTSDIR/${host}_${SSHUSER}; done
+
+		# Show usage
+		$ECHO
+		usage;
+
+       	return $false;
+    else
+		# Record host to database #
+       	echolog "$OK! [$host] has SSH access for [$SSHUSER]."
+
+		# Create file record $host_$SSHUSER #
+		$TOUCH $SSHHOSTSDIR/${host}_${SSHUSER};
+
 		return $true;
-        fi;
+    fi;
 }
 
+# check_ssh($host): Configure SSH for hosts in $HOST_LIST #
+function configure_ssh {
+
+	hosts="$1";
+
+	# Create a valid list of hosts: $HOST_LIST #
+	load_host_list "$hosts";
+	errorcheck $?;
+
+	# Check $HOST_LIST #
+	check_host_list;
+	errorcheck $?;
+
+	# Check for RSA key file #
+	check_rsa;
+	errorcheck $?;
+
+	# Check SSH connection on all $host from $HOST_LIST #
+	for host in $HOST_LIST; do 
+		# Check SSH access #
+		check_ssh $host;
+		errorcheck $?;
+
+		echolog "$OK! Configure [SSH] on [$host] ...";
+
+		# Copy $SSH_ID_RSA key to $host #
+	    scp $SSH_ID_RSA ${SSHUSER}@${host}:
+		errorcheck $?;
+
+	    # Check ~/.ssh directory existence, if not create it #
+	    ssh ${SSHUSER}@${host} "if [ ! -d '~/.ssh' ]; then $MKDIR ~/.ssh; fi";
+		errorcheck $?;
+
+	    # Change ~/.ssh directory permissions #
+	    ssh ${SSHUSER}@${host} "$CHMOD 700 ~/.ssh";
+		errorcheck $?;
+
+	    # Check for a valid $SSH_AUTH_KEYS file #
+	    ssh ${SSHUSER}@${host} "if [ ! -e \"$SSH_AUTH_KEYS\" ]; then $TOUCH $SSH_AUTH_KEYS; fi";
+		errorcheck $?;
+
+	    # Change $SSH_AUTH_KEYS file permissions #
+	    ssh ${SSHUSER}@${host} "$CHMOD 600 $SSH_AUTH_KEYS";
+		errorcheck $?;
+
+		# Add $SSH_ID_RSA to $SSH_AUTH_KEYS #
+	    ssh ${SSHUSER}@${host} "$CAT $SSH_ID_RSA >> $SSH_AUTH_KEYS";
+		errorcheck $?;
+
+		# Test $SSH_ID_RSA #
+	    ssh ${SSHUSER}@${host} "$LS -l $SSH_ID_RSA";
+		errorcheck $?;
+
+	    echo "$OK! SSH for [${SSHUSER}@${host}] has been configured.";
+	done;
+
+	return $true;
+}

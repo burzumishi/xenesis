@@ -3,3 +3,9 @@ SSHCMD="ssh";
 SCPCMD="scp";
 SSHUSER="root";
 SSHOPTS="";
+
+# SSH Files #
+SSH_ID_RSA="~/.ssh/id_rsa.pub";
+SSH_AUTH_KEYS="~/.ssh/authorized_keys";
+
+

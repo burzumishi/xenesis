@@ -3,7 +3,7 @@
 [https://github.com/burzumishi/xenesis] (https://github.com/burzumishi/xenesis)
 
 ```
-Copyright (C) 2014 Antonio Cao (@burzumishi)
+Copyright © 2014 Antonio Cao (@burzumishi)
 
 This is free software;
 You have unlimited permission to copy and/or distribute it,
