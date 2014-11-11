@@ -28,7 +28,9 @@ Remote administration of tasks, is done trought Remote Admin Layer (RAL) Plugins
 Releases
 --------
 
-Check out the latest [Xenesis Releases] (https://github.com/burzumishi/xenesis/releases)
+**[ There are NO WORKING RELEASES yet! ]**
+
+Check out the latest working [Xenesis Releases] (https://github.com/burzumishi/xenesis/releases)
 
 
 Features
@@ -44,7 +46,9 @@ Features
 Install
 -------
 
-**Xenesis** is using GNU AutoTools, as build system.
+**Xenesis** is using **GNU AutoTools**, as build system.
+
+**Xenesis** is a shell script, but it needs to be built and setup some strings to be installed on your host system.
 
 Type the following commands to install:
 
@@ -59,7 +63,7 @@ make install
 Supported OS
 ------------
 
-Linux, CygWin, HP-UX, and maybe more. ;)
+Linux, CygWin, HP-UX, FreeBSD, and maybe more. ;)
 
 
 Authors

@@ -17,7 +17,7 @@ AC_INIT([xenesis], [0.1],
 	[<antoniocao000@gmail.com>],
 	[xenesis])
 
-AC_COPYRIGHT(["2014 © Antonio Cao (@burzumishi)"])
+AC_COPYRIGHT(["2014 (c) Antonio Cao (@burzumishi)"])
 
 AM_INIT_AUTOMAKE
 
