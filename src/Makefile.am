@@ -8,6 +8,8 @@ do_subst = sed -e 's,[@]sharedstatedir[@],$(sharedstatedir),g' \
 		-e 's,[@]libdir[@],$(libdir),g' \
 		-e 's,[@]mandir[@],$(mandir),g' \
 		-e 's,[@]PERL[@],$(PERL),g' \
+		-e 's,[@]ENV[@],$(ENV),g' \
+		-e 's,[@]BASH[@],$(BASH),g' \
 		-e 's,[@]PACKAGE[@],$(PACKAGE),g' \
 		-e 's,[@]VERSION[@],$(VERSION),g' \
 		-e 's,[@]DESCRIPTION[@],$(DESCRIPTION),g'

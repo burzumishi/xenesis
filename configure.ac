@@ -39,41 +39,47 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
-AC_CHECK_PROGS([GNUMAKE], [make])
+AC_PATH_PROG([GNUMAKE], [make])
 AM_CONDITIONAL([HAVE_GNUMAKE], [test -n "${GNUMAKE}"])
 
-AC_CHECK_PROGS([BASH], [bash])
+AC_PATH_PROG([BASH], [bash])
 AM_CONDITIONAL([HAVE_BASH], [test -n "${BASH}"])
 
-AC_CHECK_PROGS([PING], [ping])
+AC_PATH_PROG([ENV], [env])
+AM_CONDITIONAL([HAVE_ENV], [test -n "${ENV}"])
+
+AC_PATH_PROG([PING], [ping])
 AM_CONDITIONAL([HAVE_PING], [test -n "${PING}"])
 
-AC_CHECK_PROGS([NSLOOKUP], [nslookup])
+AC_PATH_PROG([NSLOOKUP], [nslookup])
 AM_CONDITIONAL([HAVE_NSLOOKUP], [test -n "${NSLOOKUP}"])
 
-AC_CHECK_PROGS([SSH], [ssh])
+AC_PATH_PROG([SSH], [ssh])
 AM_CONDITIONAL([HAVE_SSH], [test -n "${SSH}"])
 
-AC_CHECK_PROGS([SCP], [scp])
+AC_PATH_PROG([SCP], [scp])
 AM_CONDITIONAL([HAVE_SCP], [test -n "${SCP}"])
 
-AC_CHECK_PROGS([TAIL], [tail])
+AC_PATH_PROG([TAIL], [tail])
 AM_CONDITIONAL([HAVE_TAIL], [test -n "${TAIL}"])
 
-AC_CHECK_PROGS([HEAD], [head])
+AC_PATH_PROG([HEAD], [head])
 AM_CONDITIONAL([HAVE_HEAD], [test -n "${HEAD}"])
 
-AC_CHECK_PROGS([LESS], [less])
+AC_PATH_PROG([LESS], [less])
 AM_CONDITIONAL([HAVE_LESS], [test -n "${LESS}"])
 
-AC_CHECK_PROGS([MORE], [more])
+AC_PATH_PROG([MORE], [more])
 AM_CONDITIONAL([HAVE_MORE], [test -n "${MORE}"])
 
-AC_CHECK_PROGS([FIND], [find])
+AC_PATH_PROG([FIND], [find])
 AM_CONDITIONAL([HAVE_FIND], [test -n "${FIND}"])
 
-AC_CHECK_PROGS([SED], [sed])
+AC_PATH_PROG([SED], [sed])
 AM_CONDITIONAL([HAVE_SED], [test -n "${SED}"])
+
+AC_PATH_PROG([PERL], [perl])
+AM_CONDITIONAL([HAVE_PERL], [test -n "${PERL}"])
 
 AC_CONFIG_FILES([Makefile
 		 src/Makefile

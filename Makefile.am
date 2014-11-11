@@ -19,6 +19,8 @@ do_subst = sed -e 's,[@]sharedstatedir[@],$(sharedstatedir),g' \
 		-e 's,[@]libdir[@],$(libdir),g' \
 		-e 's,[@]mandir[@],$(mandir),g' \
 		-e 's,[@]PERL[@],$(PERL),g' \
+		-e 's,[@]ENV[@],$(ENV),g' \
+		-e 's,[@]BASH[@],$(BASH),g' \
 		-e 's,[@]PACKAGE[@],$(PACKAGE),g' \
 		-e 's,[@]VERSION[@],$(VERSION),g' \
 		-e 's,[@]DESCRIPTION[@],$(DESCRIPTION),g'
@@ -60,6 +62,7 @@ install-data-hook:
 	cp -rfv conf.d/log.conf $(sysconfdir)/@PACKAGE@/conf.d/log.conf; \
 	cp -rfv conf.d/default_os.conf $(sysconfdir)/@PACKAGE@/conf.d/default_os.conf; \
 	cp -rfv conf.d/linux.conf $(sysconfdir)/@PACKAGE@/conf.d/linux.conf; \
+	cp -rfv conf.d/freebsd.conf $(sysconfdir)/@PACKAGE@/conf.d/freebsd.conf; \
 	cp -rfv conf.d/hpux.conf $(sysconfdir)/@PACKAGE@/conf.d/hpux.conf; \
 	cp -rfv conf.d/cygwin.conf $(sysconfdir)/@PACKAGE@/conf.d/cygwin.conf; \
 	echo "Installing <<@PACKAGE@>> data files ..."; \

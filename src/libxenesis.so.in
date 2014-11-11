@@ -1,4 +1,4 @@
-#!/bin/bash
+#!@ENV@ bash
 
 # @PACKAGE@-@VERSION@ (libxenesis.so) #
 
@@ -148,6 +148,8 @@ function setup_os_commands {
 		*linux*|*Linux*|*LINUX*) . @sysconfdir@/@PACKAGE@/conf.d/linux.conf;
 			;;
 		*hp-ux*|*HP-UX*) . @sysconfdir@/@PACKAGE@/conf.d/hpux.conf; # TODO TODO TODO #
+			;;
+		*FreeBSD*|*freebsd*) . @sysconfdir@/@PACKAGE@/conf.d/freebsd.conf;
 			;;
 		*cygwin*|*CYGWIN*) . @sysconfdir@/@PACKAGE@/conf.d/cygwin.conf;
 			;;

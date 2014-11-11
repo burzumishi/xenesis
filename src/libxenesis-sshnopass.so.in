@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!@ENV@ perl
 
 # @PACKAGE@-@VERSION@ (libxenesis-sshnopass.so) #
 
