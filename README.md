@@ -48,7 +48,7 @@ Install
 
 **Xenesis** is using **GNU AutoTools**, as build system.
 
-**Xenesis** is a shell script, but it needs to be built and setup some strings to be installed on your host system.
+**Xenesis** is a shell script, but it needs to be built and setup some strings before to be installed on your host system.
 
 Type the following commands to install:
 
