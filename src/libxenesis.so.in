@@ -104,17 +104,17 @@ if [ "$COLOR" == "yes" ]; then
 	ERROR="${color_bred}ERROR${color_reset}";
 	WARNING="${color_bylw}WARNING${color_reset}";
 	DEBUG="${color_bred}**DEBUG**${color_reset}";
-	STARTMSG_PACK="${color_bred}<-${color_bylw}(${color_bwht} @PACKAGE@ @VERSION@ ${color_bblu}[${color_bcyn}[${color_bwht} @DESCRIPTION@ ${color_bcyn}]${color_bblu}] ${color_bgrn}$OS ${color_bylw})${color_bred}->${color_reset}";
-	USAGE="${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ <exec> \"plugin(s)\" \"host(s) || host_list\" \"plugin(s) params (optional)\"
-               <test> \"plugin(s)\" \"host(s) || host_list\" \"plugin(s) params (optional)\"${color_reset}";
+	STARTMSG_PACK="${color_bred}<-${color_bylw}[${color_bwht} @PACKAGE@ @VERSION@ ${color_bblu}(${color_bcyn}(${color_bwht} @DESCRIPTION@ ${color_bcyn})${color_bblu}) ${color_bgrn}$OS ${color_bylw}]${color_bred}->${color_reset}";
+	USAGE="${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ [exec] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"
+               [test] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"${color_reset}";
 else
 	OK="OK";
 	ERROR="ERROR";
 	WARNING="WARNING";
 	DEBUG="**DEBUG**";
-	STARTMSG_PACK="<-( @PACKAGE@ @VERSION@ [[ @DESCRIPTION@ ]] $OS )->";
-	USAGE="Usage: @PACKAGE@ <exec> \"plugin(s)\" \"host(s) || host_list\" \"plugin(s) params (optional)\"
-               <test> \"plugin(s)\" \"host(s)||host_list\" \"plugin(s) params (optional)"\";
+	STARTMSG_PACK="<-[ @PACKAGE@ @VERSION@ (( @DESCRIPTION@ )) $OS ]->";
+	USAGE="Usage: @PACKAGE@ [exec] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"
+               [test] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]"\";
 fi;
 
 # Define LOG #

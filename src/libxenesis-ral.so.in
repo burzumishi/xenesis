@@ -18,44 +18,68 @@
 # libxenesis-ral.so: Remote Administration Layer functions and definitions #
 
 RALFILE_LIST="";
-num_ralfile=0;
 ralfile_list_reset=0;
+
+# ral_plugin_notfound($plugin): Send error message if a plugin was not found, always returns $false #
+function ral_plugin_notfound {
+        # Params: $plugin #
+        plugin="$1";
+
+        # If $plugin does not exist set it to "none" #
+        if [ -z "$plugin" ]; then plugin="none"; fi
+
+	# RAL Plugin NOT found (create new ralfile??) #
+	echolog "$ERROR! [RAL] Plugin [$plugin] NOT Found!";
+	echolog "$ERROR! Perhaps you should check your spelling.";
+
+        # If $plugin is "none" define a dummy plugin name, if not, show current param value #
+        if [ "$plugin" == "none" ]; then plugin="yournewplugin"; fi
+
+	# Ask user for plugin creation #
+	echolog "$WARNING! If your RAL Plugin does not exist, you can create a new one.";
+	echolog "$WARNING! Use: $EDITOR $PLUGINSDIR/${plugin}.ral"
+	$ECHO;
+	usage;
+
+	return $false;
+}
 
 # check_ral_plugin($PLUGINS): check for an existent plugin #
 function check_ral_plugin {
 	# Params: $PLUGINS #
 	PLUGINS="$1";
 
-	for plugin in $PLUGINS; do
-		ralfile=$($FIND $PLUGINSDIR -iname "${plugin}.ral");
+	if [ ! -z "$PLUGINS" ]; then
+		for plugin in $PLUGINS; do
+			ralfile=$($FIND $PLUGINSDIR -iname "${plugin}.ral");
 
-		if [ ! -z "$ralfile" ]; then
-			# RAL Plugin found (ralfile) #
-			echolog "$OK! Found Plugin: $ralfile";
+			if [ ! -z "$ralfile" ]; then
+				# RAL Plugin found (ralfile) #
+				echolog "$OK! Found Plugin: $ralfile";
 
-			# Count RALFILES -> num_ralfile #
-			num_ralfile=$((num_ralfile+1));
+				# Count RALFILES -> num_ralfile #
+				num_ralfile=$((num_ralfile+1));
 
-			# Fill $ralfile -> RALFILE_LIST #
-			RALFILE_LIST="$ralfile $RALFILE_LIST";
-		else
-			# RAL Plugin NOT found (create new ralfile??) #
-			echolog "$ERROR! RAL Plugin NOT Found!";
+				# Fill $ralfile -> RALFILE_LIST #
+				RALFILE_LIST="$ralfile $RALFILE_LIST";
+			else
+				# ERROR Forced: Plugin not found #
+				ral_plugin_notfound "$plugin"; # returns $false #
+				errorcheck $?;
+			fi;	
+		done
 
-			# Define a dummy plugin name #
-			if [ -z "$plugin" ]; then plugin="yourplugin"; fi
+		# DEBUG $RALFILE_LIST #
+		RALFILE_LIST=$($ECHO $RALFILE_LIST | sed -e 's/ $//g');
+		echolog_debug "$DEBUG: Loaded #$num_ralfile ralfiles: $RALFILE_LIST";
 
-			# Ask user for plugin creation #
-			echolog "$WARNING! If your RAL Plugin does not exist, you can create a new one.";
-			echolog "$WARNING! Use: $EDITOR $PLUGINSDIR/${plugin}.ral"
-			$ECHO
-			usage;
-		fi;	
-	done
+		return $true;
+	else
+		# ERROR Forced: Plugin not found #
+		ral_plugin_notfound "$PLUGINS"; # returns $false #
+		errorcheck $?;
+	fi;
 
-	RALFILE_LIST=$(echo $RALFILE_LIST | sed -e 's/ $//g');
-
-	echolog_debug "$DEBUG: Loaded #$num_ralfile ralfiles: $RALFILE_LIST";
 }
 
 # load_ral_plugin($ralfile_list,$host): Execute ralfile on host # TODO TODO TODO #
@@ -74,7 +98,7 @@ function load_ral_plugin {
 	return $true;
 }
 
-# ral($ralfile_list,$hosts): Execute remote administration scripts on hosts and get stdout #
+# ral($ralfile_list,$hosts): Execute all remote administration scripts on hosts and get stdout #
 function ral {
 	# Params: $ralfile_list, $hosts #
 	ralfile_list="$1";

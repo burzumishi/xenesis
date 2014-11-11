@@ -36,9 +36,6 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
-AC_CHECK_PROGS([DOXYGEN], [doxygen])
-AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "${DOXYGEN}"])
-
 AC_CHECK_PROGS([GNUMAKE], [make])
 AM_CONDITIONAL([HAVE_GNUMAKE], [test -n "${GNUMAKE}"])
 
@@ -77,8 +74,7 @@ AM_CONDITIONAL([HAVE_SED], [test -n "${SED}"])
 
 AC_CONFIG_FILES([Makefile
 		 src/Makefile
-		 conf.d/Makefile
-		 Doxyfile])
+		 conf.d/Makefile])
 
 AC_OUTPUT
 

@@ -24,46 +24,51 @@
 xenesis \- Remote Task Manager
 
 .SH SYNOPSIS
-.B xenesis
-           <exec> "plugin(s)" "host(s) || host_list" "plugin(s) params (optional)"
-           <test> "plugin(s)" "host(s) || host_list" "plugin(s) params (optional)"
+.B xenesis 
+	[exec] "[plugin{s}]" "[host{s}] || [host_list]" "[plugin{s} params (optional)]"
+
+	        [test] "[plugin{s}]" "[host{s}] || [host_list]" "[plugin{s} params (optional)]"
 
 .SH DESCRIPTION
 Xenesis is a remote task manager, it will help you on manage and schedule tasks on remote hosts conected to the same network over SSH.
+
 Xenesis is a shell script and uses basic shell tools, it's simple and fully customizable!
 
-.SH OPTIONS
+.SH OPTIONS:
 
 .TP
-.B <exec>
-Run selected plugin or plugins on hosts or host_list.
+.B [exec]:
+Run selected plugin or plugins on "hosts" or "host_list".
 .br
 
 .TP
-.B <test>
-Test selected plugin or plugins on hosts or host_list.
+.B [test]:
+Test selected plugin or plugins on "hosts" or "host_list".
 .br
 
-.SH <exec> && <test> PARAMETERS
+.SH PARAMETERS:
 
 .TP
-.B "plugin(s)"
-This option must be existent plugin(s) name(s), if the selected plugin(s) does not exist, you can create a new one in plugins directory.
+.B "[plugin{s}]":
+This option must be existent plugin{s} name{s}, if the selected plugin{s} does not exist, you can create a new one in plugins directory.\
+
 All plugins are shell scripts executed on the remote hosts.
 .br
 
 .TP
-.B "host(s) || host_list"
-This option must be a single "host" or a "host(s)" list, like: "host1 host2 host3 ..."
-Either "host_list" can be the name of a shell script in hosts directory, with the same output as a "host(s)" list: "host1 host2 host3 ..."
+.B "[host{s}] || [host_list]":
+This option must be a single "host" or a "host{s}" list, like: "host1 host2 host3 ...".
+
+"host_list" can be the name of a shell script in hosts directory, with the same output as a "host{s}" list: "host1 host2 host3 ..."
 .br
 
 .TP
-.B "plugin(s) params (optional)"
+.B "[plugin{s} params (optional)]":
 Special plugin params. This is optional, depends on each plugin.
 .br
 
-.SH BUGS
+.SH BUGS:
+
 The bug tracker can be reached by visiting the website
 \fIhttps://github.com/burzumishi/xenesis/issues\fR
 
@@ -72,7 +77,7 @@ version of xenesis. Many bugs (major and minor) are fixed at each
 release, and if yours is out of date, the problem may already have
 been solved.
 
-.SH ADDITIONAL INFORMATION
+.SH ADDITIONAL INFORMATION:
 
 For further information, visit the website
 \fIhttps://github.com/burzumishi/xenesis\fR

@@ -4,7 +4,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = src conf.d
 
-EXTRA_DIST = xenesis.conf.in autogen.sh Doxyfile.in README.md plugins conf.d src hosts
+EXTRA_DIST = xenesis.conf.in autogen.sh README.md plugins conf.d src hosts
 
 CLEANFILES = xenesis.conf *~
 
@@ -29,66 +29,20 @@ xenesis.conf: xenesis.conf.in Makefile
 docdir = $(datarootdir)/doc/@PACKAGE@
 doc_DATA = README AUTHORS INSTALL NEWS LICENSE ChangeLog 
 
-#  install the man page
 man_MANS=man/xenesis.1
 
 all-local:
 	@echo "=== all-local done ==="
 
-clean-local: clean-doc
+clean-local:
 	@echo "=== clean-local done ==="
 
-distclean-local: distclean-doc
-	@rm -rfv  rm -rf aclocal.m4 AUTHORS autom4te.cache config.guess \
+distclean-local:
+	@rm -rfv aclocal.m4 AUTHORS autom4te.cache config.guess \
 	configure config.sub COPYING INSTALL install-sh missing NEWS README \
 	Makefile.in src/Makefile.in Makefile src/Makefile compile \
 	config.log config.status conf.d/Makefile.in conf.d/Makefile; \
 	echo "=== distclean-local done ==="
-
-install-data-local: all-doc install-doc
-	@echo "=== install-data-local done ==="
-
-uninstall-local: uninstall-doc
-	@echo "=== uninstall-local done ==="
-
-if HAVE_DOXYGEN
-all-doc:
-	$(DOXYGEN) Doxyfile
-
-clean-doc:
-	rm -rf $(top_builddir)/doc
-
-distclean-doc:
-	rm -rf $(top_builddir)/doc
-
-install-doc:
-	$(mkdir_p) $(DESTDIR)$(docdir)
-	cp -rf doc/html $(DESTDIR)$(docdir)
-
-uninstall-doc:
-	-rm -rf $(DESTDIR)$(docdir)/html
-	-rmdir $(DESTDIR)$(docdir)
-else
-all-doc:
-	@echo "*** WARNING! Doxygen is not available ***"; \
-	echo "*** Documentation will not be built ***";
-
-clean-doc:
-	@echo "*** WARNING! Doxygen is not available ***"; \
-	echo "*** Documentation will not be cleaned ***";
-
-distclean-doc:
-	@echo "*** WARNING! Doxygen is not available ***"; \
-	echo "*** Documentation will not be cleaned ***";
-
-install-doc:
-	@echo "*** WARNING! Doxygen is not available ***"; \
-	echo "*** Documentation will not be installed ***";
-
-uninstall-doc:
-	@echo "*** WARNING! Doxygen is not available ***"; \
-	echo "*** Documentation will not be uninstalled ***";
-endif
 
 install-data-hook:
 	@echo "Installing <<@PACKAGE@>> files ..."; \

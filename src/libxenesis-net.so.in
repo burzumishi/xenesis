@@ -44,7 +44,7 @@ function addto_host_list {
 	host="$2";
 	if [[ $1 -eq $true ]]; then
 		HOST_LIST="$host $HOST_LIST"
-		$ECHO "$OK! <$host> is online!";
+		echolog "$OK! <$host> added to \"host_list\"!";
 	else
 		# WARNING! Host is in DNS but does not reply to ping! #
 		# WARNING! Nothing to do! #
@@ -75,7 +75,7 @@ function load_host_list {
 		done;
 
 		# Clean white spaces at end of the list #
-		HOST_LIST=$(echo $HOST_LIST | sed -e 's/ $//g');
+		HOST_LIST=$($ECHO $HOST_LIST | $SED -e 's/ $//g');
 		echolog_debug "$DEBUG: Loaded #$num_host hosts or host_list files: $HOST_LIST";
 
 		# Check all host in $HOST_LIST #
@@ -83,7 +83,7 @@ function load_host_list {
 			# check host dns $hosts; #
 			HOST_DNS=$($NSLOOKUP $host | $GREP Name | $AWK '{print $2}');
 			if [ ! -z "$HOST_DNS" ]; then
-				echolog "$WARNING! DNS discovered host name: <$HOST_DNS>!";
+				echolog_debug "$DEBUG: DNS discovered host name: <$HOST_DNS>!";
 
 				# Single host or host_list #
 				# check host ping $host #
@@ -110,6 +110,8 @@ function load_host_list {
 						# check host dns $hf; #
 						hf_DNS=$($NSLOOKUP $hf | $GREP Name | $AWK '{print $2}');
 						if [ ! -z "$hf_DNS" ]; then
+							echolog_debug "$DEBUG: DNS discovered host name: <$hf_DNS>!";
+
 							# Ping $hf
 							check_ping $hf;
 							# add to host list $error $hf #

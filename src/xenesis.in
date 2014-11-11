@@ -63,9 +63,9 @@ check_user;
 
 # @PACKAGE@ Read User Input Options #
 case $1 in
-'exec') start_ral $2 $3 $4; # Start RAL #
+'exec') start_ral "$2" "$3" "$4"; # Start RAL #
 	;;
-'test') start_ral_test $2 $3 $4; # Start RAL #
+'test') start_ral_test "$2" "$3" "$4"; # Start RAL #
 	;;
 *) usage; # @PACKAGE@ HELP #
 	;;
