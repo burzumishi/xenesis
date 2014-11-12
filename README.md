@@ -63,7 +63,8 @@ make install
 Supported OS
 ------------
 
-Linux, CygWin, HP-UX, FreeBSD, and maybe more. ;)
+ * **Linux** & **FreeBSD**.
+ * Work in progress for: _HP-UX_ & _CygWin_.
 
 
 Authors
