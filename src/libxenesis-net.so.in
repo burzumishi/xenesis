@@ -2,7 +2,7 @@
 
 # @PACKAGE@-@VERSION@ (libxenesis-net.so) #
 
-# Copyright © 2014 Antonio Cao (@burzumishi) #
+# Copyright (c) 2014 Antonio Cao (@burzumishi) #
 
 # This is free software;
 # You have unlimited permission to copy and/or distribute it,
@@ -27,16 +27,30 @@ function check_ping {
 	host="$1";
 
     # CHECK PING #
-    CHECK_PING=$($PING $host; return $?);
+    $PING $host;
 
-    # if [ "$CHECK_PING" != " 0% packet loss" ] || [ "$CHECK_PING" != "perdidos = 0 Media = 0ms" ]; then
-	# $PING $host | $AWK -F, -v ORS="" -v OFS="" '{print $3}';
-
-	if [ $CHECK_PING -ne $true ]; then		
-		echolog "$WARNING! <$host> does not reply to \"ping\".";
+	if [ $? -ne $true ]; then		
+		echolog "$WARNING! <$host> does not reply to \"ping\" requests.";
         return $false;
     else
-        echolog "$OK! <$host> replies to \"ping\".";
+        echolog "$OK! <$host> replies to \"ping\" requests.";
+        return $true;
+    fi;
+}
+
+# check_dns($host): check host DNS reply #
+function check_dns {
+
+	host="$1";
+
+    # CHECK DNS #
+    CHECK_DNS=$($HOSTCMD $host | $AWK '{print $NF}');
+
+	if [ "$CHECK_DNS" == "2(SERVFAIL)" ]; then		
+		echolog "$WARNING! <$host> does not reply to \"DNS\" requests.";
+        return $false;
+    else
+        echolog "$OK! <$host> replies to \"DNS\" requests.";
         return $true;
     fi;
 }

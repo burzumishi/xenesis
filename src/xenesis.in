@@ -43,6 +43,8 @@ fi;
 # Import @PACKAGE@ Remote Admin Layer (RAL) Functions #
 . @libdir@/libxenesis-ral.so;
 
+# Import @PACKAGE@ SSH Functions #
+. @libdir@/libxenesis-ssh.so;
 
 # Start @PACKAGE@ # libxenesis.so #
 

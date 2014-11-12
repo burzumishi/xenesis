@@ -2,7 +2,7 @@
 
 # @PACKAGE@-@VERSION@ (libxenesis-ssh.so) #
 
-# Copyright © 2014 Antonio Cao (@burzumishi) #
+# Copyright (c) 2014 Antonio Cao (@burzumishi) #
 
 # This is free software;
 # You have unlimited permission to copy and/or distribute it,
@@ -40,17 +40,17 @@ function check_ssh {
 
     if [ ! -z "$($ECHO $TEST_SSH | $GREP disconnect)" ]; then
 		# ERROR: Host cant be accesed with SSH and $SSHUSER.
-      	echolog "$ERROR! [$host] can't be accessed with SSH by [$SSHUSER].";
+	      	echolog "$ERROR! [$host] can't be accessed with SSH by [$SSHUSER].";
 		echolog "$WARNING! Configure SSH access for [${SSHUSER}@${host}] with 'sshconf' option.";
 
 		# If a database file exists we should delete it.
-		if [ -f "$SSHHOSTSDIR/${host}_${SSHUSER}" ]; then $RM -f $SSHHOSTSDIR/${host}_${SSHUSER}; done
+		if [ -f "$SSHHOSTSDIR/${host}_${SSHUSER}" ]; then $RM -f $SSHHOSTSDIR/${host}_${SSHUSER}; fi
 
 		# Show usage
 		$ECHO
 		usage;
 
-       	return $false;
+	       	return $false;
     else
 		# Record host to database #
        	echolog "$OK! [$host] has SSH access for [$SSHUSER]."
