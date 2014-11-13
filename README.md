@@ -1,6 +1,6 @@
 # XENESIS
 
-[http://burzumishi.github.io/xenesis] (http://burzumishi.github.io/xenesis) || [https://github.com/burzumishi/xenesis] (https://github.com/burzumishi/xenesis)
+[ [http://burzumishi.github.io/xenesis] (http://burzumishi.github.io/xenesis) || [https://github.com/burzumishi/xenesis] (https://github.com/burzumishi/xenesis) ]
 
 ```
 Copyright © 2014 Antonio Cao (@burzumishi)
