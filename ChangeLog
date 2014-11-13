@@ -16,6 +16,7 @@
 2014-11-09  Antonio Cao (@burzumishi)
 
 	* libxenesis-ral.so: Dinamic Host List scripts: default, demo.
+	* xenesis: Enable Debug Log.
 	* libxenesis.so: echodebuglog().
 
 
@@ -43,7 +44,7 @@
 
 2014-11-12  Antonio Cao (@burzumishi)
 
-	* libxenesis-net.so: check_dns().
+	* libxenesis-net.so: check_dns() with "$HOSTCMD=host".
 	* xenesis: FreeBSD Support.
 
 
