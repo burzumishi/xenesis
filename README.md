@@ -41,6 +41,7 @@ Features
  - Dinamic Configuration Files Support (conf.d).
  - Remote Admin Layer (RAL) Plugin Support.
  - Dinamic Host List scripts.
+ - Setup SSH on hosts.
 
 
 Install
