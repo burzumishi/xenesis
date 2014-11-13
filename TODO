@@ -3,6 +3,7 @@ TODO List
 
 General:
 
+ - **rawexec** execute "raw" command without RAL.
  - **sshconf**: New commandline option to configure SSH for "$SSHUSER@$host".
  - **hosts.db**: Known SSH "$hosts" database, if a $host is registered, do not check DNS & SSH (only ping).
  - Manage simple or complex tasks on hosts with RAL plugins.

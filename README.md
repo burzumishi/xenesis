@@ -15,8 +15,7 @@ even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.
 ```
 
-**Xenesis** is a remote task manager, it will help you on manage and
-schedule tasks on remote hosts conected to the same network over SSH.
+**Xenesis** is a remote task manager, it will help you executing, managing and scheduling tasks on remote hosts, conected to the same network over SSH.
 
 **Xenesis** is a shell script and uses basic shell tools, it's simple and fully customizable!
 
