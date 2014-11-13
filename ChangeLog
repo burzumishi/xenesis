@@ -31,6 +31,7 @@
 	* libxenesis-sshnopass.so: Perl script to avoid ask password in SSH, used from "libxenesis-ssh.so".
 	* User output improvements.
 
+
 2014-11-11  Antonio Cao (@burzumishi)
 
 	* libxenesis-ral.so: ral_plugin_notfound().
@@ -38,3 +39,11 @@
 	* libxenesis-ssh.so: check_rsa(), configure_ssh().
 	* libxenesis.so: continue_promt().
 	* More User output improvements.
+
+
+2014-11-12  Antonio Cao (@burzumishi)
+
+	* libxenesis-net.so: check_dns().
+	* xenesis: FreeBSD Support.
+
+
