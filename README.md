@@ -22,7 +22,7 @@ schedule tasks on remote hosts conected to the same network over SSH.
 
 Administrators will execute tasks on remote hosts with a single command line.
 
-Remote administration of tasks, is done trought Remote Admin Layer (RAL) Plugins.
+Remote administration of tasks, is done trought **Remote Admin Layer (RAL) Plugins**.
 
 
 Releases
@@ -30,7 +30,7 @@ Releases
 
 **[ There are NO WORKING RELEASES yet! ]**
 
-Check out the latest working [Xenesis Releases] (https://github.com/burzumishi/xenesis/releases)
+Check out the latest working [**Xenesis Releases**] (https://github.com/burzumishi/xenesis/releases).
 
 
 Features
