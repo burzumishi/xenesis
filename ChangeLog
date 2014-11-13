@@ -48,3 +48,10 @@
 	* xenesis: FreeBSD Support.
 
 
+2014-11-13  Antonio Cao (@burzumishi)
+
+	* xenesis: Moved OS config files to "etc/os" -> "etc/xenesis/os".
+	* xenesis: Color Support Disabled on FreeBSD (TODO: BSD Color Support).
+	* libxenesis-net: Improved load_host_list(), check_dns();
+
+

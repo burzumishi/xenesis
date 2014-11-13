@@ -1,2 +1,2 @@
-# Linux Setup #
+# Default Setup #
 PING="$PING -c 1";

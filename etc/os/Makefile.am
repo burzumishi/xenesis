@@ -1,4 +1,4 @@
-CLEANFILES = ssh.conf log.conf editor.conf linux.conf hpux.conf cygwin.conf default_os.conf freebsd.conf *~
+CLEANFILES = linux.conf hpux.conf cygwin.conf default.conf freebsd.conf *~
 
 do_subst = sed -e 's,[@]sharedstatedir[@],$(sharedstatedir),g' \
 		-e 's,[@]localstatedir[@],$(localstatedir),g' \
@@ -14,15 +14,6 @@ do_subst = sed -e 's,[@]sharedstatedir[@],$(sharedstatedir),g' \
 		-e 's,[@]VERSION[@],$(VERSION),g' \
 		-e 's,[@]DESCRIPTION[@],$(DESCRIPTION),g'
 
-ssh.conf: ssh.conf.in Makefile
-	$(do_subst) < $(srcdir)/ssh.conf.in > ssh.conf;
-
-log.conf: log.conf.in Makefile
-	$(do_subst) < $(srcdir)/log.conf.in > log.conf;
-
-editor.conf: editor.conf.in Makefile
-	$(do_subst) < $(srcdir)/editor.conf.in > editor.conf;
-
 linux.conf: linux.conf.in Makefile
 	$(do_subst) < $(srcdir)/linux.conf.in > linux.conf;
 
@@ -35,7 +26,7 @@ cygwin.conf: cygwin.conf.in Makefile
 freebsd.conf: freebsd.conf.in Makefile
 	$(do_subst) < $(srcdir)/freebsd.conf.in > freebsd.conf;
 
-default_os.conf: default_os.conf.in Makefile
-	$(do_subst) < $(srcdir)/default_os.conf.in > default_os.conf;
+default.conf: default.conf.in Makefile
+	$(do_subst) < $(srcdir)/default.conf.in > default.conf;
 
-all-local: ssh.conf log.conf editor.conf linux.conf hpux.conf cygwin.conf default_os.conf freebsd.conf
+all-local: linux.conf hpux.conf cygwin.conf default.conf freebsd.conf

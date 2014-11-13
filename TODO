@@ -4,9 +4,11 @@ TODO List
 General:
 
  - **sshconf**: New commandline option to configure SSH for "$SSHUSER@$host".
- - **sshhost.db**: SSH "$host" database, then check only for PING & DNS.
+ - **hosts.db**: Known SSH "$hosts" database, if a $host is registered, do not check DNS & SSH (only ping).
  - Manage simple or complex tasks on hosts with RAL plugins.
  - **Scheduler**: Schedule RAL Plugins (crond).
+ - BSD Color Support.
+ - ¿HOSTCMD = NSLOOKUP on CYGWIN?
 
 Plugins:
 

@@ -83,7 +83,9 @@ AM_CONDITIONAL([HAVE_PERL], [test -n "${PERL}"])
 
 AC_CONFIG_FILES([Makefile
 		 src/Makefile
-		 conf.d/Makefile])
+		 etc/Makefile
+		 etc/conf.d/Makefile
+		 etc/os/Makefile])
 
 AC_OUTPUT
 

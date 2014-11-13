@@ -2,7 +2,7 @@
 
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = src conf.d
+SUBDIRS = src etc
 
 EXTRA_DIST = xenesis.conf.in autogen.sh README.md plugins conf.d src hosts
 
@@ -43,7 +43,9 @@ distclean-local:
 	@rm -rfv aclocal.m4 AUTHORS autom4te.cache config.guess \
 	configure config.sub COPYING INSTALL install-sh missing NEWS README \
 	Makefile.in src/Makefile.in Makefile src/Makefile compile \
-	config.log config.status conf.d/Makefile.in conf.d/Makefile; \
+	config.log config.status \
+	etc/os/Makefile.in etc/Makefile.in etc/conf.d/Makefile.in; \
+	etc/os/Makefile etc/Makefile etc/conf.d/Makefile; \
 	echo "=== distclean-local done ==="
 
 install-data-hook:
@@ -57,14 +59,15 @@ install-data-hook:
 	cp -rfv src/libxenesis-sshnopass.so $(libdir)/libxenesis-sshnopass.so; \
 	echo "Installing <<@PACKAGE@>> config files ..."; \
 	mkdir -pv $(sysconfdir)/@PACKAGE@/conf.d; \
-	cp -rfv conf.d/editor.conf $(sysconfdir)/@PACKAGE@/conf.d/editor.conf; \
-	cp -rfv conf.d/ssh.conf $(sysconfdir)/@PACKAGE@/conf.d/ssh.conf; \
-	cp -rfv conf.d/log.conf $(sysconfdir)/@PACKAGE@/conf.d/log.conf; \
-	cp -rfv conf.d/default_os.conf $(sysconfdir)/@PACKAGE@/conf.d/default_os.conf; \
-	cp -rfv conf.d/linux.conf $(sysconfdir)/@PACKAGE@/conf.d/linux.conf; \
-	cp -rfv conf.d/freebsd.conf $(sysconfdir)/@PACKAGE@/conf.d/freebsd.conf; \
-	cp -rfv conf.d/hpux.conf $(sysconfdir)/@PACKAGE@/conf.d/hpux.conf; \
-	cp -rfv conf.d/cygwin.conf $(sysconfdir)/@PACKAGE@/conf.d/cygwin.conf; \
+	mkdir -pv $(sysconfdir)/@PACKAGE@/os; \
+	cp -rfv etc/conf.d/editor.conf $(sysconfdir)/@PACKAGE@/conf.d/editor.conf; \
+	cp -rfv etc/conf.d/ssh.conf $(sysconfdir)/@PACKAGE@/conf.d/ssh.conf; \
+	cp -rfv etc/conf.d/log.conf $(sysconfdir)/@PACKAGE@/conf.d/log.conf; \
+	cp -rfv etc/os/default.conf $(sysconfdir)/@PACKAGE@/os/default.conf; \
+	cp -rfv etc/os/linux.conf $(sysconfdir)/@PACKAGE@/os/linux.conf; \
+	cp -rfv etc/os/freebsd.conf $(sysconfdir)/@PACKAGE@/os/freebsd.conf; \
+	cp -rfv etc/os/hpux.conf $(sysconfdir)/@PACKAGE@/os/hpux.conf; \
+	cp -rfv etc/os/cygwin.conf $(sysconfdir)/@PACKAGE@/os/cygwin.conf; \
 	echo "Installing <<@PACKAGE@>> data files ..."; \
 	mkdir -pv $(localstatedir)/lib/@PACKAGE@; \
 	cp -rfv plugins $(localstatedir)/lib/@PACKAGE@/; \

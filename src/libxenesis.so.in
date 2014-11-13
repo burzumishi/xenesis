@@ -142,19 +142,19 @@ function check_user {
 	return $true;
 }
 
-# setup_os_commands(): Setup OS specific commands. This commands can be redefined in config files #
+# setup_os_commands(): Load Setup OS specific commands and variables. This commands and variables can be redefined in "etc/os" config files. #
 function setup_os_commands {
 	case $OS in
 		# Operating System # Linux, HP-UX, CYGWIN_NT, ... #
-		*linux*|*Linux*|*LINUX*) . @sysconfdir@/@PACKAGE@/conf.d/linux.conf;
+		*linux*|*Linux*|*LINUX*) . @sysconfdir@/@PACKAGE@/os/linux.conf;
 			;;
-		*hp-ux*|*HP-UX*) . @sysconfdir@/@PACKAGE@/conf.d/hpux.conf; # TODO TODO TODO #
+		*hp-ux*|*HP-UX*) . @sysconfdir@/@PACKAGE@/os/hpux.conf; # TODO TODO TODO #
 			;;
-		*FreeBSD*|*freebsd*) . @sysconfdir@/@PACKAGE@/conf.d/freebsd.conf;
+		*FreeBSD*|*freebsd*) . @sysconfdir@/@PACKAGE@/os/freebsd.conf;
 			;;
-		*cygwin*|*CYGWIN*) . @sysconfdir@/@PACKAGE@/conf.d/cygwin.conf;
+		*cygwin*|*CYGWIN*) . @sysconfdir@/@PACKAGE@/os/cygwin.conf; # TODO TODO TODO #
 			;;
-		*) . @sysconfdir@/@PACKAGE@/conf.d/default_os.conf;
+		*) . @sysconfdir@/@PACKAGE@/os/default.conf;
 			;;
 	esac
 	return $true;

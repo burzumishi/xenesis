@@ -30,10 +30,10 @@ function check_ping {
     $PING $host >/dev/null;
 
 	if [[ $? -ne $true ]]; then		
-		echolog "$WARNING! <$host> does not reply to \"ping\" requests.";
+		echolog "$WARNING! [$host] does not reply to \"ping\" requests.";
         	return $false;
     else
-        echolog "$OK! <$host> replies to \"ping\" requests.";
+        echolog "$OK! [$host] replies to \"ping\" requests.";
         	return $true;
     fi;
 }
@@ -44,13 +44,13 @@ function check_dns {
 	host="$1";
 
     # CHECK DNS #
-    CHECK_DNS=$($HOSTCMD $host | $HEAD -1 | $AWK '{print $NF}');
+    $HOSTCMD $host >/dev/null;
 
-	if [ "$CHECK_DNS" == "2(SERVFAIL)" ]; then		
-		echolog "$WARNING! <$host> does not reply to \"DNS\" requests.";
+	if [[ $? -ne $true ]]; then		
+		echolog "$WARNING! [$host] does not reply to \"DNS\" requests.";
         	return $false;
     else
-        echolog "$OK! <$host> replies to \"DNS\" requests.";
+        echolog "$OK! [$host] replies to \"DNS\" requests.";
         	return $true;
     fi;
 }
@@ -63,10 +63,9 @@ function addto_host_list {
 		HOST_LIST="$host $HOST_LIST"
 		echolog "$OK! [$host] added to \"host_list\"!";
 	else
-		# WARNING! Host is in DNS but does not reply to ping! #
-		# WARNING! Nothing to do! #
+		# WARNING! Nothing to do! Skipping $host! #
 		echolog "$WARNING! Nothing to do! Skipping [$host]!";
-		# Skip this host $hf #
+		# Skip this host $host #
 		HOST_LIST=$($ECHO $HOST_LIST | $SED -e 's/'$host'//g');
 	fi;
 }
@@ -137,15 +136,23 @@ function load_host_list {
 							# WARNING! Host is in NOT DNS #
 							# WARNING! Nothing to do! #
 							echolog "$WARNING! [$hf] does not have a DNS name.";
-							echolog "$WARNING! Nothing to do! Skipping [$hf]!";
+							# Ping $hf
+							check_ping $hf;
+
+							# add to host list $error $hf #
+							addto_host_list $? $hf;
 						fi;
 					done;
 				else
 					# Param is not a host or a host_list #
-					echolog "$ERROR! [$host] is not a \"host\" or \"host_list\"!";
-					echolog "$WARNING! Nothing to do! Skipping [$host]!";
-					# Skip this host $host #
-					HOST_LIST=$($ECHO $HOST_LIST | $SED -e 's/'$host'//g');
+					echolog "$WARNING! [$host] is not a \"host_list\"!";
+
+					# Ping $host
+					check_ping $host;
+
+					# add to host list $error $hf #
+					addto_host_list $? $host;
+
 					return $true;
 				fi;
 			fi;
