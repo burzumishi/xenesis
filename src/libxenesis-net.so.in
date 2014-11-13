@@ -27,14 +27,14 @@ function check_ping {
 	host="$1";
 
     # CHECK PING #
-    $PING $host;
+    $PING $host >/dev/null;
 
-	if [ $? -ne $true ]; then		
+	if [[ $? -ne $true ]]; then		
 		echolog "$WARNING! <$host> does not reply to \"ping\" requests.";
-        return $false;
+        	return $false;
     else
         echolog "$OK! <$host> replies to \"ping\" requests.";
-        return $true;
+        	return $true;
     fi;
 }
 
@@ -44,14 +44,14 @@ function check_dns {
 	host="$1";
 
     # CHECK DNS #
-    CHECK_DNS=$($HOSTCMD $host | $AWK '{print $NF}');
+    CHECK_DNS=$($HOSTCMD $host | $HEAD -1 | $AWK '{print $NF}');
 
 	if [ "$CHECK_DNS" == "2(SERVFAIL)" ]; then		
 		echolog "$WARNING! <$host> does not reply to \"DNS\" requests.";
-        return $false;
+        	return $false;
     else
         echolog "$OK! <$host> replies to \"DNS\" requests.";
-        return $true;
+        	return $true;
     fi;
 }
 
@@ -98,9 +98,9 @@ function load_host_list {
 		# Check all host in $HOST_LIST #
 		for host in $HOST_LIST; do
 			# check host dns $hosts; #
-			HOST_DNS=$($NSLOOKUP $host | $GREP ^N | $AWK '{print $2}');
-			if [ ! -z "$HOST_DNS" ]; then
-				echolog_debug "$DEBUG: DNS discovered host name: [$HOST_DNS]!";
+			check_dns $host;
+			if [[ $? -eq 0 ]]; then
+				echolog_debug "$DEBUG: DNS discovered host name for [$host]!";
 
 				# Single host or host_list #
 				# check host ping $host #
@@ -125,9 +125,9 @@ function load_host_list {
 					# Reload HOST_LIST from current host_list file #
 					for hf in $CHECK_HOST_LIST; do
 						# check host dns $hf; #
-						hf_DNS=$($NSLOOKUP $hf | $GREP Name | $AWK '{print $2}');
-						if [ ! -z "$hf_DNS" ]; then
-							echolog_debug "$DEBUG: DNS discovered host name: [$hf_DNS]!";
+						check_dns $hf;
+						if [[ $? -eq 0 ]]; then
+							echolog_debug "$DEBUG: DNS discovered host name for [$hf]!";
 
 							# Ping $hf
 							check_ping $hf;
