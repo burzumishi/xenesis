@@ -1,40 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
     <title>Xenesis by burzumishi</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/burzumishi/xenesis">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/burzumishi/xenesis/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/burzumishi/xenesis/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-        <header>
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
           <h1>Xenesis</h1>
-          <h2>Remote Task Manager</h2>
-        </header>
+          <p>Remote Task Manager</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/burzumishi">burzumishi</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/burzumishi/xenesis/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/burzumishi/xenesis/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/burzumishi/xenesis" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <h1>
+        <h1>
 <a id="xenesis" class="anchor" href="#xenesis" aria-hidden="true"><span class="octicon octicon-link"></span></a>XENESIS</h1>
 
-<pre><code>Copyright (C) 2014 Antonio Cao (@burzumishi)
+<p>[ <a href="http://burzumishi.github.io/xenesis"><strong>http://burzumishi.github.io/xenesis</strong></a> || <a href="https://github.com/burzumishi/xenesis"><strong>https://github.com/burzumishi/xenesis</strong></a> ]</p>
+
+<pre><code>Copyright © 2014 Antonio Cao (@burzumishi)
 
 This is free software;
 You have unlimited permission to copy and/or distribute it,
@@ -46,25 +55,20 @@ even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.
 </code></pre>
 
-<p><strong>Xenesis</strong> is a remote task manager, it will help you on manage and
-schedule tasks on remote hosts conected to the same network over SSH.</p>
+<p><strong>Xenesis</strong> is a remote task manager, it will help you executing, managing and scheduling tasks on remote hosts, conected to the same network over SSH.</p>
 
-<p><strong>Xenesis</strong> uses basic shell tools, it's simple and fully customizable!</p>
+<p><strong>Xenesis</strong> is a shell script and uses basic shell tools, it's simple and fully customizable!</p>
 
-<p>Remote administration of tasks, is done trought Remote Admin Layer (RAL) Plugins.</p>
+<p>Administrators will execute tasks on remote hosts with a single command line.</p>
+
+<p>Remote administration of tasks, is done trought <strong>Remote Admin Layer (RAL) Plugins</strong>.</p>
 
 <h2>
-<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h2>
+<a id="releases" class="anchor" href="#releases" aria-hidden="true"><span class="octicon octicon-link"></span></a>Releases</h2>
 
-<p><strong>Xenesis</strong> is using GNU AutoTools, as build system.</p>
+<p><strong>[ There are NO WORKING RELEASES yet! ]</strong></p>
 
-<p>Type the following commands to install:</p>
-
-<pre><code>sh autogen.sh
-./configure --prefix=/usr
-make
-make install
-</code></pre>
+<p>Check out the latest working <a href="https://github.com/burzumishi/xenesis/releases"><strong>Xenesis Releases</strong></a>.</p>
 
 <h2>
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
@@ -75,24 +79,41 @@ make install
 <li>Dinamic Configuration Files Support (conf.d).</li>
 <li>Remote Admin Layer (RAL) Plugin Support.</li>
 <li>Dinamic Host List scripts.</li>
-<li>TODO: Manage simple or complex tasks on hosts with RAL plugins.</li>
-<li>TODO: Schedule RAL Plugins (crond).</li>
-<li>TODO RAL Plugin (deploy): Deploy files to hosts.</li>
+<li>Setup SSH on hosts.</li>
+</ul>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<p><strong>Xenesis</strong> is using <strong>GNU AutoTools</strong>, as build system.</p>
+
+<p><strong>Xenesis</strong> is a shell script, but it needs to be built and setup some strings before to be installed on your host system.</p>
+
+<p>Type the following commands to install:</p>
+
+<pre><code>sh autogen.sh
+./configure --prefix=/usr
+make
+make install
+</code></pre>
+
+<h2>
+<a id="supported-os" class="anchor" href="#supported-os" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported OS</h2>
+
+<ul>
+<li>
+<strong>Linux</strong> &amp; <strong>FreeBSD</strong>.</li>
+<li>Work in progress for: <em>HP-UX</em> &amp; <em>CygWin</em>.</li>
 </ul>
 
 <h2>
 <a id="authors" class="anchor" href="#authors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors</h2>
 
-<p>Antonio Cao (<a href="https://github.com/burzumishi" class="user-mention">@burzumishi</a>)</p>
-        </section>
+<p>Antonio Cao (<a href="https://github.com/burzumishi">@burzumishi</a>)</p>
+      </section>
 
-        <footer>
-          Xenesis is maintained by <a href="https://github.com/burzumishi">burzumishi</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
-      </div>
     </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
   </body>
 </html>
