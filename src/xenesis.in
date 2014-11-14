@@ -17,6 +17,8 @@
 # @PACKAGE@ @VERSION@ (@DESCRIPTION@) #
 # Usage: xenesis <plugin_name> <host>||<host_list> <plugin_params (optional)>
 
+# Operating System # Linux, HP-UX, CYGWIN_NT, ... #
+OS=$(uname -s);
 
 # Load Configuration Files #
 
@@ -30,6 +32,20 @@ if [ -d "@sysconfdir@/@PACKAGE@/conf.d" ]; then
                 . $confd;
         done
 fi;
+
+case $OS in
+	# Operating System # Linux, HP-UX, CYGWIN_NT, ... #
+	*linux*|*Linux*|*LINUX*) . @sysconfdir@/@PACKAGE@/os/linux.conf;
+		;;
+	*hp-ux*|*HP-UX*) . @sysconfdir@/@PACKAGE@/os/hpux.conf; # TODO TODO TODO #
+		;;
+	*FreeBSD*|*freebsd*) . @sysconfdir@/@PACKAGE@/os/freebsd.conf;
+		;;
+	*cygwin*|*CYGWIN*) . @sysconfdir@/@PACKAGE@/os/cygwin.conf; # TODO TODO TODO #
+		;;
+	*) . @sysconfdir@/@PACKAGE@/os/default.conf;
+		;;
+esac
 
 
 # Load Libraries #
@@ -48,7 +64,7 @@ fi;
 
 # Start @PACKAGE@ # libxenesis.so #
 
-# Setup @PACKAGE@ OS Specific Commands #
+# Import @PACKAGE@ OS Specific Configurations #
 setup_os_commands;
 
 # Check @PACKAGE@ runtime directory structure # 

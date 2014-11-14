@@ -44,7 +44,7 @@ distclean-local:
 	configure config.sub COPYING INSTALL install-sh missing NEWS README \
 	Makefile.in src/Makefile.in Makefile src/Makefile compile \
 	config.log config.status \
-	etc/os/Makefile.in etc/Makefile.in etc/conf.d/Makefile.in; \
+	etc/os/Makefile.in etc/Makefile.in etc/conf.d/Makefile.in \
 	etc/os/Makefile etc/Makefile etc/conf.d/Makefile; \
 	echo "=== distclean-local done ==="
 
@@ -59,7 +59,7 @@ install-data-hook:
 	cp -rfv src/libxenesis-sshnopass.so $(libdir)/libxenesis-sshnopass.so; \
 	echo "Installing <<@PACKAGE@>> config files ..."; \
 	mkdir -pv $(sysconfdir)/@PACKAGE@/conf.d; \
-	mkdir -pv $(sysconfdir)/@PACKAGE@/os; \
+	mkdir -pv $(sysconfdir)/@PACKAGE@/os/commands; \
 	cp -rfv etc/conf.d/editor.conf $(sysconfdir)/@PACKAGE@/conf.d/editor.conf; \
 	cp -rfv etc/conf.d/ssh.conf $(sysconfdir)/@PACKAGE@/conf.d/ssh.conf; \
 	cp -rfv etc/conf.d/log.conf $(sysconfdir)/@PACKAGE@/conf.d/log.conf; \
@@ -68,6 +68,11 @@ install-data-hook:
 	cp -rfv etc/os/freebsd.conf $(sysconfdir)/@PACKAGE@/os/freebsd.conf; \
 	cp -rfv etc/os/hpux.conf $(sysconfdir)/@PACKAGE@/os/hpux.conf; \
 	cp -rfv etc/os/cygwin.conf $(sysconfdir)/@PACKAGE@/os/cygwin.conf; \
+	cp -rfv etc/os/commands/default.conf $(sysconfdir)/@PACKAGE@/os/commands/default.conf; \
+	cp -rfv etc/os/commands/linux.conf $(sysconfdir)/@PACKAGE@/os/commands/linux.conf; \
+	cp -rfv etc/os/commands/freebsd.conf $(sysconfdir)/@PACKAGE@/os/commands/freebsd.conf; \
+	cp -rfv etc/os/commands/hpux.conf $(sysconfdir)/@PACKAGE@/os/commands/hpux.conf; \
+	cp -rfv etc/os/commands/cygwin.conf $(sysconfdir)/@PACKAGE@/os/commands/cygwin.conf; \
 	echo "Installing <<@PACKAGE@>> data files ..."; \
 	mkdir -pv $(localstatedir)/lib/@PACKAGE@; \
 	cp -rfv plugins $(localstatedir)/lib/@PACKAGE@/; \

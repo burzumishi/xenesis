@@ -1,0 +1,2 @@
+# Default OS Commands #
+PING="$PING -c 1";

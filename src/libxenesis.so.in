@@ -20,11 +20,6 @@
 # Force POSIX "C" (Does not work on CYGWIN_NT)
 export $LANG $LC_ALL
 
-# Operating System # Linux, HP-UX, CYGWIN_NT, ... #
-OS=$(uname -s);
-
-# Log Date #
-LOGDATE=$(date +%D-%H:%M:%S);
 
 # Command Definitions #
 
@@ -124,6 +119,11 @@ else
 fi;
 
 # Define LOG #
+
+# Define Log Date Format #
+LOGDATE=$($DATE $DATEFORMAT);
+
+# Define Log Files #
 LOG="$LOGDIR/$LOGFILE";
 DEBUGLOG="$LOGDIR/debug-$LOGFILE";
 
@@ -142,19 +142,19 @@ function check_user {
 	return $true;
 }
 
-# setup_os_commands(): Load Setup OS specific commands and variables. This commands and variables can be redefined in "etc/os" config files. #
+# setup_os_commands(): Load Setup OS specific commands and variables. This commands and variables can be redefined in "etc/os/commands" config files. #
 function setup_os_commands {
 	case $OS in
 		# Operating System # Linux, HP-UX, CYGWIN_NT, ... #
-		*linux*|*Linux*|*LINUX*) . @sysconfdir@/@PACKAGE@/os/linux.conf;
+		*linux*|*Linux*|*LINUX*) . @sysconfdir@/@PACKAGE@/os/commands/linux.conf;
 			;;
-		*hp-ux*|*HP-UX*) . @sysconfdir@/@PACKAGE@/os/hpux.conf; # TODO TODO TODO #
+		*hp-ux*|*HP-UX*) . @sysconfdir@/@PACKAGE@/os/commands/hpux.conf; # TODO TODO TODO #
 			;;
-		*FreeBSD*|*freebsd*) . @sysconfdir@/@PACKAGE@/os/freebsd.conf;
+		*FreeBSD*|*freebsd*) . @sysconfdir@/@PACKAGE@/os/commands/freebsd.conf;
 			;;
-		*cygwin*|*CYGWIN*) . @sysconfdir@/@PACKAGE@/os/cygwin.conf; # TODO TODO TODO #
+		*cygwin*|*CYGWIN*) . @sysconfdir@/@PACKAGE@/os/commands/cygwin.conf; # TODO TODO TODO #
 			;;
-		*) . @sysconfdir@/@PACKAGE@/os/default.conf;
+		*) . @sysconfdir@/@PACKAGE@/os/commands/default.conf;
 			;;
 	esac
 	return $true;

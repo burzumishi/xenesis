@@ -1,4 +1,2 @@
 # FreeBSD Setup #
-PING="$PING -c 1";
-
 COLOR="no";

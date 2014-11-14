@@ -7,6 +7,9 @@ COLOR="yes";
 LC_ALL="C"
 LANG="C"
 
+# Log Date Format #
+DATEFORMAT="+%D-%H:%M:%S";
+
 # @PACKAGE@ PATHS #
 
 # PLUGINS DATABASE PATH #

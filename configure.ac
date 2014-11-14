@@ -85,6 +85,7 @@ AC_CONFIG_FILES([Makefile
 		 src/Makefile
 		 etc/Makefile
 		 etc/conf.d/Makefile
+		 etc/os/commands/Makefile
 		 etc/os/Makefile])
 
 AC_OUTPUT

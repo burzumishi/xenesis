@@ -55,3 +55,7 @@
 	* libxenesis-net: Improved load_host_list(), check_dns();
 
 
+2014-11-14  Antonio Cao (@burzumishi)
+
+	* xenesis: Improved OS Configuration and Command files.
+
