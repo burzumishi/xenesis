@@ -33,6 +33,7 @@ if [ -d "@sysconfdir@/@PACKAGE@/conf.d" ]; then
         done
 fi;
 
+# Import @PACKAGE@ OS Config Files (os) #
 case $OS in
 	# Operating System # Linux, HP-UX, CYGWIN_NT, ... #
 	*linux*|*Linux*|*LINUX*) . @sysconfdir@/@PACKAGE@/os/linux.conf;
@@ -62,6 +63,7 @@ esac
 # Import @PACKAGE@ SSH Functions #
 . @libdir@/libxenesis-ssh.so;
 
+
 # Start @PACKAGE@ # libxenesis.so #
 
 # Import @PACKAGE@ OS Specific Configurations #
@@ -79,7 +81,8 @@ startmsg;
 # @PACKAGE@ check current user #
 check_user;
 
-# @PACKAGE@ Read User Input Options #
+
+# @PACKAGE@ Read User Input [OPTIONS] #
 case $1 in
 # libxenesis-ral.so & libxenesis-net.so #
 # start_ral: "$2 == $PLUGINS", "$3 == $HOST_LIST", "$4 == $PLUGIN_PARAMS" #
