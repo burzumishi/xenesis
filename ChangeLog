@@ -59,3 +59,10 @@
 
 	* xenesis: Improved OS Configuration and Command files.
 
+
+2014-11-17  Antonio Cao (@burzumishi)
+
+	* xenesis: Execute SSH Command.
+	* libxenesis-ssh.so: exec_ssh_cmd().
+
+

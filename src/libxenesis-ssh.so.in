@@ -120,3 +120,19 @@ function configure_ssh {
 
 	return $true;
 }
+
+# exec_ssh_cmd($cmd, $hosts): Execute Command for $host in $HOST_LIST #
+function configure_ssh {
+	hosts="$1";
+
+	# Create a valid list of hosts: $HOST_LIST #
+	load_host_list "$hosts";
+	errorcheck $?;
+
+	# Check $HOST_LIST #
+	check_host_list;
+	errorcheck $?;
+
+	# TODO TODO TODO # 
+	# Execute SSH Command on $host #
+}

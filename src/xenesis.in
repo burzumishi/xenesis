@@ -86,10 +86,13 @@ check_user;
 case $1 in
 # libxenesis-ral.so & libxenesis-net.so #
 # start_ral: "$2 == $PLUGINS", "$3 == $HOST_LIST", "$4 == $PLUGIN_PARAMS" #
-'exec') start_ral "$2" "$3" "$4"; 
+'load') start_ral "$2" "$3" "$4"; 
 	;;
 # start_ral_test: "$2 == $PLUGINS", "$3 == $HOST_LIST", "$4 == $PLUGIN_PARAMS" #
 'test') start_ral_test "$2" "$3" "$4";
+	;;
+# start_ral: "$2 == $CMD", "$3 == $HOST_LIST" #
+'exec') exec_ssh_cmd "$2" "$3"; 
 	;;
 # libxenesis-ssh.so #
 # sshconf: "$2 == $HOST_LIST" #

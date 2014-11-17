@@ -105,16 +105,18 @@ if [ "$COLOR" == "yes" ]; then
 	DEBUG="${color_bred}**DEBUG**${color_reset}";
 	STARTMSG_PACK="${color_bred}<-${color_bylw}[${color_bwht} @PACKAGE@ @VERSION@ ${color_bblu}(${color_bcyn}(${color_bwht} @DESCRIPTION@ ${color_bcyn})${color_bblu}) ${color_bgrn}$OS ${color_bylw}]${color_bred}->${color_reset}";
 	USAGE="${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ [exec] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"
-               [test] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"${color_reset}
-               [sshconf] \"[host{s}] || [host_list]\"";
+               [test] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"
+               [exec] \"[cmd{s}]\" \"[host{s}] || [host_list]\"
+               [sshconf] \"[host{s}] || [host_list]\"${color_reset}";
 else
 	OK="OK";
 	ERROR="ERROR";
 	WARNING="WARNING";
 	DEBUG="**DEBUG**";
 	STARTMSG_PACK="<-[ @PACKAGE@ @VERSION@ (( @DESCRIPTION@ )) $OS ]->";
-	USAGE="Usage: @PACKAGE@ [exec] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"
+	USAGE="Usage: @PACKAGE@ [load] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"
                [test] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"
+               [exec] \"[cmd{s}]\" \"[host{s}] || [host_list]\"
                [sshconf] \"[host{s}] || [host_list]\"";
 fi;
 
