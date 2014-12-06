@@ -108,7 +108,7 @@ if [ "$COLOR" == "yes" ]; then
                [test] \"[plugin{s}]\" \"[host{s}] || [host_list]\" \"[plugin{s} params (optional)]\"
                [exec] \"[cmd{s}]\" \"[host{s}] || [host_list]\"
                [sshconf] \"[host{s}] || [host_list]\"${color_reset}";
-else
+else # Define RAW Messages #
 	OK="OK";
 	ERROR="ERROR";
 	WARNING="WARNING";

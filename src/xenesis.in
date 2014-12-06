@@ -54,7 +54,7 @@ esac
 # Import @PACKAGE@ Core Functions #
 . @libdir@/libxenesis.so;
 
-# Import @PACKAGE@ Basic Network Functions #
+# Import @PACKAGE@ Basic Host & Network Functions #
 . @libdir@/libxenesis-net.so;
 
 # Import @PACKAGE@ Remote Admin Layer (RAL) Functions #
@@ -84,18 +84,18 @@ check_user;
 
 # @PACKAGE@ Read User Input [OPTIONS] #
 case $1 in
-# libxenesis-ral.so & libxenesis-net.so #
+# libxenesis-ral.so -- actions -- #
 # start_ral: "$2 == $PLUGINS", "$3 == $HOST_LIST", "$4 == $PLUGIN_PARAMS" #
 'load') start_ral "$2" "$3" "$4"; 
 	;;
 # start_ral_test: "$2 == $PLUGINS", "$3 == $HOST_LIST", "$4 == $PLUGIN_PARAMS" #
 'test') start_ral_test "$2" "$3" "$4";
 	;;
-# start_ral: "$2 == $CMD", "$3 == $HOST_LIST" #
+# libxenesis-ssh.so -- actions -- #
+# exec_ssh_cmd: "$2 == $CMD", "$3 == $HOST_LIST" #
 'exec') exec_ssh_cmd "$2" "$3"; 
 	;;
-# libxenesis-ssh.so #
-# sshconf: "$2 == $HOST_LIST" #
+# configure_ssh: "$2 == $HOST_LIST" #
 'sshconf') configure_ssh "$2";
 	;;
 # usage: help #

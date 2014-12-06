@@ -43,7 +43,7 @@ distclean-local:
 	@rm -rfv aclocal.m4 AUTHORS autom4te.cache config.guess \
 	configure config.sub COPYING INSTALL install-sh missing NEWS README \
 	Makefile.in src/Makefile.in Makefile src/Makefile compile \
-	config.log config.status \
+	config.log config.status etc/os/commands/Makefile.in \
 	etc/os/Makefile.in etc/Makefile.in etc/conf.d/Makefile.in \
 	etc/os/Makefile etc/Makefile etc/conf.d/Makefile; \
 	echo "=== distclean-local done ==="

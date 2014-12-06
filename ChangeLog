@@ -30,7 +30,7 @@
 	* libxenesis-net.so: check_ping(), load_host_list(), addto_host_list(), check_host_list();
 	* libxenesis-ssh.so: check_ssh().
 	* libxenesis-sshnopass.so: Perl script to avoid ask password in SSH, used from "libxenesis-ssh.so".
-	* User output improvements.
+	* User output fixes.
 
 
 2014-11-11  Antonio Cao (@burzumishi)
@@ -39,7 +39,7 @@
 	* xenesis: "sshconf".
 	* libxenesis-ssh.so: check_rsa(), configure_ssh().
 	* libxenesis.so: continue_promt().
-	* More User output improvements.
+	* More User output fixes.
 
 
 2014-11-12  Antonio Cao (@burzumishi)
@@ -52,7 +52,7 @@
 
 	* xenesis: Moved OS config files to "etc/os" -> "etc/xenesis/os".
 	* xenesis: Color Support Disabled on FreeBSD (TODO: BSD Color Support).
-	* libxenesis-net: Improved load_host_list(), check_dns();
+	* libxenesis-net: Fixed load_host_list(), check_dns();
 
 
 2014-11-14  Antonio Cao (@burzumishi)
@@ -65,4 +65,9 @@
 	* xenesis: Execute SSH Command.
 	* libxenesis-ssh.so: exec_ssh_cmd().
 
+2014-12-06  Antonio Cao (@burzumishi)
+
+	* xenesis: Execute SSH Command Fixes.
+	* libxenesis-net.so: Fixes.
+	* libxenesis-ssh.so: Fixes.
 

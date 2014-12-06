@@ -59,9 +59,18 @@ function check_dns {
 function addto_host_list {
 	error=$1;
 	host="$2";
-	if [[ $1 -eq $true ]]; then
-		HOST_LIST="$host $HOST_LIST"
-		echolog "$OK! [$host] added to \"host_list\"!";
+
+	# If there are no errors add host to list #
+	if [[ $error -eq $true ]]; then
+		# Check if $host is already on $HOST_LIST #
+		TEST_HOST_LIST=$(echo $HOST_LIST | grep $host);
+		if [ -z "$TEST_HOST_LIST" ]; then
+			HOST_LIST="$host $HOST_LIST"
+			echolog "$OK! [$host] added to \"host_list\"!";
+		else
+			# WARNING! Nothing to do! Skipping $host! #
+			echolog_debug "$DEBUG: Nothing to do! [$host] already listed!";		
+		fi;
 	else
 		# WARNING! Nothing to do! Skipping $host! #
 		echolog "$WARNING! Nothing to do! Skipping [$host]!";
@@ -72,7 +81,7 @@ function addto_host_list {
 
 # load_host_list($HOSTS): check hosts and create a valid host_list -> $HOST_LIST # 
 
-# First check if it's a HOST_LIST file #
+# At first check if it's a HOST_LIST file #
 # Load all hosts from file, then check DNS and PING #
 # If it's not a file, it's a real host, then check DNS and PING #
 
