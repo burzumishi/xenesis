@@ -33,7 +33,7 @@ function check_ping {
 		echolog "$WARNING! [$host] does not reply to \"ping\" requests.";
         	return $false;
     else
-        echolog "$OK! [$host] replies to \"ping\" requests.";
+        	echolog "$OK! [$host] replies to \"ping\" requests.";
         	return $true;
     fi;
 }
@@ -50,7 +50,7 @@ function check_dns {
 		echolog "$WARNING! [$host] does not reply to \"DNS\" requests.";
         	return $false;
     else
-        echolog "$OK! [$host] replies to \"DNS\" requests.";
+        	echolog "$OK! [$host] replies to \"DNS\" requests.";
         	return $true;
     fi;
 }

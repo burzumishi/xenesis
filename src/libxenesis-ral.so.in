@@ -28,20 +28,20 @@ function ral_plugin_notfound {
         # If $plugin does not exist set it to "none" #
         if [ -z "$plugin" ]; then plugin="none"; fi
 
-		# RAL Plugin NOT found (create new ralfile??) #
-		echolog "$ERROR! [RAL Plugin]: [$plugin] not Found!";
-		echolog "$ERROR! Perhaps you should check your spelling.";
+	# RAL Plugin NOT found (create new ralfile??) #
+	echolog "$ERROR! [RAL Plugin]: [$plugin] not Found!";
+	echolog "$ERROR! Perhaps you should check your spelling.";
 
-	    # If $plugin is "none" define a dummy plugin name, if not, show current param value #
-	    if [ "$plugin" == "none" ]; then plugin="yournewplugin"; fi
+	# If $plugin is "none" define a dummy plugin name, if not, show current param value #
+	if [ "$plugin" == "none" ]; then plugin="yournewplugin"; fi
 
-		# Ask user for plugin creation #
-		echolog "$WARNING! [RAL Plugin]: does not exist, you can create a new one.";
-		echolog "$WARNING! Use: $EDITOR $PLUGINSDIR/${plugin}.ral"
-		$ECHO;
-		usage;
+	# Ask user for plugin creation #
+	echolog "$WARNING! [RAL Plugin]: does not exist, you can create a new one.";
+	echolog "$WARNING! Use: $EDITOR $PLUGINSDIR/${plugin}.ral"
+	$ECHO;
+	usage;
 
-		return $false;
+	return $false;
 }
 
 # check_ral_plugin($PLUGINS): check for an existent plugin #
