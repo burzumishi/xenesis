@@ -1,6 +1,6 @@
-#!@ENV@ bash
+#!/usr/bin/env bash
 
-# @PACKAGE@-@VERSION@ (libxenesis-env.c) #
+# xenesis-15.2.23 (libxenesis-env.c) #
 
 # Copyright (c) 2014-2015 Antonio Cao (@burzumishi) #
 
@@ -19,7 +19,7 @@
 
 ### --- Define '@PACKAGE' Environment variables --- ###
 
-# load_core_variables(): loads '@PACKAGE@' required variables #
+# load_core_variables(): loads 'xenesis' required variables #
 load_core_variables() {
 
 	# Setup LANG & LC_ALL #
@@ -91,7 +91,7 @@ load_core_variables() {
 	USER="$($WHOAMI)";
 
 
-	# Define '@PACKAGE@' Log Date Format #
+	# Define 'xenesis' Log Date Format #
 	LOGDATE=$($DATE $DATEFORMAT);
 
 
@@ -103,10 +103,10 @@ load_core_variables() {
 	return $true;
 }
 
-# load_terminal_color_support(): '@PACKAGE@' Terminal Color Support #
+# load_terminal_color_support(): 'xenesis' Terminal Color Support #
 load_terminal_color_support() {
 
-	### --- '@PACKAGE@' Terminal Color Support --- ###
+	### --- 'xenesis' Terminal Color Support --- ###
 
 	if test "$ENABLE_COLOR" == "yes"; then
 		# Define Shell Colors #
@@ -166,11 +166,11 @@ load_terminal_color_support() {
 
 		# User Screen Color Messages #
 
-		# @PACKAGE@ version #
-		@PACKAGE@_VERSION="$INFO ${color_bylw}@DESCRIPTION@ ${color_bblu}[${color_bwht}@PACKAGE@ ${color_bcyn}(${color_bwht}@VERSION@${color_bcyn})${color_bblu}] ${color_reset}running on ${color_bcyn}(${color_bwht}$HOST_MACHINE${color_bcyn}) ${color_bcyn}'${color_bgrn}$HOST_OS${color_bcyn}'${color_reset}.";
+		# xenesis version #
+		xenesis_VERSION="$INFO ${color_bylw}Remote Task Manager ${color_bblu}[${color_bwht}xenesis ${color_bcyn}(${color_bwht}15.2.23${color_bcyn})${color_bblu}] ${color_reset}running on ${color_bcyn}(${color_bwht}$HOST_MACHINE${color_bcyn}) ${color_bcyn}'${color_bgrn}$HOST_OS${color_bcyn}'${color_reset}.";
 
-		# @PACKAGE@ help #	
-		HELP="$INFO ${color_bgrn}Usage:${color_reset} ${color_bwht}@PACKAGE@ ${color_bcyn}--option1 --option2 'args' ... ${color_bwht}--command|-c 'file'
+		# xenesis help #	
+		HELP="$INFO ${color_bgrn}Usage:${color_reset} ${color_bwht}xenesis ${color_bcyn}--option1 --option2 'args' ... ${color_bwht}--command|-c 'file'
 
 $INFO Commands:
 
@@ -199,7 +199,7 @@ $INFO SSH Options:
 
 	${color_bcyn}	  --sshconf			${color_cyn}(Configure SSH access on hosts)
 
-$INFO Try ${color_bwht}'${color_bgrn}man @PACKAGE@.(1)${color_bwht}'${color_reset} for more information.";
+$INFO Try ${color_bwht}'${color_bgrn}man xenesis.(1)${color_bwht}'${color_reset} for more information.";
 
 	else # Define Shell RAW Messages (no color) #
 
@@ -221,11 +221,11 @@ $INFO Try ${color_bwht}'${color_bgrn}man @PACKAGE@.(1)${color_bwht}'${color_rese
 
 		# User Screen Color Messages #
 
-		# @PACKAGE@ version #
-		@PACKAGE@_VERSION="$INFO @DESCRIPTION@ [@PACKAGE@ (@VERSION@)] running on ($HOST_MACHINE) '$HOST_OS'.";
+		# xenesis version #
+		xenesis_VERSION="$INFO Remote Task Manager [xenesis (15.2.23)] running on ($HOST_MACHINE) '$HOST_OS'.";
 
-		# @PACKAGE@ help #
-		  	HELP="$INFO Usage: @PACKAGE@ --option1 --option2 'arg' ... --command|-c 'file'
+		# xenesis help #
+		  	HELP="$INFO Usage: xenesis --option1 --option2 'arg' ... --command|-c 'file'
 
 $INFO Commands:
 
@@ -254,7 +254,7 @@ $INFO SSH Options:
 
 		 --sshconf			(Configure SSH access on hosts)
 
-$INFO Try 'man @PACKAGE@.(1)' for more information.";
+$INFO Try 'man xenesis.(1)' for more information.";
 	fi;
 
 	return $true;

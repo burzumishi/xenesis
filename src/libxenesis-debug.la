@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+# xenesis-15.2.23 (libxenesis-debug.c) #
+
+# Copyright (c) 2014-2015 Antonio Cao (@burzumishi) #
+
+# This is free software;
+# You have unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# Genetic Debug Library #
+
+# libxenesis-debug.la: Core functions and definitions #
+
+### -- 'xenesis' environment debug -- ###
+
+# debug_setup(): Debug xenesis environment #
+environment_debug() {
+	# If xenesis $ENABLEDEBUG && $ENABLEDEBUG_ENVIRONMENT are enabled, then show some setups #
+	if test "$ENABLEDEBUG" == "yes" && test "$ENABLEDEBUG_ENVIRONMENT" == "yes"; then
+		# Show xenesis #
+		echolog_debug "$DEBUG ================== %%% xenesis %%% ==================";
+		echolog_debug "$DEBUG This is 'xenesis' with 'Environment Debug' enabled.";
+		echolog_debug "$DEBUG Running on a '$HOST_OS' ($HOST_OS_VERSION) host platform '$HOST_PLATFORM/$HOST_CPU' and using '$BASH' ($BASH_VERSION) as interpreter with arguments: '$BASH_ARGV'.";
+		echolog_debug "$DEBUG =====================================================";
+
+		# Show xenesis Language Support values #
+		echolog_debug "$DEBUG Language setup is 'LC_ALL=$LC_ALL' and 'LANG=$LANG'.";
+
+		# Show COLOR values #
+		if test "$COLOR" == "yes"; then
+			echolog_debug "$DEBUG Color Support enabled!"
+		else
+			echolog_debug "$DEBUG Color Support disabled!"
+		fi;
+
+		# Show $ENABLELOG values: yes|no #
+		if test "$ENABLELOG" == "yes"; then
+			echolog_debug "$DEBUG Main 'xenesis' log file is enabled: '$LOGFILE'.";
+		else
+			echolog_debug "$DEBUG Main 'xenesis' log file is disabled!";
+		fi;
+
+		# Show $ENABLEDEBUG value: yes|no #
+		if test "$ENABLEDEBUG" == "yes"; then
+			echolog_debug "$DEBUG Debug 'xenesis' log file is enabled: '$DEBUGLOGFILE'.";
+		else
+			echolog_debug "$DEBUG Debug 'xenesis' log file is disabled!";
+		fi;
+
+		# Show $ENABLE_VERBOSE value: yes|no #
+		echolog_debug "$DEBUG Verbose 'xenesis' screen output: '$ENABLE_VERBOSE'.";
+
+		# Show $ENABLE_Force value: yes|no #
+		if test "$ENABLE_FORCE" == "yes"; then
+			echolog_debug "$DEBUG Running 'xenesis' with '-f' or '--force' option enabled!!!"
+			echolog_debug "$DEBUG Forcing all 'errorcheck' and 'spinner' functions to end always with an exit '$true' status!";
+		else
+			echolog_debug "$DEBUG Disabled forcing all 'errorcheck' and 'spinner' functions to end always with an exit '$true' status.";
+		fi;
+ 
+		# Show $DATEFORMAT $LOGDATE #
+		echolog_debug "$DEBUG All 'xenesis' log files are using '[$DATEFORMAT]'.";
+
+		echolog_debug "$DEBUG =====================================================";
+	fi;
+}
