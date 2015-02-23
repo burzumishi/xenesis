@@ -1,8 +1,8 @@
 #!@ENV@ bash
 
-# @PACKAGE@-@VERSION@ (libxenesis-net.so) #
+# @PACKAGE@-@VERSION@ (libxenesis-net.c) #
 
-# Copyright (c) 2014 Antonio Cao (@burzumishi) #
+# Copyright (c) 2014-2015 Antonio Cao (@burzumishi) #
 
 # This is free software;
 # You have unlimited permission to copy and/or distribute it,
@@ -15,16 +15,15 @@
 
 # Xenesis NET Library #
 
-# libxenesis-net.so: Basic Network functions and definitions #
+# libxenesis-net.la: Basic Network functions and definitions #
 
-HOST_LIST="";
 num_host=0;
 host_list_reset=0;
 
 # check_ping($host): check host ping reply #
-function check_ping {
+check_ping() {
 
-	host="$1";
+	host="$1"; shift;
 
     # CHECK PING #
     $PING $host >/dev/null;
@@ -39,9 +38,9 @@ function check_ping {
 }
 
 # check_dns($host): check host DNS reply #
-function check_dns {
+check_dns() {
 
-	host="$1";
+	host="$1"; shift;
 
     # CHECK DNS #
     $HOSTCMD $host >/dev/null;
@@ -56,9 +55,9 @@ function check_dns {
 }
 
 # addto_host_list($error,$host): add verified hosts to $HOST_LIST # 
-function addto_host_list {
-	error=$1;
-	host="$2";
+addto_host_list() {
+	error=$1; shift;
+	host="$1"; shift;
 
 	# If there are no errors add host to list #
 	if [[ $error -eq $true ]]; then
@@ -85,12 +84,12 @@ function addto_host_list {
 # Load all hosts from file, then check DNS and PING #
 # If it's not a file, it's a real host, then check DNS and PING #
 
-function load_host_list {
+load_host_list() {
 	# Params: $HOSTS #
-	HOSTS="$1";
+	HOSTS="$1"; shift;
 
 	# $HOSTS cannot be empty #
-	if [ ! -z "$HOSTS" ]; then
+	if test ! -z "$HOSTS"; then
 		# Host || Host List count #
 		for h in $HOSTS; do
 			# Count HOSTS -> num_host #
@@ -107,7 +106,7 @@ function load_host_list {
 		for host in $HOST_LIST; do
 			# check host dns $hosts; #
 			check_dns $host;
-			if [[ $? -eq 0 ]]; then
+			if test $? -eq 0; then
 				echolog_debug "$DEBUG: DNS discovered host name for [$host]!";
 
 				# Single host or host_list #
@@ -121,12 +120,12 @@ function load_host_list {
 				# Maybe it's a 'hostslist' in '$HOSTSDIR' #
 				# check host list $host; # (cat $HOSTSDIR/$hosts) #
 				CHECK_HOST_LIST=$($FIND $HOSTSDIR -iname "$host" -exec $BASH {} \;);
-				if [ ! -z "$CHECK_HOST_LIST" ]; then
+				if test ! -z "$CHECK_HOST_LIST"; then
 					echolog "$OK! Found [$host] \"host_list \" file with the following hosts: $CHECK_HOST_LIST";
 					# Reset HOST_LIST #
 					# Load list with hostnames instead of host_list #
 					# First time loop runs, we need to reset host_list names from HOST_LIST #
-					if [[ $host_list_reset -eq 0 ]]; then
+					if test $host_list_reset -eq 0; then
 						HOST_LIST="";
 						host_list_reset=1;
 					fi;
@@ -134,7 +133,7 @@ function load_host_list {
 					for hf in $CHECK_HOST_LIST; do
 						# check host dns $hf; #
 						check_dns $hf;
-						if [[ $? -eq 0 ]]; then
+						if test $? -eq 0; then
 							echolog_debug "$DEBUG: DNS discovered host name for [$hf]!";
 
 							# Ping $hf
@@ -170,16 +169,16 @@ function load_host_list {
 		$ECHO
 		echolog "$ERROR! \"host\" or \"host_list\" is needed!";
 		$ECHO
-		usage;
+		help;
 		return $false;
 	fi;
 }
 
 
 # check_host_list(): checks avaliable hosts from $HOST_LIST created by load_host_list() #
-function check_host_list {
+check_host_list() {
 	# Check $HOST_LIST #
-	if [ ! -z "$HOST_LIST" ]; then
+	if test ! -z "$HOST_LIST"; then
 		# Host count #
 		avaliable_hosts=0;
 		for h in $HOST_LIST; do

@@ -19,72 +19,45 @@
 .\" License along with this manual; if not, write to the Free
 .\" Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 .\" Boston, MA  02111-1301  USA.
-.TH XENESIS 1
+.TH GENETIC 1
 .SH NAME
-xenesis \- Remote Task Manager
+genetic \- Genuine Package Manager
 
 .SH SYNOPSIS
-.B xenesis 
-	[exec] "[plugin{s}]" "[host{s}] || [host_list]" "[plugin{s} params (optional)]"
-
-	        [test] "[plugin{s}]" "[host{s}] || [host_list]" "[plugin{s} params (optional)]"
-
-			[sshconf] "[host{s}] || [host_list]"
+.B genetic --option1 --option2 'args' ... --command|-c 'file'
 
 .SH DESCRIPTION
-Xenesis is a remote task manager, it will help you on manage and schedule tasks on remote hosts conected to the same network over SSH.
+Genetic is a package manager for Genuine GNU/Linux, it will help you on manage Genuine System packages.
 
-Xenesis is a shell script and uses basic shell tools, it's simple and fully customizable!
+.SH COMMANDS:
+
+.TP
+.B	[-h] --help
+.br
+
+.TP
+.B	[-v] --version
+.br
 
 .SH OPTIONS:
 
 .TP
-.B [exec]:
-Run selected plugin or plugins on "hosts" or "host_list".
-.br
-
-.TP
-.B [test]:
-Test selected plugin or plugins on "hosts" or "host_list".
-.br
-
-.TP
-.B [sshconf]:
-Configure SSH access on "hosts" or "host_list".
-.br
-
-.SH PARAMETERS:
-
-.TP
-.B "[plugin{s}]":
-This option must be existent plugin{s} name{s}, if the selected plugin{s} does not exist, you can create a new one in plugins directory.\
-
-All plugins are shell scripts executed on the remote hosts.
-.br
-
-.TP
-.B "[host{s}] || [host_list]":
-This option must be a single "host" or a "host{s}" list, like: "host1 host2 host3 ...".
-
-"host_list" can be the name of a shell script in hosts directory, with the same output as a "host{s}" list: "host1 host2 host3 ..."
-.br
-
-.TP
-.B "[plugin{s} params (optional)]":
-Special plugin params. This is optional, depends on each plugin.
+	     --color
+	     --verbose
+	     --force
 .br
 
 .SH BUGS:
 
 The bug tracker can be reached by visiting the website
-\fIhttps://github.com/burzumishi/xenesis/issues\fR
+\fIhttps://github.com/burzumishi/bashskel/issues\fR
 
 Before sending a bug report, please verify that you have the latest
-version of xenesis. Many bugs (major and minor) are fixed at each
+version of genetic. Many bugs (major and minor) are fixed at each
 release, and if yours is out of date, the problem may already have
 been solved.
 
 .SH ADDITIONAL INFORMATION:
 
 For further information, visit the website
-\fIhttps://github.com/burzumishi/xenesis\fR
+\fIhttps://github.com/burzumishi/bashskel\fR

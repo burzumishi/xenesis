@@ -1,8 +1,8 @@
 #!@ENV@ bash
 
-# @PACKAGE@-@VERSION@ (libxenesis-ssh.so) #
+# @PACKAGE@-@VERSION@ (libxenesis-ssh.c) #
 
-# Copyright (c) 2014 Antonio Cao (@burzumishi) #
+# Copyright (c) 2014-2015 Antonio Cao (@burzumishi) #
 
 # This is free software;
 # You have unlimited permission to copy and/or distribute it,
@@ -15,11 +15,11 @@
 
 # Xenesis SSH Library #
 
-# libxenesis-ssh.so: SSH functions and definitions #
+# libxenesis-ssh.la: SSH functions and definitions #
 
 # check_rsa: Check for RSA key file #
-function check_rsa {
-	if [ ! -f "$SSH_ID_RSA" ]; then
+check_rsa() {
+	if test ! -f "$SSH_ID_RSA"; then
 		# Generate a new RSA key #
 		ssh-keygen -t rsa;
 		checkerror ?;
@@ -31,14 +31,14 @@ function check_rsa {
 }
 
 # check_ssh($host): Check SSH host reply #
-function check_ssh {
+check_ssh() {
 
-	host="$1";
+	host="$1"; shift;
 
     # TEST_SSH on $host #
-    TEST_SSH=$(@libdir@/libxenesis-sshnopass.so $BASH -c "$SSHCMD -o StrictHostKeyChecking=no $SSHUSER@${host} -n \"$LS\" 2>&1");
+    TEST_SSH=$(@libdir@/libxenesis-sshnopass.la $BASH -c "$SSHCMD -o StrictHostKeyChecking=no $SSHUSER@${host} -n \"$LS\" 2>&1");
 
-    if [ ! -z "$($ECHO $TEST_SSH | $GREP disconnect)" ]; then
+    if test ! -z "$($ECHO $TEST_SSH | $GREP disconnect)"; then
 		# ERROR: Host cant be accesed with SSH and $SSHUSER.
 	      	echolog "$ERROR! [$host] can't be accessed with SSH by [$SSHUSER].";
 		echolog "$WARNING! Configure SSH access for [${SSHUSER}@${host}] with 'sshconf' option.";
@@ -63,9 +63,9 @@ function check_ssh {
 }
 
 # check_ssh($host): Configure SSH for hosts in $HOST_LIST #
-function configure_ssh {
+configure_ssh() {
 
-	hosts="$1";
+	hosts="$1"; shift;
 
 	# Create a valid list of hosts: $HOST_LIST #
 	load_host_list "$hosts";
@@ -122,9 +122,9 @@ function configure_ssh {
 }
 
 # exec_ssh_cmd($cmd, $hosts): Execute Command for $host in $HOST_LIST #
-function exec_ssh_cmd {
-	cmd="$1";
-	hosts="$2";
+exec_ssh_cmd() {
+	cmd="$1"; shift;
+	hosts="$1"; shift;
 
 	# Create a valid list of hosts: $HOST_LIST #
 	load_host_list "$hosts";

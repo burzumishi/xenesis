@@ -1,0 +1,3 @@
+# PLUGINS DATABASE PATH #
+PLUGINSDIR="@localstatedir@/lib/@PACKAGE@/plugins";
+

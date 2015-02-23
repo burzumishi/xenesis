@@ -1,6 +1,6 @@
 #!@ENV@ bash
 
-# @PACKAGE@-@VERSION@ (libxenesis-ral.so) #
+# @PACKAGE@-@VERSION@ (libxenesis-ral.c) #
 
 # Copyright (c) 2014 Antonio Cao (@burzumishi) #
 
@@ -15,25 +15,24 @@
 
 # Xenesis RAL Library #
 
-# libxenesis-ral.so: Remote Administration Layer functions and definitions #
+# libxenesis-ral.la: Remote Administration Layer functions and definitions #
 
-RALFILE_LIST="";
 ralfile_list_reset=0;
 
 # ral_plugin_notfound($plugin): Send error message if a plugin was not found, always returns $false #
-function ral_plugin_notfound {
-        # Params: $plugin #
-        plugin="$1";
+ral_plugin_notfound() {
+    # Params: $plugin #
+    plugin="$1"; shift;
 
-        # If $plugin does not exist set it to "none" #
-        if [ -z "$plugin" ]; then plugin="none"; fi
+    # If $plugin does not exist set it to "none" #
+    if test -z "$plugin"; then plugin="none"; fi
 
 	# RAL Plugin NOT found (create new ralfile??) #
 	echolog "$ERROR! [RAL Plugin]: [$plugin] not Found!";
 	echolog "$ERROR! Perhaps you should check your spelling.";
 
 	# If $plugin is "none" define a dummy plugin name, if not, show current param value #
-	if [ "$plugin" == "none" ]; then plugin="yournewplugin"; fi
+	if test "$plugin" == "none"; then plugin="yournewplugin"; fi
 
 	# Ask user for plugin creation #
 	echolog "$WARNING! [RAL Plugin]: does not exist, you can create a new one.";
@@ -45,15 +44,15 @@ function ral_plugin_notfound {
 }
 
 # check_ral_plugin($PLUGINS): check for an existent plugin #
-function check_ral_plugin {
+check_ral_plugin() {
 	# Params: $PLUGINS #
-	PLUGINS="$1";
+	PLUGINS="$1"; shift;
 
-	if [ ! -z "$PLUGINS" ]; then
+	if test ! -z "$PLUGINS"; then
 		for plugin in $PLUGINS; do
 			ralfile=$($FIND $PLUGINSDIR -iname "${plugin}.ral");
 
-			if [ ! -z "$ralfile" ]; then
+			if test ! -z "$ralfile"; then
 				# RAL Plugin found (ralfile) #
 				echolog "$OK! [RAL Plugin] found: $ralfile";
 
@@ -83,10 +82,10 @@ function check_ral_plugin {
 }
 
 # load_ral_plugin($ralfile_list,$host): Execute ralfile on host # TODO TODO TODO #
-function load_ral_plugin {
+load_ral_plugin() {
 	# Params: $ralfile_list, $host #
-	ralfile_list="$1";
-	host="$2";
+	ralfile_list="$1"; shift;
+	host="$1"; shift;
 
 	for ralfile in $ralfile_list; do
 		# TODO TODO TODO #
@@ -99,10 +98,10 @@ function load_ral_plugin {
 }
 
 # ral($ralfile_list,$hosts): Execute all remote administration scripts on hosts and get stdout #
-function ral {
+ral() {
 	# Params: $ralfile_list, $hosts #
-	ralfile_list="$1";
-	hosts="$2";
+	ralfile_list="$1"; shift;
+	hosts="$1"; shift;
 
 	# Create a valid list of hosts: $HOST_LIST #
 	load_host_list "$hosts";
@@ -120,17 +119,17 @@ function ral {
 }
 
 # start_ral($plugins,$hosts): Execute remote administration scripts on hosts and get stdout #
-function start_ral {
+start_ral() {
 	# Start Remote Admin Layer (RAL) Support # libxenesis-ral.so #
 
 	# [option] PLUGIN: must be an existent "plugin name" #
-	PLUGINS="$1";
+	PLUGINS="$1"; shift;
 
 	# [option] HOSTS: must be a valid "host" or "host_list" #
-	HOSTS="$2";
+	HOSTS="$1"; shift;
 
 	# [option] PLUGIN_PARAMS: should be a "plugin params list" # (OPTIONAL) #
-	PLUGIN_PARAMS="$3";
+	PLUGIN_PARAMS="$1"; shift;
 
 	# Check for Remote Admin Layer (RAL) Plugin File #
 	# PLUGIN -> export $RALFILE #

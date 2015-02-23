@@ -1,18 +1,17 @@
 #!/bin/sh
 
 aclocal
+libtoolize
 autoconf
-
-ln -sf LICENSE COPYING
-ln -sf README.md README
-ln -sf README.md AUTHORS
-ln -sf README.md NEWS
-
 automake -a
 
-if [ -f "configure" ]; then
-	./configure --prefix=/opt/xenesis
-fi;
+#if [ -f "configure" ]; then
+	# --prefix /opt/xenesis: ./configure --prefix=/opt/xenesis --sysconfdir=/opt/xenesis/etc --localstatedir=/opt/xenesis/var
+	# ./configure --prefix=/opt/xenesis --sysconfdir=/opt/xenesis/etc --localstatedir=/opt/xenesis/var
 
-# CLEAN
-# rm -rf aclocal.m4 AUTHORS autom4te.cache config.guess configure config.sub COPYING INSTALL install-sh missing NEWS README Makefile.in src/Makefile.in Makefile src/Makefile config.log config.status
+	# --prefix /usr (default)
+	# ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+#fi;
+
+# DEVEL DIST CLEAN ALL
+# rm -rf aclocal.m4 autom4te.cache config.guess configure config.sub install-sh missing Makefile.in src/Makefile.in Makefile src/Makefile config.log config.status

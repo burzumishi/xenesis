@@ -1,10 +1,11 @@
-CLEANFILES = xenesis libxenesis-ral.so libxenesis.so libxenesis-net.so libxenesis-ssh.so libxenesis-sshnopass.so *~
+CLEANFILES = libxenesis.la libxenesis-debug.la libxenesis-env.la libxenesis-log.la libxenesis-net.la libxenesis-ral.la libxenesis-ssh.la libxenesis-sshnopass.la xenesis$(EXEEXT) *~
 
 do_subst = sed -e 's,[@]sharedstatedir[@],$(sharedstatedir),g' \
 		-e 's,[@]localstatedir[@],$(localstatedir),g' \
 		-e 's,[@]sysconfdir[@],$(sysconfdir),g' \
 		-e 's,[@]prefix[@],$(prefix),g' \
 		-e 's,[@]bindir[@],$(bindir),g' \
+		-e 's,[@]sbindir[@],$(sbindir),g' \
 		-e 's,[@]libdir[@],$(libdir),g' \
 		-e 's,[@]mandir[@],$(mandir),g' \
 		-e 's,[@]PERL[@],$(PERL),g' \
@@ -14,28 +15,47 @@ do_subst = sed -e 's,[@]sharedstatedir[@],$(sharedstatedir),g' \
 		-e 's,[@]VERSION[@],$(VERSION),g' \
 		-e 's,[@]DESCRIPTION[@],$(DESCRIPTION),g'
 
-libxenesis.so: libxenesis.so.in Makefile
-	$(do_subst) < $(srcdir)/libxenesis.so.in > libxenesis.so; \
-	chmod +x libxenesis.so
+xenesis_SOURCES = xenesis.c libxenesis.c libxenesis-debug.c libxenesis-env.c libxenesis-log.c libxenesis-net.c libxenesis-ral.c libxenesis-ssh.c libxenesis-sshnopass.c
 
-libxenesis-ral.so: libxenesis-ral.so.in Makefile
-	$(do_subst) < $(srcdir)/libxenesis-ral.so.in > libxenesis-ral.so; \
-	chmod +x libxenesis-ral.so
+sbin_PROGRAMS = xenesis$(EXEEXT)
 
-libxenesis-net.so: libxenesis-net.so.in Makefile
-	$(do_subst) < $(srcdir)/libxenesis-net.so.in > libxenesis-net.so; \
-	chmod +x libxenesis-net.so
+libxenesisdir = $(libdir)
+libxenesis_DATA = libxenesis.la libxenesis-debug.la libxenesis-log.la libxenesis-env.la libxenesis-net.la libxenesis-ral.la libxenesis-ssh.la libxenesis-sshnopass.la
 
-libxenesis-ssh.so: libxenesis-ssh.so.in Makefile
-	$(do_subst) < $(srcdir)/libxenesis-ssh.so.in > libxenesis-ssh.so; \
-	chmod +x libxenesis-ssh.so
+libxenesis.la: libxenesis.c Makefile
+	$(do_subst) < $(srcdir)/libxenesis.c > libxenesis.la; \
+	chmod +x libxenesis.la
 
-libxenesis-sshnopass.so: libxenesis-sshnopass.so.in Makefile
-	$(do_subst) < $(srcdir)/libxenesis-sshnopass.so.in > libxenesis-sshnopass.so; \
-	chmod +x libxenesis-sshnopass.so
+libxenesis-debug.la: libxenesis-debug.c Makefile
+	$(do_subst) < $(srcdir)/libxenesis-debug.c > libxenesis-debug.la; \
+	chmod +x libxenesis-debug.la
 
-xenesis: xenesis.in Makefile
-	$(do_subst) < $(srcdir)/xenesis.in > xenesis; \
-	chmod +x xenesis
+libxenesis-env.la: libxenesis-env.c Makefile
+	$(do_subst) < $(srcdir)/libxenesis-env.c > libxenesis-env.la; \
+	chmod +x libxenesis-env.la
 
-all-local: libxenesis.so libxenesis-ral.so libxenesis-net.so libxenesis-ssh.so libxenesis-sshnopass.so xenesis
+libxenesis-log.la: libxenesis-log.c Makefile
+	$(do_subst) < $(srcdir)/libxenesis-log.c > libxenesis-log.la; \
+	chmod +x libxenesis-log.la
+
+libxenesis-net.la: libxenesis-net.c Makefile
+	$(do_subst) < $(srcdir)/libxenesis-net.c > libxenesis-net.la; \
+	chmod +x libxenesis-net.la
+
+libxenesis-ral.la: libxenesis-ral.c Makefile
+	$(do_subst) < $(srcdir)/libxenesis-ral.c > libxenesis-ral.la; \
+	chmod +x libxenesis-ral.la
+
+libxenesis-ssh.la: libxenesis-ssh.c Makefile
+	$(do_subst) < $(srcdir)/libxenesis-ssh.c > libxenesis-ssh.la; \
+	chmod +x libxenesis-ssh.la
+
+libxenesis-sshnopass.la: libxenesis-sshnopass.c Makefile
+	$(do_subst) < $(srcdir)/libxenesis-sshnopass.c > libxenesis-sshnopass.la; \
+	chmod +x libxenesis-sshnopass.la
+
+xenesis$(EXEEXT): xenesis.c Makefile
+	$(do_subst) < $(srcdir)/xenesis.c > xenesis$(EXEEXT); \
+	chmod +x xenesis$(EXEEXT);
+
+all-local: libxenesis.la libxenesis-debug.la libxenesis-env.la libxenesis-log.la libxenesis-net.la libxenesis-ral.la libxenesis-ssh.la libxenesis-sshnopass.la xenesis$(EXEEXT)

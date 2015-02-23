@@ -1,6 +1,34 @@
-# LOGFILE Setup #
+### Setup @PACKAGE@ LogFiles, LogPaths and LogSettings ###
+
+# Log Date Format #
+DATEFORMAT="+%D-%H:%M:%S";
+
+# Enable @PACKAGE@ main log # (default: yes) #
+ENABLELOG="yes";
+
+# Enable @PACKAGE@ main debug log # (default: yes) #
+ENABLEDEBUG="yes";
+
+# Enable @PACKAGE@ debug log for Setups and Settings, main debug log must be enabled # (default: yes) #
+ENABLEDEBUG_ENVIRONMENT="yes";
+
+# Enable @PACKAGE@ verbose output (default: no) #
+ENABLE_VERBOSE="no";
+
+### Modify with care! ###
+
+# System Log directory #
 LOGDIR="@localstatedir@/log/@PACKAGE@";
+
+# @PACKAGE@ Log file name #
 LOGFILE="@PACKAGE@.log";
 
-# Activate Debug Log #
-ENABLEDEBUG="yes";
+# Complete Log PATH #
+LOG="$LOGDIR/$LOGFILE";
+
+# @PACKAGE@ Debug Log file name #
+DEBUGLOGFILE="@PACKAGE@-debug.log";
+
+# Complete Debug Log PATH #
+DEBUGLOG="$LOGDIR/$DEBUGLOGFILE";
+

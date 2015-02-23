@@ -1,5 +1,8 @@
 CLEANFILES = linux.conf hpux.conf cygwin.conf default.conf freebsd.conf *~
 
+xenesisetcoscmddir = $(sysconfdir)/@PACKAGE@/os/commands
+xenesisetcoscmd_DATA = linux.conf hpux.conf cygwin.conf default.conf freebsd.conf
+
 do_subst = sed -e 's,[@]sharedstatedir[@],$(sharedstatedir),g' \
 		-e 's,[@]localstatedir[@],$(localstatedir),g' \
 		-e 's,[@]sysconfdir[@],$(sysconfdir),g' \

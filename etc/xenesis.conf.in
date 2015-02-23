@@ -1,0 +1,20 @@
+# @PACKAGE@.conf - @DESCRIPTION@ #
+
+# Enable Start Message #
+ENABLE_VERSION="yes";
+
+# Terminal Color Support #
+ENABLE_COLOR="yes";
+
+# Language Support #
+LC_ALL="C";
+LANG="C";
+
+### Modify with care! ###
+
+# @PACKAGE@ shared work directory #
+TMPDIR="@localstatedir@/tmp";
+
+# @PACKAGE@ process locking #
+LOCKDIR="@localstatedir@/lock";
+LOCKFILE="$LOCKDIR/@PACKAGE@.lock";
