@@ -1,7 +1,4 @@
 # ral: uname #
 
-# User #
-SSHUSER="root"
-
 # Command #
 uname -a

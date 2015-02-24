@@ -2,7 +2,7 @@
 
 # @PACKAGE@-@VERSION@ (libxenesis-ral.c) #
 
-# Copyright (c) 2014 Antonio Cao (@burzumishi) #
+# Copyright (c) 2014-2015 Antonio Cao (@burzumishi) #
 
 # This is free software;
 # You have unlimited permission to copy and/or distribute it,
