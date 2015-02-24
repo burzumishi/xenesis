@@ -30,10 +30,10 @@ check_ping() {
 
 	if test $? -ne $true; then		
 		echolog "$WARNING Warning! '$host' does not reply to 'ping' requests.";
-        	return $false;
+        return $false;
     else
-        	echolog "$OK Host '$host' replies to 'ping' requests.";
-        	return $true;
+        echolog "$OK Host '$host' replies to 'ping' requests.";
+        return $true;
     fi;
 }
 
@@ -47,10 +47,10 @@ check_dns() {
 
 	if test $? -ne $true; then		
 		echolog "$WARNING Warning! '$host' does not reply to 'DNS' requests.";
-        	return $false;
+        return $false;
     else
-        	echolog "$OK Host '$host' replies to 'DNS' requests.";
-        	return $true;
+        echolog "$OK Host '$host' replies to 'DNS' requests.";
+        return $true;
     fi;
 }
 
@@ -95,7 +95,7 @@ load_host_list() {
 			# Count HOSTS -> num_host #
 			num_host=$((num_host+1));
 			# Fill $h -> HOST_LIST #
-			HOST_LIST="$h $HOST_LIST";
+			# HOST_LIST="$h $HOST_LIST";
 		done;
 
 		# Clean white spaces at end of the list #
@@ -181,6 +181,7 @@ check_host_list() {
 	if test ! -z "$HOST_LIST"; then
 		# Host count #
 		avaliable_hosts=0;
+
 		for h in $HOST_LIST; do
 			# Count HOSTS -> avaliable_hosts #
 			avaliable_hosts=$((avaliable_hosts+1));
