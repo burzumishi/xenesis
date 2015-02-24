@@ -28,15 +28,15 @@ ral_plugin_notfound() {
     if test -z "$plugin"; then plugin="none"; fi
 
 	# RAL Plugin NOT found (create new ralfile??) #
-	echolog "$ERROR! [RAL Plugin]: [$plugin] not Found!";
-	echolog "$ERROR! Perhaps you should check your spelling.";
+	echolog "$ERROR Error! Plugin not fount: '$plugin'!";
+	echolog "$ERROR Error! Perhaps you should check your spelling.";
 
 	# If $plugin is "none" define a dummy plugin name, if not, show current param value #
 	if test "$plugin" == "none"; then plugin="yournewplugin"; fi
 
 	# Ask user for plugin creation #
-	echolog "$WARNING! [RAL Plugin]: does not exist, you can create a new one.";
-	echolog "$WARNING! Use: $EDITOR $PLUGINSDIR/${plugin}.ral"
+	echolog "$WARNING Warning! Plugin does not exist! You can create a new one!";
+	echolog "$WARNING Warning! Use: $EDITOR $PLUGINSDIR/${plugin}.ral"
 	$ECHO;
 	usage;
 
@@ -54,7 +54,7 @@ check_ral_plugin() {
 
 			if test ! -z "$ralfile"; then
 				# RAL Plugin found (ralfile) #
-				echolog "$OK! [RAL Plugin] found: $ralfile";
+				echolog "$OK Plugin found: '$ralfile'.";
 
 				# Count RALFILES -> num_ralfile #
 				num_ralfile=$((num_ralfile+1));
@@ -70,7 +70,7 @@ check_ral_plugin() {
 
 		# DEBUG $RALFILE_LIST #
 		RALFILE_LIST=$($ECHO $RALFILE_LIST | sed -e 's/ $//g');
-		echolog_debug "$DEBUG: Loaded [#$num_ralfile] ralfiles: $RALFILE_LIST";
+		echolog_debug "$DEBUG: Loaded #$num_ralfile ralfiles: '$RALFILE_LIST'";
 
 		return $true;
 	else
@@ -89,9 +89,9 @@ load_ral_plugin() {
 
 	for ralfile in $ralfile_list; do
 		# TODO TODO TODO #
-		echolog "$OK! Deploying [$ralfile] to [$host] ...";
-		echolog "$OK! Running [$ralfile] on [$host] ...";
-		echolog "$OK! [RAL Plugin] status [$ralfile] on [$host]: Finished!";
+		echolog "$OK Deploying '$ralfile' to '$host' ...";
+		echolog "$OK Running '$ralfile' on '$host' ...";
+		echolog "$OK Plugin status '$ralfile' on '$host': Finished!";
 	done
 
 	return $true;

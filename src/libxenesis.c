@@ -131,9 +131,9 @@ main() {
 					;;
 
 					# libxenesis-ssh.so -- actions -- #
-					-c|--command) # exec_ssh_cmd: "$2 == $CMD", "$3 == $HOST_LIST" #
-						SSHCMD="$2"; shift 2;
-						exec_ssh_cmd "$SSHCMD" "$HOST_LIST";
+					-c|--command) # exec_ssh_cmd: "$2 == $cmd", "$3 == $HOST_LIST" #
+						cmd="$2"; shift 2;
+						exec_ssh_cmd "$cmd" "$HOST_LIST";
 					;;
 					
 					--sshconf) # configure_ssh: "$2 == $HOST_LIST" #

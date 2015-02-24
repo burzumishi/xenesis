@@ -25,7 +25,7 @@ check_rsa() {
 		checkerror ?;
 	else
 		# $SSH_ID_RSA key file found #
-       		echolog_debug "$OK! Have a [$SSH_ID_RSA] key file."
+       	echolog_debug "$OK Have a '$SSH_ID_RSA' key file."
 		return $true;
 	fi;
 }
@@ -40,8 +40,8 @@ check_ssh() {
 
     if test ! -z "$($ECHO $TEST_SSH | $GREP disconnect)"; then
 		# ERROR: Host cant be accesed with SSH and $SSHUSER.
-	      	echolog "$ERROR! [$host] can't be accessed with SSH by [$SSHUSER].";
-		echolog "$WARNING! Configure SSH access for [${SSHUSER}@${host}] with 'sshconf' option.";
+	    echolog "$ERROR Error! '$host' can't be accessed with 'SSH' by '$SSHUSER'.";
+		echolog "$WARNING Warning! Configure 'SSH' access for '${SSHUSER}@${host}' with '--sshconf' option.";
 
 		# If a database file exists we should delete it.
 		if [ -f "$SSHHOSTSDIR/${host}_${SSHUSER}" ]; then $RM -f $SSHHOSTSDIR/${host}_${SSHUSER}; fi
@@ -53,7 +53,7 @@ check_ssh() {
 	       	return $false;
     else
 		# Record host to database #
-       		echolog "$OK! [$host] has SSH access for [$SSHUSER]."
+       	echolog "$OK Host '$host' has 'SSH' access for '$SSHUSER'."
 
 		# Create file record $host_$SSHUSER #
 		$TOUCH $SSHHOSTSDIR/${host}_${SSHUSER};
@@ -85,37 +85,37 @@ configure_ssh() {
 		check_ssh $host;
 		errorcheck $?;
 
-		echolog "$OK! Configure [SSH] on [$host] ...";
+		echolog "$OK Configure 'SSH' on '$host' ...";
 
 		# Copy $SSH_ID_RSA key to $host #
-	    	$SSHCMD $SSH_ID_RSA ${SSHUSER}@${host}:
+	    $SSHCMD $SSH_ID_RSA ${SSHUSER}@${host}:
 		errorcheck $?;
 
-	   	 # Check ~/.ssh directory existence, if not create it #
-	    	$SSHCMD ${SSHUSER}@${host} "if [ ! -d '~/.ssh' ]; then $MKDIR ~/.ssh; fi";
+	   	# Check ~/.ssh directory existence, if not create it #
+	    $SSHCMD ${SSHUSER}@${host} "if [ ! -d '~/.ssh' ]; then $MKDIR ~/.ssh; fi";
 		errorcheck $?;
 
-	    	# Change ~/.ssh directory permissions #
-	    	$SSHCMD ${SSHUSER}@${host} "$CHMOD 700 ~/.ssh";
+	    # Change ~/.ssh directory permissions #
+	    $SSHCMD ${SSHUSER}@${host} "$CHMOD 700 ~/.ssh";
 		errorcheck $?;
 
-	    	# Check for a valid $SSH_AUTH_KEYS file #
-	    	$SSHCMD ${SSHUSER}@${host} "if [ ! -e \"$SSH_AUTH_KEYS\" ]; then $TOUCH $SSH_AUTH_KEYS; fi";
+	    # Check for a valid $SSH_AUTH_KEYS file #
+	    $SSHCMD ${SSHUSER}@${host} "if [ ! -e \"$SSH_AUTH_KEYS\" ]; then $TOUCH $SSH_AUTH_KEYS; fi";
 		errorcheck $?;
 
-	    	# Change $SSH_AUTH_KEYS file permissions #
-	    	$SSHCMD ${SSHUSER}@${host} "$CHMOD 600 $SSH_AUTH_KEYS";
+	    # Change $SSH_AUTH_KEYS file permissions #
+	    $SSHCMD ${SSHUSER}@${host} "$CHMOD 600 $SSH_AUTH_KEYS";
 		errorcheck $?;
 
 		# Add $SSH_ID_RSA to $SSH_AUTH_KEYS #
-	    	$SSHCMD ${SSHUSER}@${host} "$CAT $SSH_ID_RSA >> $SSH_AUTH_KEYS";
+	    $SSHCMD ${SSHUSER}@${host} "$CAT $SSH_ID_RSA >> $SSH_AUTH_KEYS";
 		errorcheck $?;
 
 		# Test $SSH_ID_RSA #
-	    	$SSHCMD ${SSHUSER}@${host} "$LS -l $SSH_ID_RSA";
+	    $SSHCMD ${SSHUSER}@${host} "$LS -l $SSH_ID_RSA";
 		errorcheck $?;
 
-	    	echolog "$OK! SSH for [${SSHUSER}@${host}] has been configured.";
+	    echolog "$OK Setup SSH for '${SSHUSER}@${host}' finished.";
 	done;
 
 	return $true;
@@ -136,7 +136,7 @@ exec_ssh_cmd() {
 
 	# Execute SSH Command on $host #
 	for host in $HOST_LIST; do
-		echolog "$OK! Running [$cmd] on [$host] ...";
-		$SSHCMD ${SSHUSER}@${host} "$cmd";
+		echolog "$OK Running: '$SSHCMD ${SSHUSER}@${host} $cmd'.";
+		$SSHCMD ${SSHUSER}@${host} $cmd;
 	done;
 }

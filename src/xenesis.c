@@ -32,15 +32,20 @@ fi;
 case $OS in
 	# Operating System # Linux, HP-UX, CYGWIN_NT, ... #
 	*linux*|*Linux*|*LINUX*) source @sysconfdir@/@PACKAGE@/os/linux.conf;
-		;;
+							 source @sysconfdir@/@PACKAGE@/os/commands/linux.conf;
+	;;
 	*hp-ux*|*HP-UX*) source @sysconfdir@/@PACKAGE@/os/hpux.conf; # TODO TODO TODO #
-		;;
+					 source @sysconfdir@/@PACKAGE@/os/commands/hpux.conf; # TODO TODO TODO #
+	;;
 	*FreeBSD*|*freebsd*) source @sysconfdir@/@PACKAGE@/os/freebsd.conf;
-		;;
+						 source @sysconfdir@/@PACKAGE@/os/commands/freebsd.conf;
+	;;
 	*cygwin*|*CYGWIN*) source @sysconfdir@/@PACKAGE@/os/cygwin.conf; # TODO TODO TODO #
-		;;
+					   source @sysconfdir@/@PACKAGE@/os/commands/cygwin.conf; # TODO TODO TODO #
+	;;
 	*) source @sysconfdir@/@PACKAGE@/os/default.conf;
-		;;
+	   source @sysconfdir@/@PACKAGE@/os/commands/default.conf;
+	;;
 esac
 
 # Load @PACKAGE@ Libraries #

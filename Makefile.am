@@ -42,7 +42,9 @@ distclean-local:
 	@rm -rfv configure src/Makefile.in Makefile.in \
 	Makefile src/Makefile config.log autom4te.cache \
 	etc/Makefile.in etc/conf.d/Makefile.in \
-	etc/Makefile etc/conf.d/Makefile; \
+	etc/Makefile etc/conf.d/Makefile \
+	etc/os/commands/Makefile etc/os/Makefile \
+	etc/os/commands/Makefile.in etc/os/Makefile.in; \
 	echo "=== distclean-local done ==="
 
 devdistclean-local:
