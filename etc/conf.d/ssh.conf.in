@@ -2,9 +2,12 @@
 SSHUSER="root";
 SSHOPTS="";
 
+# SSH Dir #
+SSHDIR="$HOME/.ssh";
+
 # SSH Files #
-SSH_ID_RSA="~/.ssh/id_rsa.pub";
-SSH_AUTH_KEYS="~/.ssh/authorized_keys";
+SSH_ID_RSA="$SSHDIR/id_rsa.pub";
+SSH_AUTH_KEYS="$SSHDIR/authorized_keys";
 
 # SSH HOSTS ACCESS DATABASE PATH #
 SSHHOSTSDIR="@localstatedir@/lib/@PACKAGE@/sshhosts";

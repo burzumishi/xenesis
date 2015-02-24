@@ -28,6 +28,7 @@ load_core_variables() {
 
 
 	# Define '@PACKAGE' commands #
+	ENV="env";
 	ECHO="echo -e";
 	GREP="grep";
 	HOSTCMD="host";

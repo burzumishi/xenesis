@@ -63,7 +63,7 @@ addto_host_list() {
 	if test $error -eq $true; then
 		# Check if $host is already on $HOST_LIST #
 		TEST_HOST_LIST=$(echo $HOST_LIST | grep $host);
-		if [ -z "$TEST_HOST_LIST" ]; then
+		if test -z "$TEST_HOST_LIST"; then
 			HOST_LIST="$host $HOST_LIST"
 			echolog "$OK Host '$host' added to 'HOST_LIST'!";
 		else

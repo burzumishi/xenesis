@@ -41,7 +41,7 @@ main() {
 		echolog_debug "$DEBUG =====================================================";
 
 		# Check @PACKAGE@ directory structure. These dirs are needed for @PACKAGE@ to work properly #
-		check_directory_structure "$LOCKDIR $TMPDIR" "$PLUGINSDIR" "$HOSTSDIR" "$SSHHOSTSDIR";
+		check_directory_structure "$LOCKDIR $TMPDIR $PLUGINSDIR $HOSTSDIR $SSHHOSTSDIR";
 
 		# Lock @PACKAGE@ instance #
 		lock_instance;
@@ -465,12 +465,14 @@ check_directory_structure() {
 	# Create required '@PACKAGE' directories #
 	for dir in $directories; do
 		# Create $dir if not found #
-	  if test ! -d "$dir"; then
-	    echolog_debug "$DEBUG Warning! Requested directory '$dir' was not found!";
+	  	if test ! -d "$dir"; then
+	    	echolog_debug_verbose "$DEBUG Warning! Requested directory '$dir' was not found!";
 			
 			$MKDIR -p $dir $>/dev/null;
 
 			echolog_debug_verbose "$DEBUG Warning! Requested directory '$dir' has been created!";
+		else
+			echolog_debug_verbose "$DEBUG Requested directory '$dir' was found!";
 		fi;
 	done;
 	

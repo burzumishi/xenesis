@@ -57,7 +57,9 @@ devdistclean-local:
 	echo "=== distclean-local done ==="
 
 install-data-hook:
-	@echo "Installing <<@PACKAGE@>> data files ..."; \
+	@echo "Setting up <<@PACKAGE@>> libraries ..."; \
+	chmod +x $(libdir)/*.la; \
+	echo "Installing <<@PACKAGE@>> data files ..."; \
 	mkdir -pv $(localstatedir)/lib/@PACKAGE@; \
 	cp -rfv plugins $(localstatedir)/lib/@PACKAGE@/; \
 	cp -rfv hosts $(localstatedir)/lib/@PACKAGE@/; \
