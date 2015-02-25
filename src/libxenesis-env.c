@@ -187,18 +187,14 @@ $INFO Options:
 $INFO RAL Options:
 
 	${color_bwht}[-H] --hostlist		${color_wht}(Host list can be a file or a comma separated list)
-
 	${color_bwht}[-O] --plugin-options	${color_wht}(Plugin Options)
-
-	${color_bwht}[-p] --plugin			${color_wht}(Plugin to load)
-
-	${color_bwht}[-T] --test			${color_wht}(Test plugin)
-
-	${color_bwht}[-c] --command			${color_wht}(Execute command in Host list)
+	${color_bwht}[-p] --plugin		${color_wht}(Plugin to load)
+	${color_bwht}[-T] --test		${color_wht}(Test plugin)
+	${color_bwht}[-c] --command		${color_wht}(Execute command in Host list)
 
 $INFO SSH Options:
 
-	${color_bcyn}	  --sshconf			${color_cyn}(Configure SSH access on hosts)
+	${color_bcyn}     --sshconf		${color_cyn}(Configure SSH access on hosts)
 
 $INFO Try ${color_bwht}'${color_bgrn}man @PACKAGE@.(1)${color_bwht}'${color_reset} for more information.";
 
@@ -226,7 +222,7 @@ $INFO Try ${color_bwht}'${color_bgrn}man @PACKAGE@.(1)${color_bwht}'${color_rese
 		@PACKAGE@_VERSION="$INFO @DESCRIPTION@ [@PACKAGE@ (@VERSION@)] running on ($HOST_MACHINE) '$HOST_OS'.";
 
 		# @PACKAGE@ help #
-		  	HELP="$INFO Usage: @PACKAGE@ --option1 --option2 'arg' ... --command|-c 'file'
+		HELP="$INFO Usage: @PACKAGE@ --option1 --option2 'arg' ... --command|-c 'file'
 
 $INFO Commands:
 
@@ -242,18 +238,14 @@ $INFO Options:
 $INFO RAL Options:
 
 	[-H] --hostlist			(Host list can be a file or a comma separated list)
-
 	[-O] --plugin-options	(Plugin Options)
-
-	[-p] --plugin			(Plugin to load)
-
-	[-T] --test				(Test plugin)
-
-	[-c] --command			(Execute command in Host list)
+	[-p] --plugin		(Plugin to load)
+	[-T] --test			(Test plugin)
+	[-c] --command		(Execute command in Host list)
 
 $INFO SSH Options:
 
-		 --sshconf			(Configure SSH access on hosts)
+	     --sshconf		(Configure SSH access on hosts)
 
 $INFO Try 'man @PACKAGE@.(1)' for more information.";
 	fi;

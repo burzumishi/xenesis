@@ -81,17 +81,26 @@ check_ral_plugin() {
 
 }
 
-# load_ral_plugin($ralfile_list,$host): Execute ralfile on host # TODO TODO TODO #
+# load_ral_plugin($ralfile_list,$host): Execute ralfile on host #
 load_ral_plugin() {
 	# Params: $ralfile_list, $host #
 	ralfile_list="$1"; shift;
 	host="$1"; shift;
 
-	for ralfile in $ralfile_list; do
+	for ralfile_path in $ralfile_list; do
+		ralfile=$(echo "$ralfile_path" | awk -F/ '{print $NF}');
+
+		# Deploy RAL Plugin file to $host #
+		echolog "$OK Deploying plugin file '$ralfile' to '$host' ...";
+		$SCPCMD $ralfile_path ${SSHUSER}@${host}:/tmp/$ralfile;
+		errorcheck $?;
+
 		# TODO TODO TODO #
-		echolog "$OK Deploying '$ralfile' to '$host' ...";
-		echolog "$OK Running '$ralfile' on '$host' ...";
-		echolog "$OK Plugin status '$ralfile' on '$host': Finished!";
+		echolog "$OK Running plugin '$ralfile' on '$host' ...";
+		$SSHCMD ${SSHUSER}@${host} "$BASH /tmp/$ralfile";
+		errorcheck $?;
+
+		echolog "$OK Plugin '$ralfile' on '$host' has finished!";
 	done
 
 	return $true;
