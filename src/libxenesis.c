@@ -268,14 +268,30 @@ exit_instance() {
 check_os() {
 	case "$HOST_SYSTEM" in
 		Linux|LINUX|linux) HOST_SYSTEM="linux";
+			# Import Linux config files #
+			source @sysconfdir@/@PACKAGE@/os/linux.conf;
+			source @sysconfdir@/@PACKAGE@/os/commands/linux.conf;
 			return $true;
 		;;
 
 		*BSD|*bsd) HOST_SYSTEM="bsd";
+			# Import BSD config files #
+			source @sysconfdir@/@PACKAGE@/os/freebsd.conf;
+			source @sysconfdir@/@PACKAGE@/os/commands/freebsd.conf;
+			return $true;
+		;;
+
+		*hp-ux*|*HP-UX*) HOST_SYSTEM="hpux";
+			# Import HP-UX config files #
+			source @sysconfdir@/@PACKAGE@/os/hpux.conf; # TODO TODO TODO #
+			source @sysconfdir@/@PACKAGE@/os/commands/hpux.conf; # TODO TODO TODO #
 			return $true;
 		;;
 
 		cygwin*|CygWin*|CYGWIN*|Cygwin*) HOST_SYSTEM="cygwin";
+			# Import CygWin config files #
+			source @sysconfdir@/@PACKAGE@/os/cygwin.conf; # TODO TODO TODO #
+			source @sysconfdir@/@PACKAGE@/os/commands/cygwin.conf; # TODO TODO TODO #
 			return $true;
 		;;
 
