@@ -20,6 +20,63 @@ You have another version of autoconf.  It may work, but is not guaranteed to.
 If you have problems, you may need to regenerate the build system entirely.
 To do so, use the procedure documented by the package, typically 'autoreconf'.])])
 
+# intlmacosx.m4 serial 5 (gettext-0.18.2)
+dnl Copyright (C) 2004-2014 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
+dnl
+dnl This file can can be used in projects which are not available under
+dnl the GNU General Public License or the GNU Library General Public
+dnl License but which still want to provide support for the GNU gettext
+dnl functionality.
+dnl Please note that the actual code of the GNU gettext library is covered
+dnl by the GNU Library General Public License, and the rest of the GNU
+dnl gettext package package is covered by the GNU General Public License.
+dnl They are *not* in the public domain.
+
+dnl Checks for special options needed on Mac OS X.
+dnl Defines INTL_MACOSX_LIBS.
+AC_DEFUN([gt_INTL_MACOSX],
+[
+  dnl Check for API introduced in Mac OS X 10.2.
+  AC_CACHE_CHECK([for CFPreferencesCopyAppValue],
+    [gt_cv_func_CFPreferencesCopyAppValue],
+    [gt_save_LIBS="$LIBS"
+     LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
+     AC_LINK_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <CoreFoundation/CFPreferences.h>]],
+          [[CFPreferencesCopyAppValue(NULL, NULL)]])],
+       [gt_cv_func_CFPreferencesCopyAppValue=yes],
+       [gt_cv_func_CFPreferencesCopyAppValue=no])
+     LIBS="$gt_save_LIBS"])
+  if test $gt_cv_func_CFPreferencesCopyAppValue = yes; then
+    AC_DEFINE([HAVE_CFPREFERENCESCOPYAPPVALUE], [1],
+      [Define to 1 if you have the Mac OS X function CFPreferencesCopyAppValue in the CoreFoundation framework.])
+  fi
+  dnl Check for API introduced in Mac OS X 10.3.
+  AC_CACHE_CHECK([for CFLocaleCopyCurrent], [gt_cv_func_CFLocaleCopyCurrent],
+    [gt_save_LIBS="$LIBS"
+     LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
+     AC_LINK_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <CoreFoundation/CFLocale.h>]],
+          [[CFLocaleCopyCurrent();]])],
+       [gt_cv_func_CFLocaleCopyCurrent=yes],
+       [gt_cv_func_CFLocaleCopyCurrent=no])
+     LIBS="$gt_save_LIBS"])
+  if test $gt_cv_func_CFLocaleCopyCurrent = yes; then
+    AC_DEFINE([HAVE_CFLOCALECOPYCURRENT], [1],
+      [Define to 1 if you have the Mac OS X function CFLocaleCopyCurrent in the CoreFoundation framework.])
+  fi
+  INTL_MACOSX_LIBS=
+  if test $gt_cv_func_CFPreferencesCopyAppValue = yes || test $gt_cv_func_CFLocaleCopyCurrent = yes; then
+    INTL_MACOSX_LIBS="-Wl,-framework -Wl,CoreFoundation"
+  fi
+  AC_SUBST([INTL_MACOSX_LIBS])
+])
+
 # Copyright (C) 2002-2013 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
@@ -55,6 +112,86 @@ AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
 m4_ifndef([AC_AUTOCONF_VERSION],
   [m4_copy([m4_PACKAGE_VERSION], [AC_AUTOCONF_VERSION])])dnl
 _AM_AUTOCONF_VERSION(m4_defn([AC_AUTOCONF_VERSION]))])
+
+# Copyright (C) 2011-2013 Free Software Foundation, Inc.
+#
+# This file is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# AM_PROG_AR([ACT-IF-FAIL])
+# -------------------------
+# Try to determine the archiver interface, and trigger the ar-lib wrapper
+# if it is needed.  If the detection of archiver interface fails, run
+# ACT-IF-FAIL (default is to abort configure with a proper error message).
+AC_DEFUN([AM_PROG_AR],
+[AC_BEFORE([$0], [LT_INIT])dnl
+AC_BEFORE([$0], [AC_PROG_LIBTOOL])dnl
+AC_REQUIRE([AM_AUX_DIR_EXPAND])dnl
+AC_REQUIRE_AUX_FILE([ar-lib])dnl
+AC_CHECK_TOOLS([AR], [ar lib "link -lib"], [false])
+: ${AR=ar}
+
+AC_CACHE_CHECK([the archiver ($AR) interface], [am_cv_ar_interface],
+  [AC_LANG_PUSH([C])
+   am_cv_ar_interface=ar
+   AC_COMPILE_IFELSE([AC_LANG_SOURCE([[int some_variable = 0;]])],
+     [am_ar_try='$AR cru libconftest.a conftest.$ac_objext >&AS_MESSAGE_LOG_FD'
+      AC_TRY_EVAL([am_ar_try])
+      if test "$ac_status" -eq 0; then
+        am_cv_ar_interface=ar
+      else
+        am_ar_try='$AR -NOLOGO -OUT:conftest.lib conftest.$ac_objext >&AS_MESSAGE_LOG_FD'
+        AC_TRY_EVAL([am_ar_try])
+        if test "$ac_status" -eq 0; then
+          am_cv_ar_interface=lib
+        else
+          am_cv_ar_interface=unknown
+        fi
+      fi
+      rm -f conftest.lib libconftest.a
+     ])
+   AC_LANG_POP([C])])
+
+case $am_cv_ar_interface in
+ar)
+  ;;
+lib)
+  # Microsoft lib, so override with the ar-lib wrapper script.
+  # FIXME: It is wrong to rewrite AR.
+  # But if we don't then we get into trouble of one sort or another.
+  # A longer-term fix would be to have automake use am__AR in this case,
+  # and then we could set am__AR="$am_aux_dir/ar-lib \$(AR)" or something
+  # similar.
+  AR="$am_aux_dir/ar-lib $AR"
+  ;;
+unknown)
+  m4_default([$1],
+             [AC_MSG_ERROR([could not determine $AR interface])])
+  ;;
+esac
+AC_SUBST([AR])dnl
+])
+
+# Figure out how to run the assembler.                      -*- Autoconf -*-
+
+# Copyright (C) 2001-2013 Free Software Foundation, Inc.
+#
+# This file is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# AM_PROG_AS
+# ----------
+AC_DEFUN([AM_PROG_AS],
+[# By default we simply use the C compiler to build assembly code.
+AC_REQUIRE([AC_PROG_CC])
+test "${CCAS+set}" = set || CCAS=$CC
+test "${CCASFLAGS+set}" = set || CCASFLAGS=$CFLAGS
+AC_ARG_VAR([CCAS],      [assembler compiler command (defaults to CC)])
+AC_ARG_VAR([CCASFLAGS], [assembler compiler flags (defaults to CFLAGS)])
+_AM_IF_OPTION([no-dependencies],, [_AM_DEPENDENCIES([CCAS])])dnl
+])
 
 # AM_AUX_DIR_EXPAND                                         -*- Autoconf -*-
 
@@ -103,9 +240,10 @@ _AM_AUTOCONF_VERSION(m4_defn([AC_AUTOCONF_VERSION]))])
 # configured tree to be moved without reconfiguration.
 
 AC_DEFUN([AM_AUX_DIR_EXPAND],
-[AC_REQUIRE([AC_CONFIG_AUX_DIR_DEFAULT])dnl
-# Expand $ac_aux_dir to an absolute path.
-am_aux_dir=`cd "$ac_aux_dir" && pwd`
+[dnl Rely on autoconf to set up CDPATH properly.
+AC_PREREQ([2.50])dnl
+# expand $ac_aux_dir to an absolute path
+am_aux_dir=`cd $ac_aux_dir && pwd`
 ])
 
 # AM_CONDITIONAL                                            -*- Autoconf -*-
@@ -406,6 +544,29 @@ AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
      [AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"])
 ])
 
+
+# Copyright (C) 1996-2013 Free Software Foundation, Inc.
+#
+# This file is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+AC_DEFUN([AM_WITH_DMALLOC],
+[AC_MSG_CHECKING([if malloc debugging is wanted])
+AC_ARG_WITH([dmalloc],
+[AS_HELP_STRING([--with-dmalloc],
+                [use dmalloc, as in http://www.dmalloc.com])],
+[if test "$withval" = yes; then
+  AC_MSG_RESULT([yes])
+  AC_DEFINE([WITH_DMALLOC], [1],
+	    [Define if using the dmalloc debugging malloc package])
+  LIBS="$LIBS -ldmalloc"
+  LDFLAGS="$LDFLAGS -g"
+else
+  AC_MSG_RESULT([no])
+fi], [AC_MSG_RESULT([no])])
+])
+
 # Do all the work for Automake.                             -*- Autoconf -*-
 
 # Copyright (C) 1996-2013 Free Software Foundation, Inc.
@@ -572,8 +733,7 @@ to "yes", and re-run configure.
 END
     AC_MSG_ERROR([Your 'rm' program is bad, sorry.])
   fi
-fi
-])
+fi])
 
 dnl Hook into '_AC_COMPILER_EXEEXT' early to learn its expansion.  Do not
 dnl add the conditional right here, as _AC_COMPILER_EXEEXT may be further
@@ -1147,8 +1307,12 @@ AC_SUBST([am__tar])
 AC_SUBST([am__untar])
 ]) # _AM_PROG_TAR
 
-m4_include([m4/libtool.m4])
-m4_include([m4/ltoptions.m4])
-m4_include([m4/ltsugar.m4])
-m4_include([m4/ltversion.m4])
-m4_include([m4/lt~obsolete.m4])
+m4_include([m4/gettext.m4])
+m4_include([m4/iconv.m4])
+m4_include([m4/lib-ld.m4])
+m4_include([m4/lib-link.m4])
+m4_include([m4/lib-prefix.m4])
+m4_include([m4/nls.m4])
+m4_include([m4/po.m4])
+m4_include([m4/progtest.m4])
+m4_include([acinclude.m4])
