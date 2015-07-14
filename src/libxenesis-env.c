@@ -112,9 +112,6 @@ load_core_variables() {
 function plurals() {
    COUNT=$1
    THERE=$(ngettext $"there is" $"there are" $COUNT)
-   FRUIT=$(ngettext $"orange" $"oranges" $COUNT)
-
-   echo $"Here $THERE $COUNT $FRUIT"
 }
 
 # check_lang(): '@PACKAGE@' Check Language Support #
