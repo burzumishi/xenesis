@@ -29,9 +29,6 @@ environment_debug() {
 		echolog_debug "$DEBUG Running on a '$HOST_OS' ($HOST_OS_VERSION) host platform '$HOST_PLATFORM/$HOST_CPU' and using '$BASH' ($BASH_VERSION) as interpreter with arguments: '$BASH_ARGV'.";
 		echolog_debug "$DEBUG =====================================================";
 
-		# Show @PACKAGE@ Language Support values #
-		echolog_debug "$DEBUG Language setup is 'LC_ALL=$LC_ALL' and 'LANG=$LANG'.";
-
 		# Show COLOR values #
 		if test "$COLOR" == "yes"; then
 			echolog_debug "$DEBUG Color Support enabled!"

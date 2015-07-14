@@ -10,6 +10,9 @@ ENABLE_COLOR="yes";
 LC_ALL="C";
 LANG="C";
 
+TEXTDOMAIN=$0;
+TEXTDOMAINDIR="@localedir@";
+
 ### Modify with care! ###
 
 # @PACKAGE@ shared work directory #

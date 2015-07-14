@@ -26,6 +26,9 @@ load_core_variables() {
 	export LANG=$LANG;
 	export LC_ALL=$LC_ALL;
 
+  export TEXTDOMAIN=$TEXTDOMAIN;
+  export TEXTDOMAINDIR=$TEXTDOMAINDIR;
+
 
 	# Define '@PACKAGE' commands #
 	ENV="env";
@@ -71,6 +74,7 @@ load_core_variables() {
 	PIDOF="pidof";
 	GETOPT="getopt";
 	GETOPTS="getopts";
+  GETTEXT="gettext";
 
 
 	# Define (true || false)
@@ -102,6 +106,25 @@ load_core_variables() {
 	load_terminal_color_support;
 
 	return $true;
+}
+
+# plurals(): '@PACKAGE@' Gettext plurals #
+function plurals() {
+   COUNT=$1
+   THERE=$(ngettext $"there is" $"there are" $COUNT)
+   FRUIT=$(ngettext $"orange" $"oranges" $COUNT)
+
+   echo $"Here $THERE $COUNT $FRUIT"
+}
+
+# check_lang(): '@PACKAGE@' Check Language Support #
+function check_lang() {
+  EMPTY_LANG=$"emptylang"
+  XENESIS_LANG=${LANGUAGE:-$EMPTY_LANG}
+
+	# Show @PACKAGE@ Language Support values #
+	echolog_debug "$DEBUG Language setup is 'LC_ALL=$LC_ALL' and 'LANG=$LANG'.";
+	echolog_debug "Language is set to: $XENESIS_LANG";
 }
 
 # load_terminal_color_support(): '@PACKAGE@' Terminal Color Support #
