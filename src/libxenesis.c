@@ -68,8 +68,8 @@ main() {
 			help;
 		else
 			# Define $ACTION_OPTIONS #
-			ACTION_OPTIONS=$($GETOPT -o hvH:O:p:T:c: \
-				 -l "help,version,verbose,force,color,sshconf,hosts:,plugopts:,plugin:,test:,command:" \
+			ACTION_OPTIONS=$($GETOPT -o hvU:H:O:p:T:c: \
+				 -l "help,version,verbose,force,color,sshconf,user:,hosts:,plugopts:,plugin:,test:,command:" \
 				 -n "$0" -- "$@");
 
 			eval set -- "$ACTION_OPTIONS"
@@ -111,6 +111,10 @@ main() {
 					;;
 
 					# libxenesis-ral.so -- options -- #
+					-U|--user) # Working SSH User #
+						SSHUSER="$2"; shift 2;
+					;;
+
 					-H|--hosts) # Working <$HOST_LIST> file or servers #
 						HOST_LIST="$2"; shift 2;
 					;;

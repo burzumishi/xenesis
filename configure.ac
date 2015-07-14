@@ -5,10 +5,10 @@
 #     |   Process this file with autoconf to produce a configure script     |
 #     |_____________________________________________________________________|
 #    //                                                                     \\
-#   [|  XENESIS 2.0 © 2014-2015 Antonio Cao (@burzumishi)                    |]
+#   [|  XENESIS © 2014-2015 Antonio Cao (@burzumishi)                        |]
 #    \\_____________________________________________________________________//
 
-AC_INIT([xenesis], [2.0.0],
+AC_INIT([xenesis], [2015.07.14],
 	[<@burzumishi>],
 	[xenesis])
 
@@ -48,7 +48,7 @@ AC_DEFINE_UNQUOTED([LOGDIR], ["${prefix}/var/log/xenesis/"], [Define to log dire
 AC_DEFINE_UNQUOTED([BINDIR], ["${prefix}/bin/"], [Define HotBoot Executable Directory.])
 AC_DEFINE_UNQUOTED([LOCKDIR], ["${prefix}/var/lock/xenesis/"], [Define lock file directory.])
 
-AC_SUBST([DESCRIPTION], ["--{ XENESIS 2.0 }-- Remote Task Manager"])
+AC_SUBST([DESCRIPTION], ["--{ Xenesis }-- Remote Task Manager"])
 
 LT_INIT
 LT_LANG([C])
@@ -459,7 +459,6 @@ AC_OUTPUT
 AC_MSG_RESULT
 AC_MSG_RESULT([Configured --{XENESIS}-- build flags:
 
- * Time Format fix:     <$enable_time>
  * RE_EXEC fix:         <$enable_regex>
  * Profiling flags:     <$enable_profiling>
  * Developer flags:     <$enable_devel>

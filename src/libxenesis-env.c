@@ -186,6 +186,7 @@ $INFO Options:
 
 $INFO RAL Options:
 
+	${color_bwht}[-U] --user		${color_wht}(Working user)
 	${color_bwht}[-H] --hostlist		${color_wht}(Host list can be a file or a comma separated list)
 	${color_bwht}[-O] --plugin-options	${color_wht}(Plugin Options)
 	${color_bwht}[-p] --plugin		${color_wht}(Plugin to load)
@@ -237,6 +238,7 @@ $INFO Options:
 
 $INFO RAL Options:
 
+	[-U] --user			(Working user)
 	[-H] --hostlist			(Host list can be a file or a comma separated list)
 	[-O] --plugin-options	(Plugin Options)
 	[-p] --plugin		(Plugin to load)

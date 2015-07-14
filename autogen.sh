@@ -2,11 +2,11 @@
 
 #     _______________________________________________________________________
 #    //                                                                     \\
-#   [|  XENESIS 2.0 © 2014-2015 Antonio Cao (@burzumishi)  -*- Autogen -*-   |]
+#   [|  XENESIS © 2014-2015 Antonio Cao (@burzumishi)  -*- Autogen -*-       |]
 #    \\_____________________________________________________________________//
 
 echo
-echo "-- --{XENESIS 2.0}-- -* Autogen *- by (@burzumishi) --"
+echo "-- --{ Xenesis }-- -* Autogen *- by (@burzumishi) --"
 echo
 
 echo "Backup configure.ac Makefile.am src/Makefile.am ...";

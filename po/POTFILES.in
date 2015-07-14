@@ -1,1 +1,10 @@
 # List of source files which contain translatable strings.
+src/libxenesis.c
+src/libxenesis-env.c
+src/libxenesis-net.c
+src/libxenesis-ssh.c
+src/xenesis.c
+src/libxenesis-debug.c
+src/libxenesis-log.c
+src/libxenesis-ral.c
+src/libxenesis-sshnopass.c
